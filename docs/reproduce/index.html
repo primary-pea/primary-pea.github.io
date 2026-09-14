@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reproduce · Primary Pea</title>
+<meta name="description" content="Reproduce every number: clone the repository, create the environment, run one command, and check the data version, the test count and the headline estimate.">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="brand" href="../">Primary <span>Pea</span></a>
+  <nav class="site"><a href="../">Home</a><a href="../at-a-glance/">At a glance</a><a href="../method/">Method</a><a href="./" aria-current="page">Reproduce</a><a class="ext" href="https://primary-pea.github.io/ink-and-iron/">Deck</a><a class="ext" href="https://primary-pea.github.io/dashboard/">Dashboard</a><a class="ext" href="https://github.com/primary-pea/wid-datathon-2026">Repo</a></nav>
+</div></header>
+
+<main class="wrap">
+  <div class="eyebrow">Reproduce</div>
+  <h1>Every number, from one command</h1>
+  <p class="lead">The whole analysis rebuilds from pinned inputs in about three minutes on a laptop, offline. If your run prints the same data version and the same test count, you have the same panel and the same results as this site.</p>
+
+  <h2>1 · What you need</h2>
+  <ul>
+    <li>Git and Python 3.12. The commands below use <a href="https://docs.astral.sh/uv/">uv</a> for the environment; plain <code>python3.12 -m venv</code> and <code>pip</code> work too.</li>
+    <li>macOS or Linux (the runner is a bash script). About 1 GB of disk for the environment, three minutes of CPU.</li>
+    <li>No internet after the clone: every input is committed with its provenance. The World Bank and DHS pull scripts are only needed if you want to refresh those inputs.</li>
+  </ul>
+
+  <h2>2 · Get the code</h2>
+<pre><code>git clone https://github.com/primary-pea/wid-datathon-2026.git
+cd wid-datathon-2026</code></pre>
+  <p>The layout the scaffold expects, relative to the repository root:</p>
+<pre><code>sarah/scaffold/          the pipeline: 00_assemble_panel.py … 09_dml_sidebar.py, run_all.sh, tests/, inputs/
+sarah/scaffold/inputs/   pinned inputs, each with a *.provenance.json; pull_wb_context.py regenerates the World Bank file
+sarah/requirements.txt   the exact package versions
+tiana/                   the three WHO GIFNA registry exports and the feature table
+subsaharan_data/         the team's World Bank pulls
+derived/                 the panel (ssa_panel.csv), its dictionary, readiness table, MANIFEST.json and data_version.txt</code></pre>
+
+  <h2>3 · Create the environment</h2>
+<pre><code>cd sarah
+uv venv .venv --python 3.12
+uv pip install --python .venv/bin/python -r requirements.txt</code></pre>
+  <p>The pins that matter for the numbers: pandas 3.0.5, numpy 2.5.2, statsmodels 0.15.0, linearmodels 7.0, pyfixest 0.60.0, wildboottest 0.3.2, scikit-learn 1.9.1, scipy 1.18.1. Figures use matplotlib 3.11.1 and plotly 6.3.0 with kaleido 1.1.0; the notebook check uses ipykernel and nbconvert.</p>
+
+  <h2>4 · Run it</h2>
+<pre><code>cd scaffold
+./run_all.sh</code></pre>
+  <div class="tablewrap"><table>
+    <tr><th>Step</th><th>Script</th><th>What it writes</th></tr>
+    <tr><td>Assemble</td><td><code>00_assemble_panel.py</code> (+ <code>gifna_direct.py</code>)</td><td>the panel, the readiness table, the events table, the manifest with every input's hash, the data version</td></tr>
+    <tr><td>Frame</td><td><code>01_prep_frame.py</code></td><td>logs, lags and leads, the women's index, the estimation sample</td></tr>
+    <tr><td>Ladder</td><td><code>02_fe_model.py</code></td><td>the main estimate and every sensitivity row, wild-bootstrap p-values, the bound</td></tr>
+    <tr><td>Event studies</td><td><code>02b_event_study.py</code></td><td>three estimators around two events, negative-weight shares, pre-trend slopes</td></tr>
+    <tr><td>Specification curve</td><td><code>02c_spec_curve.py</code></td><td>336 pre-specified estimates</td></tr>
+    <tr><td>Held-out prediction</td><td><code>03_loco.py</code></td><td>leave-one-country-out errors by nested model, calibration</td></tr>
+    <tr><td>Ranking</td><td><code>04_residuals.py</code></td><td>the income-only and context rankings, the tails, their policy contrast</td></tr>
+    <tr><td>Figures</td><td><code>05_figures.py</code></td><td><code>results/figures/*.png</code></td></tr>
+    <tr><td>Sidebars</td><td><code>08_concern_score.py</code>, <code>09_dml_sidebar.py</code></td><td>the concern-score reproduction; a double machine-learning cross-check</td></tr>
+    <tr><td>Report</td><td><code>06_report.py</code></td><td><code>results/RESULTS.md</code>, every number tagged; the data dictionary</td></tr>
+    <tr><td>Notebook</td><td><code>07_make_notebook.py</code></td><td><code>90_team_notebook.ipynb</code>, executed on a fresh kernel and checked against the pipeline</td></tr>
+    <tr><td>Tests</td><td><code>pytest tests</code></td><td>25 tests: 24 pass, 1 is skipped by design (a retired R replica)</td></tr>
+  </table></div>
+
+  <h2>5 · Check you got the same thing</h2>
+  <p>The last lines of the run should read:</p>
+<pre><code>notebook executed on a fresh kernel; spec A matches the pipeline (-0.209354)
+== tests
+24 passed, 1 skipped
+== done: data version afe63e46c26b</code></pre>
+  <p>Then compare three numbers in <code>results/RESULTS.md</code> with this site: the main row, −0.209 with a 95% interval of −0.623 to +0.204 <code>[E:02_fe→spec_A]</code>; the lead test, −0.342 <code>[E:02_fe→sensitivity]</code>; the equivalence test, TOST p 0.031 <code>[E:02_fe→bounds]</code>. If the data version differs, an input differs; <code>derived/MANIFEST.json</code> lists each input with its hash so you can see which.</p>
+
+  <h2>6 · Where things are after a run</h2>
+  <div class="tablewrap"><table>
+    <tr><th>File</th><th>Contents</th></tr>
+    <tr><td><code>derived/ssa_panel.csv</code></td><td>the panel: 1,274 rows × 174 columns</td></tr>
+    <tr><td><code>derived/DATA_DICTIONARY.md</code></td><td>every column: source, unit, coverage</td></tr>
+    <tr><td><code>derived/ssa_panel_readiness.md</code></td><td>which series is missing for which countries, and why</td></tr>
+    <tr><td><code>derived/MANIFEST.json</code>, <code>derived/data_version.txt</code></td><td>input hashes and the version they produce</td></tr>
+    <tr><td><code>sarah/scaffold/results/RESULTS.md</code></td><td>the report; every number carries a <code>[E:script→key]</code> tag</td></tr>
+    <tr><td><code>sarah/scaffold/results/stats/*.json</code></td><td>the statistics behind each tag, one file per script</td></tr>
+    <tr><td><code>sarah/scaffold/results/*.csv</code></td><td>the ladder, event-study, specification-curve, held-out and ranking tables</td></tr>
+    <tr><td><code>sarah/scaffold/results/figures/</code></td><td>the report figures</td></tr>
+    <tr><td><code>sarah/scaffold/90_team_notebook.ipynb</code></td><td>a Colab-ready notebook that re-fits the headline model from the panel</td></tr>
+  </table></div>
+
+  <h2>7 · Inputs and provenance</h2>
+  <p>Each pinned input in <code>sarah/scaffold/inputs/</code> sits next to a <code>*.provenance.json</code> with the source URL or API query, the pull or download time, the SHA-256 of the file and the reading rule the assembly applies. The World Bank context file is written by <code>inputs/pull_wb_context.py</code> (indicators SH.MLR.INCD.P3, SP.DYN.TFRT.IN, SP.URB.TOTL.IN.ZS, SL.EMP.TOTL.SP.ZS, SH.DYN.AIDS.ZS, SH.XPD.CHEX.PC.CD, SH.STA.BASS.ZS, SH.STA.ODFC.ZS); constant-dollar income by its own pull; the DHS survey list by an API query recorded in its provenance file; the WHO PCT deworming workbook, the Nunn–Puga ruggedness file and the GFDx legislation years are downloads with their page URL recorded. The registry files in <code>tiana/</code> are per-country GIFNA exports combined by <code>tiana/combine_gifna_raw.py</code>. The cluster rules that turn registry records into the dose are a 47-line table, <code>inputs/gifna_cluster_rules.csv</code>, and the token map the assembly writes shows which token matched which cluster.</p>
+
+  <h2>8 · Change something</h2>
+  <ul>
+    <li><b>Knobs</b> live in <code>config.py</code>: the lag (<code>LAG = 3</code>), the smallest effect of interest (<code>SESOI_PP_PER_WITHIN_SD = 1.0</code>), the events, the context and team control lists, the event-study window, the bootstrap draws and seed. Change one, re-run, and the report re-tags itself.</li>
+    <li><b>Paths</b>: <code>SCAFFOLD_REPO_DIR</code> points the assembly at a repository laid out as above; <code>SCAFFOLD_PANEL_DIR</code> at where the panel should live; <code>PY</code> at the interpreter for <code>run_all.sh</code>.</li>
+    <li><b>Adding a series</b>: drop a country-year file into <code>inputs/</code> with a provenance file, add one loader call in <code>00_assemble_panel.py</code>, and the readiness table, manifest and data version pick it up. The tests will refuse a duplicate key or a broken grid.</li>
+    <li><b>Adding a delivery series</b> is the change we most want someone to make: the ladder row and sub-period control that carry deworming coverage show where a coverage series plugs in.</li>
+  </ul>
+
+  <h2>9 · What the tests check</h2>
+  <p>The grid is complete and keyed once; every input in the manifest exists and hashes to the recorded value; the direct registry features are consistent (a hand recount of one country-year, stock and ever-adopted flags agree, log stocks equal log of stocks); the events table has one row per country; the survey flag is binary and sparse; the headline model reproduces; the bounds, bootstrap and adjusted p-values exist and are sane; the specification curve has the expected size; the event studies ran for both events; the deworming column is present with the expected reading rule.</p>
+
+  <h2>10 · Limits</h2>
+  <p>The outcome is a modelled series anchored on surveys in 33 of 49 countries; the registry records reporting, not delivery; the within-country design has limited power, which is why the result is a bound; the context ranking is a screening device. None of the code claims causation, and neither should a re-run of it.</p>
+  <div class="links"><a href="../method/">← Method</a><a href="https://github.com/primary-pea/wid-datathon-2026">The repository ↗</a></div>
+</main>
+
+<footer class="site"><div class="wrap"><p>Scaffold v2.0, data version afe63e46c26b. Last updated 14 September 2026.</p></div></footer>
+</body>
+</html>

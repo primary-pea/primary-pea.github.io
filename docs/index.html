@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Primary Pea · Ink and Iron</title>
+<meta name="description" content="Does the policy record predict maternal anaemia in sub-Saharan Africa? Team Primary Pea, Women in Data 2026 Datathon: a 49-country panel, a ladder of tests, a bounded null, and an open, re-runnable evidence scaffold.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="brand" href="./">Primary <span>Pea</span></a>
+  <nav class="site"><a href="./" aria-current="page">Home</a><a href="at-a-glance/">At a glance</a><a href="method/">Method</a><a href="reproduce/">Reproduce</a><a class="ext" href="https://primary-pea.github.io/ink-and-iron/">Deck</a><a class="ext" href="https://primary-pea.github.io/dashboard/">Dashboard</a><a class="ext" href="https://github.com/primary-pea/wid-datathon-2026">Repo</a></nav>
+</div></header>
+
+<main class="wrap">
+  <div class="eyebrow">Women in Data 2026 Datathon · What's Cooking, from farm to fork · Eat track</div>
+  <h1>Ink and <span class="accent">Iron</span></h1>
+  <p class="lead">Does the policy record predict maternal anaemia in sub-Saharan Africa? We built a 49-country panel from a dozen public datasets, tested the question every way we could think of, and found that the paper trail does not measurably move the number. What does is context, and what is missing is delivery data.</p>
+
+  <div class="grid g5" style="margin-top:26px">
+    <div class="card"><div class="stat">2 in 5<small>women 15–49 anaemic, 49 countries, 2023</small></div></div>
+    <div class="card"><div class="stat">17 → 158<small>anaemia policies in force, 2000 → 2023</small></div></div>
+    <div class="card"><div class="stat">37 of 49<small>countries higher in 2023 than in 2015</small></div></div>
+    <div class="card"><div class="stat">−0.2 pp<small>per policy, three years on; interval spans zero</small></div></div>
+    <div class="card"><div class="stat">81%<small>of level differences explained by context</small></div></div>
+  </div>
+
+  <h2>Three questions, three findings</h2>
+  <div class="grid g3">
+    <div class="card blush"><div class="eyebrow">Finding 1</div><h3>Where it is most concerning</h3><p>Anaemia in women fell from 44% to 37% across the region between 2000 and 2015, then turned: it is higher in 2023 than in 2015 in 37 of 49 countries. A concern score over 194 countries put three of the five most concerning in sub-Saharan Africa. Income explains under five per cent of the spread between countries.</p></div>
+    <div class="card sage"><div class="eyebrow">Finding 2</div><h3>The policy record does not move anaemia, measurably</h3><p>Inside a country, one more anaemia policy in force is followed three years later by −0.2 percentage points, indistinguishable from zero, and the answer holds across lags, controls, estimators and 336 specifications. Benefits larger than about half a point per policy are ruled out; smaller ones could not have been detected. The one row off zero is the lead test: policies adopted later "predict" anaemia now, the fingerprint of governments reacting to trends.</p></div>
+    <div class="card lilac"><div class="eyebrow">Finding 3</div><h3>Who beats their context, and it is not the paper trail</h3><p>Income, fertility, malaria, urbanisation, sanitation, sub-region and terrain explain 81% of the differences in levels. Nigeria, Namibia, Cameroon, Ghana and Liberia sit six to ten points below the level their context predicts; on the books, they report the same policy record as the countries above it.</p></div>
+  </div>
+
+  <div class="callout" style="margin-top:22px"><b>Diagnosis in one line.</b> Written, not delivered: the registry records what governments write, not what reaches women. Until delivery is measured next to policy, nobody can say which policies work.</div>
+
+  <h2>What we built</h2>
+  <p>Not a chart to believe but a test that can be repeated. One command rebuilds the panel from pinned inputs, runs the ladder of tests and writes a report in which every number links to the script and the statistic that produced it, stamped with the data version. A Colab notebook re-fits the headline model to the same number. Anyone can add a country, a year or a delivery series and re-run.</p>
+  <figure><img src="assets/fig/07b_pipeline_simple.png" alt="Pipeline: eight source groups joined into one panel of 49 countries by 26 years by 174 columns, passed through a ladder of tests, producing a tagged report, figures, a notebook and automated tests"><figcaption>From the sources to the outputs. Scaffold v2.0, data version afe63e46c26b.</figcaption></figure>
+  <div class="links"><a href="at-a-glance/">The whole thing on one page →</a><a href="method/">How and why, in detail →</a><a href="reproduce/">Reproduce it yourself →</a></div>
+
+  <h2>Explore</h2>
+  <div class="grid g3">
+    <div class="card"><h3><a href="https://primary-pea.github.io/ink-and-iron/">The deck</a></h3><p>The presentation as a scroll page: hook, team, problem, method, the three findings, the tool, recommendations.</p></div>
+    <div class="card"><h3><a href="https://primary-pea.github.io/dashboard/">The dashboard</a></h3><p>Filters over the same results: map, ranking, trends, the coefficient ladder and its checks, the tails.</p></div>
+    <div class="card"><h3><a href="https://github.com/primary-pea/wid-datathon-2026">The repository</a></h3><p>Code, pinned inputs with provenance, the panel, the report with every number tagged, and the notebook.</p></div>
+  </div>
+
+  <h2>Team Primary Pea</h2>
+  <div class="grid g5">
+    <div class="card"><h3>Ramya</h3><p>Presentation lead and timeline; the deck.</p></div>
+    <div class="card"><h3>Alison</h3><p>UNICEF women's nutrition EDA and the concern score.</p></div>
+    <div class="card"><h3>Hope</h3><p>World Bank income and food-insecurity data; the confounders.</p></div>
+    <div class="card"><h3>Saarah</h3><p>The country panel, the models, the tests, this site.</p></div>
+    <div class="card"><h3>Tiana</h3><p>The policy feature table and the maternal-nutrition background.</p></div>
+  </div>
+</main>
+
+<footer class="site"><div class="wrap">
+  <p>Data: WHO anaemia estimates (via FAOSTAT), UNICEF women's nutrition, FAOSTAT food security and cost of a healthy diet, World Bank WDI, WHO GIFNA, Global Fortification Data Exchange, DHS, UN IGME, WHO PCT databank, Nunn &amp; Puga ruggedness. Scaffold v2.0, data version afe63e46c26b. Association within countries, not causation. Last updated 14 September 2026.</p>
+</div></footer>
+</body>
+</html>

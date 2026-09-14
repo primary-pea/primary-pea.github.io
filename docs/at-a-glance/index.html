@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>At a glance · Primary Pea</title>
+<meta name="description" content="What Primary Pea did, on one page: the question, the panel, the ladder of tests, the three findings with their figures, and where every number comes from.">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="brand" href="../">Primary <span>Pea</span></a>
+  <nav class="site"><a href="../">Home</a><a href="./" aria-current="page">At a glance</a><a href="../method/">Method</a><a href="../reproduce/">Reproduce</a><a class="ext" href="https://primary-pea.github.io/ink-and-iron/">Deck</a><a class="ext" href="https://primary-pea.github.io/dashboard/">Dashboard</a><a class="ext" href="https://github.com/primary-pea/wid-datathon-2026">Repo</a></nav>
+</div></header>
+
+<main class="wrap">
+  <div class="eyebrow">At a glance</div>
+  <h1>What we did, on one page</h1>
+  <p class="lead">A country-year panel for sub-Saharan Africa, a policy dose read straight from the WHO registry, a ladder of tests around one association, and an honest reading of a null. Every number below is in the report's stats files under the tag shown in brackets.</p>
+
+  <h2>The question and the chain</h2>
+  <p>Nutrition in the first thousand days depends on the mother, and anaemia is the most widely measured marker of her nutrition. We asked whether a country's record of nutrition policy moves its anaemia rate. The chain runs policy → food and nutrition → mother → child; we tested the first link against the mother's anaemia and kept the rest in the panel.</p>
+  <figure><img src="../assets/fig/06_framework_chain.png" alt="Four linked boxes: Policy, Food and nutrition, Mother, Child; the first arrow is marked tested, the others in the panel"><figcaption>One chain, four links. The tested link is policy → maternal anaemia.</figcaption></figure>
+  <div class="qs">
+    <div class="q"><div class="qn">Question 1</div><p>Where is anaemia high, and which way is it moving?</p></div>
+    <div class="q"><div class="qn">Question 2</div><p>Does the policy record move with anaemia inside a country?</p></div>
+    <div class="q"><div class="qn">Question 3</div><p>Who beats their context, and does their policy record look different?</p></div>
+  </div>
+
+  <h2>The panel</h2>
+  <div class="grid g5">
+    <div class="card"><div class="stat">49 × 26<small>countries × years, 2000–2025</small></div></div>
+    <div class="card"><div class="stat">174<small>columns: 13 outcomes, 158 features</small></div></div>
+    <div class="card"><div class="stat">12<small>datasets from eight organisations</small></div></div>
+    <div class="card"><div class="stat">0<small>imputed values</small></div></div>
+    <div class="card"><div class="stat">24<small>automated tests on every build</small></div></div>
+  </div>
+  <p style="margin-top:14px">One guarded script joins the sources on country codes, refuses duplicate keys, undeclared gaps and an incomplete grid, hashes every input, and stamps the data version on every result. Only 39 of the 174 columns enter a model; the rest are there so that every alternative and every check could be run from one table.</p>
+  <figure><img src="../assets/fig/07b_pipeline_simple.png" alt="Pipeline diagram from sources to panel to ladder of tests to outputs"><figcaption>Sources → panel → ladder → outputs. One command rebuilds it.</figcaption></figure>
+
+  <h2>Finding 1 · Where it is most concerning</h2>
+  <p>Across the 49 countries the unweighted mean fell from 44% in 2000 to 37% in 2015, then rose to 39% by 2023; anaemia is higher in 2023 than in 2015 in 37 of 49 countries. Levels run from 16% in Rwanda to 60% in Gabon. A concern score over 194 countries, built from whether an indicator sits in the worst quarter and whether it is failing to improve, put Burundi, Jordan, Somalia, Lesotho and Lebanon at the top: three of five in this region, which is where we built the panel. Income alone explains under five per cent of the spread between countries.</p>
+  <figure><img src="../assets/fig/14_trends_small_multiples.png" alt="Small multiples: anaemia in women 15 to 49, 2000 to 2023, one panel per country for all 49 countries, sorted by the 2023 level"><figcaption>All 49 countries, 2000–2023, sorted by the 2023 level. Most curves flatten or turn up after 2015. [01_frame; panel]</figcaption></figure>
+
+  <h2>Finding 2 · The policy record does not move anaemia, measurably</h2>
+  <p>The dose is the number of anaemia-cluster policies in force in a country, dated by their adoption years and lagged three years. Comparing each country with itself over time, with country and year effects and log income, one more policy in force is followed by −0.21 percentage points of anaemia, 95% interval −0.62 to +0.20. The estimate stays at zero with other lags, other income measures, malaria, fertility, urbanisation, sanitation and unemployment as controls, in first differences, with a lagged outcome instead of country effects, and on survey-anchored years only. [02_fe→spec_A, sensitivity]</p>
+  <figure><img src="../assets/fig/04_coefficient_ladder.png" alt="Coefficient ladder: nine rows of estimates with 95% intervals, all crossing zero except the lead test"><figcaption>The ladder. Every interval spans zero; the lead test, policies adopted three years later, is the one row off it. [02_fe→sensitivity]</figcaption></figure>
+  <p>Around each country's first anaemia policy, a naive two-way fixed-effects event study shows a decline, but the pre-period slopes the same way and 27% of the estimate's weights are negative; the two estimators built for staggered adoption, two-stage difference-in-differences and local-projections difference-in-differences, sit at zero. Around wheat-flour fortification mandates there is no pre-trend and no break under any estimator. [02b_event]</p>
+  <figure><img src="../assets/fig/09_event_study.png" alt="Two event-study panels, first anaemia policy and wheat-flour mandate, three estimators each, coefficients by year relative to adoption"><figcaption>Event studies around adoption, three estimators. [02b_event]</figcaption></figure>
+  <p>The null is a bound, not an absence. With a pre-specified smallest effect of interest of one percentage point per within-country standard deviation of the dose, the equivalence test passes (p 0.031): benefits larger than about half a point of anaemia per policy are ruled out, and the design could not have detected anything smaller than about one point per within-country step of the dose. Across 336 pre-specified specifications, 7% exclude zero. Adding the policy count to a model that never saw a country does not lower its prediction error. [02_fe→bounds; 02c_spec; 03_loco]</p>
+  <figure><img src="../assets/fig/10_spec_curve.png" alt="Specification curve: 336 estimates sorted by size with intervals, coloured by estimator"><figcaption>336 specifications: exposure construction × estimator × income measure × lag × controls. [02c_spec]</figcaption></figure>
+
+  <h2>Finding 3 · Who beats their context</h2>
+  <p>A cross-country model with year effects, log income, malaria incidence, fertility, urbanisation, basic sanitation, UNICEF sub-region and terrain explains 81% of the differences in levels, where income alone explains 6%. Ranked against what that context predicts, Nigeria, Namibia, Cameroon, Ghana, Liberia, DR Congo, Ethiopia and Zambia sit lowest; Mozambique, Burundi, Gabon, Mali, Tanzania, Madagascar, Eswatini and Comoros sit highest. The two groups have the same policy record on the books: 4.5 versus 2.8 dated anaemia policies in force, and no exposure separates them. A screening device, not a verdict. [04_residuals]</p>
+  <figure><img src="../assets/fig/12_context_ranking.png" alt="Lollipop chart of 45 countries ranked by anaemia minus the context-predicted level"><figcaption>Anaemia minus the context-predicted level, mean 2015–2023. [04_residuals]</figcaption></figure>
+
+  <h2>Obstacles, and what they changed</h2>
+  <div class="chips"><span>The registry records reporting, not delivery</span><span>3 in 4 programme records carry no date</span><span>Outcomes are modelled estimates</span><span>Income file was current dollars under a "constant" header</span><span>Annual food-insecurity series empty for the region</span></div>
+  <p>Undated programme rows made the dose policies only. Modelled outcomes made a survey-anchored re-run the honest check. The mislabelled income file became a pinned World Bank pull with provenance. The empty food-insecurity series became three-year averages.</p>
+
+  <h2>Where every number comes from</h2>
+  <p>The report <code>results/RESULTS.md</code> tags each number <code>[E:script→key]</code>; the key lives in <code>results/stats/&lt;script&gt;.json</code>, written by the script named. The panel's data version, <code>afe63e46c26b</code>, is the hash of the panel and of every input that built it, recorded in <code>MANIFEST.json</code>. Change one input and the version changes with it.</p>
+  <div class="links"><a href="../method/">Method: how and why →</a><a href="../reproduce/">Reproduce it →</a></div>
+</main>
+
+<footer class="site"><div class="wrap"><p>Scaffold v2.0, data version afe63e46c26b. Sources on each figure. Association within countries, not causation. Last updated 14 September 2026.</p></div></footer>
+</body>
+</html>

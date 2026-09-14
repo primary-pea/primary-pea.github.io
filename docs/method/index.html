@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Method · Primary Pea</title>
+<meta name="description" content="How and why: the sources and their provenance, the panel, the policy dose, the fixed-effects model, the ladder of checks, the event studies, the equivalence bound, held-out prediction, the context ranking, and what not to conclude.">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="brand" href="../">Primary <span>Pea</span></a>
+  <nav class="site"><a href="../">Home</a><a href="../at-a-glance/">At a glance</a><a href="./" aria-current="page">Method</a><a href="../reproduce/">Reproduce</a><a class="ext" href="https://primary-pea.github.io/ink-and-iron/">Deck</a><a class="ext" href="https://primary-pea.github.io/dashboard/">Dashboard</a><a class="ext" href="https://github.com/primary-pea/wid-datathon-2026">Repo</a></nav>
+</div></header>
+
+<main class="wrap">
+  <div class="eyebrow">Method</div>
+  <h1>How we did it, and why</h1>
+  <p class="lead">This page explains each decision in the order the pipeline makes it: which data, how it becomes one table, what the policy dose is, what the model compares, which checks surround it, and how to read a null honestly. The numbers are the scaffold's v2.0 results (data version afe63e46c26b); the bracketed tags name the stats key that holds each one.</p>
+
+  <h2>1 · Why this question, and why sub-Saharan Africa</h2>
+  <p>The datathon's Eat track asked how food systems reach people. We chose the last mile that is measured in blood: anaemia in women aged 15 to 49, which shapes pregnancy outcomes and the first thousand days of a child's life. The question is whether a country's record of nutrition policy moves that rate. Sub-Saharan Africa was the region with the broadest country coverage across our sources (46 of 48 countries in the first pass) and, independently, where a concern score over 194 countries pointed: three of the five most concerning countries are in it.</p>
+
+  <h2>2 · Sources and provenance</h2>
+  <p>Every input is pinned: either a file downloaded once and recorded with its URL, download time and SHA-256 in a provenance file next to it, or a committed pull script that regenerates the file from an API and writes the same record. The panel's manifest hashes all of them.</p>
+  <div class="tablewrap"><table>
+    <tr><th>Dataset</th><th>Organisation</th><th>What it gives the panel</th><th>Release or pull</th></tr>
+    <tr><td>Anaemia in women 15–49 (modelled estimates, GHO indicator 4552)</td><td>WHO, republished in FAOSTAT's Suite of Food Security Indicators</td><td>The main outcome</td><td>FAOSTAT July 2026 release, cached</td></tr>
+    <tr><td>Women's nutrition database</td><td>UNICEF (WHO anaemia; NCD-RisC weight)</td><td>Anaemia in pregnant and all women, underweight, overweight; the concern score</td><td>August 2025 workbook</td></tr>
+    <tr><td>Food security suite: low birthweight, stunting, wasting, exclusive breastfeeding</td><td>FAOSTAT</td><td>Child outcomes used as swaps and descriptives</td><td>July 2026 release</td></tr>
+    <tr><td>Cost and affordability of a healthy diet; food insecurity (FIES, 3-year averages)</td><td>FAOSTAT</td><td>Sub-period controls</td><td>CAHD 7S2026; FIES July 2026</td></tr>
+    <tr><td>Child mortality (neonatal, infant, under-five)</td><td>UN IGME</td><td>Descriptive outcomes</td><td>2025 round</td></tr>
+    <tr><td>GDP per capita, constant 2015 US$; malaria incidence, fertility, urbanisation, HIV, sanitation, employment, health spending, hospital beds</td><td>World Bank WDI</td><td>Income and context controls</td><td>API pulls, September 2026, by committed scripts</td></tr>
+    <tr><td>Policy, programme and mechanism registries (three files)</td><td>WHO GIFNA</td><td>The policy dose and every alternative exposure</td><td>Per-country downloads, 3–5 September 2026</td></tr>
+    <tr><td>Fortification legislation years</td><td>Global Fortification Data Exchange</td><td>The wheat-flour mandate event</td><td>Dataset snapshot</td></tr>
+    <tr><td>Surveys measuring women's haemoglobin</td><td>The DHS Program (API)</td><td>The survey-anchor flag</td><td>API pull, September 2026</td></tr>
+    <tr><td>Preventive chemotherapy coverage, soil-transmitted helminths</td><td>WHO PCT databank</td><td>The one delivered-coverage series; an implementation contrast</td><td>Workbook updated November 2025</td></tr>
+    <tr><td>Terrain ruggedness, tropical share, distance to coast</td><td>Nunn &amp; Puga (2012)</td><td>Context for the ranking</td><td>Public dataset</td></tr>
+  </table></div>
+
+  <h2>3 · The panel</h2>
+  <p>One script assembles a complete grid of 49 countries by 26 years (2000–2025), 174 columns: three keys, 13 outcomes and 158 features. It joins on ISO codes, never on names; it refuses duplicate keys, gaps that are not declared, and any input that changes the grid. Nothing is imputed: a missing value stays missing, and a readiness table records which series is missing for which countries. Only 39 columns enter a model; the rest are the team's exploratory material and the alternatives the checks need. [01_frame→estimation_sample: 994 country-years, 2003–2023]</p>
+
+  <h2>4 · The policy dose</h2>
+  <p>The registry's three files (policies, programmes and actions, mechanisms) are read directly. Each record's controlled fields (policy topics; programme theme, topic, target group and micronutrient; mechanism topics and type) are matched, token by token, against a table of 47 patterns sorted into 11 topic clusters. Free text is never read, so language is not an issue, and a record is counted once per cluster. Records are dated from their start and end years; programme rows without a date are the survey-questionnaire snapshots of 2009–10 and 2016–17, so the dose is <b>policies in force</b>, dated, in the anaemia cluster. Across the region that count rose from 17 in 2000 to 158 in 2023, in 45 countries. The team's 76-column feature table, log and ever-adopted forms, all-file counts and an all-topic count are carried as alternative exposures.</p>
+  <figure><img src="../assets/fig/03_policy_stock_vs_anaemia.png" alt="Two panels: policy stock rising 2000 to 2023 in nearly every country; anaemia drifting down then flat"><figcaption>Both series move within nearly every country over the same years, which is why the model must separate the policy from the shared trend.</figcaption></figure>
+
+  <h2>5 · The model</h2>
+  <p>Each country is compared with itself over time. Anaemia in country <i>i</i> and year <i>t</i> is regressed on a country effect, a year effect, the policy dose three years earlier and log income, with standard errors clustered by country and a wild cluster bootstrap alongside. The country effect removes each country's level (geography, health system, malaria burden); the year effect removes what hit all 49 at once (price spikes, the pandemic, revisions to the WHO estimates). The number we want is the within-country association between the dose and anaemia. The identifying assumption for reading it as more than association is that, absent the policy, adopters and comparison countries would have moved in parallel; we state it and test it, we do not assume it. The smallest effect worth finding, one percentage point of anaemia per within-country standard deviation of the dose, was fixed before the results were read. [02_fe→spec_A: −0.209, 95% CI −0.623 to +0.204, p 0.32, wild bootstrap p 0.33]</p>
+
+  <h2>6 · The ladder of checks</h2>
+  <div class="tablewrap"><table>
+    <tr><th>Row</th><th>What it guards against</th><th class="num">pp per policy</th><th class="num">95% interval</th></tr>
+    <tr><td>Main: two-way fixed effects, 3-year lag</td><td>the baseline</td><td class="num">−0.21</td><td class="num">−0.62 to +0.20</td></tr>
+    <tr><td>Lag 2 years · lag 5 years</td><td>the lag being a lucky choice</td><td class="num">−0.25 · −0.16</td><td class="num">both span zero</td></tr>
+    <tr><td>Income in current US$</td><td>the income measure</td><td class="num">−0.15</td><td class="num">−0.53 to +0.23</td></tr>
+    <tr><td>Lead test: policy 3 years later</td><td>reverse timing: a lead that "predicts" today's anaemia signals trend or targeting</td><td class="num">−0.34</td><td class="num">−0.66 to −0.03</td></tr>
+    <tr><td>A linear trend per country</td><td>slow drifts; note that trends also absorb slow real effects</td><td class="num">−0.02</td><td class="num">−0.13 to +0.09</td></tr>
+    <tr><td>First differences · lagged outcome</td><td>the fixed-effects and lagged-outcome estimates bracket the effect under their respective assumptions</td><td class="num">−0.01 · −0.02</td><td class="num">both span zero</td></tr>
+    <tr><td>Malaria, fertility, urbanisation, HIV, sanitation, unemployment</td><td>the anaemia literature's drivers and the team's confounders</td><td class="num">−0.05 to −0.22</td><td class="num">all span zero</td></tr>
+    <tr><td>Delivered deworming coverage as the exposure</td><td>a delivery series instead of a paper one</td><td class="num">+0.001 per pp</td><td class="num">spans zero</td></tr>
+    <tr><td>Survey-anchored years only</td><td>the outcome being a model rather than a measurement</td><td class="num">−0.04</td><td class="num">−0.61 to +0.54 (n 80)</td></tr>
+    <tr><td>Outcome swaps: pregnant-women anaemia, underweight, overweight, low birthweight, a women's index</td><td>the result being specific to one series; p-values adjusted across the five</td><td class="num">all near zero</td><td class="num">adjusted p 0.80</td></tr>
+  </table></div>
+  <p>[02_fe→sensitivity, subsample, outcome_swaps]</p>
+
+  <h2>7 · Event studies</h2>
+  <p>The ladder asks about the dose; the event studies ask what happens around the first adoption. Two events: a country's first dated anaemia policy (31 adopters inside the window, 3 never-adopters, 15 excluded because they adopted before 2002) and its mandatory wheat-flour fortification law (26 adopters, 23 never). Three estimators, because staggered adoption breaks the naive one: the two-way fixed-effects event study, with the de Chaisemartin–D'Haultfœuille share of negative weights as its diagnostic; Gardner's two-stage difference-in-differences with a country cluster bootstrap; and the local-projections difference-in-differences of Dube, Girardi, Jordà and Taylor. Pre-period slopes are reported and subtracted. Around the first anaemia policy the naive estimator shows a post-adoption decline (−0.94, p 0.08) with a 27% negative-weight share and a pre-trend of the same sign; the two robust estimators give +0.10 and −0.08, both spanning zero. Around the wheat-flour mandate there is no pre-trend and no break. [02b_event]</p>
+
+  <h2>8 · The bound and the specification curve</h2>
+  <p>A null is only informative with a bound. Against the pre-specified smallest effect of interest, two one-sided tests reject effects that large (p 0.031): the 90% interval per policy runs from −0.56 to +0.14, so benefits larger than about half a point per policy are ruled out, and the minimum detectable effect at 80% power is 0.98 points per within-country standard deviation. Everything smaller is undetectable with this design; we say so. The specification curve re-runs 336 pre-specified combinations (seven exposure constructions × three lags × two income measures × two control sets × four estimators); the median is −0.02 points per within-country standard deviation and 7% of intervals exclude zero, most of them the trend-augmented rows. [02_fe→bounds; 02c_spec]</p>
+
+  <h2>9 · Held-out prediction</h2>
+  <p>Each country is predicted by a model fitted to the other 48, along its whole path, and the errors are pooled. Year effects alone bring the error from 2.50 to 1.91 points; income adds nothing; the policy dose adds nothing (1.92 → 1.93, a bootstrap interval that spans zero); the dose lowers a country's own error in 22 of 49, chance. If policy carried a signal that transfers across countries, this is where it would show. [03_loco]</p>
+
+  <h2>10 · The context ranking</h2>
+  <p>To ask who beats the odds, the odds have to be stated. Income alone explains 6% of the differences in levels; a model with year effects, log income, malaria incidence, fertility, urbanisation, basic sanitation, UNICEF sub-region and terrain explains 81%. The ranking is the residual from that model averaged over 2015–2023, for the 45 countries with enough coverage. It disagrees with the income-only ranking (Spearman 0.27), which is the point: Rwanda and Ethiopia lead the income ranking because their income is low, and sit mid-table once their context is in. The eight countries below their prediction and the eight above have indistinguishable policy records on every exposure. This is a screening device for qualitative follow-up, not a verdict on any country. [04_residuals]</p>
+  <figure><img src="../assets/fig/13_context_map.png" alt="Map of Africa shading each country by anaemia minus its context-predicted level"><figcaption>Anaemia relative to the context-predicted level, mean 2015–2023; blue below, orange above, grey not ranked. [04_residuals]</figcaption></figure>
+
+  <h2>11 · The concern score</h2>
+  <p>The team's concern score flags each of four indicators (anaemia in pregnant women, anaemia in all women, underweight, overweight) with 0 if the country improved, 1 if it started in the worst quarter, 2 if it worsened, adds the country's percentile, and averages. The scaffold reproduces it on the 49 countries and checks its sensitivity to the weights over 500 random draws: the equal-weight ranking and the median random-weight ranking agree at Spearman 0.997. [08_concern]</p>
+
+  <h2>12 · What not to conclude</h2>
+  <ul>
+    <li><b>Association within countries, never causation.</b> The lead test shows adoption follows trends; the null is a bound, not proof that policies do nothing.</li>
+    <li><b>The outcomes are modelled estimates.</b> WHO's anaemia model uses the Socio-Demographic Index, meat supply and mean BMI as covariates; only 33 of the 49 countries have a haemoglobin survey in the window (83 country-years). The survey-anchored row is the honest check, and it is underpowered.</li>
+    <li><b>The registry measures reporting.</b> Counts of policies say what governments wrote and filed, not what was delivered; the coverage field is empty and three in four programme records carry no date.</li>
+    <li><b>Within-country variation is small</b> (standard deviation about 2.8 points against 11 between countries), which is why the design reports a bound and why the between-country context story is the strong one.</li>
+    <li><b>Absorbing "ever adopted" indicators are fragile:</b> they flip sign when country trends are added; the event studies are the check that holds.</li>
+  </ul>
+
+  <h2>13 · References</h2>
+  <p>de Chaisemartin, C., &amp; D'Haultfœuille, X. (2020). Two-way fixed effects estimators with heterogeneous treatment effects. <i>American Economic Review</i>, 110(9). · Gardner, J. (2022). Two-stage differences in differences (arXiv:2207.05943). · Dube, A., Girardi, D., Jordà, Ò., &amp; Taylor, A. M. (2023). A local projections approach to difference-in-differences event studies (NBER WP 31184). · Wolfers, J. (2006). Did unilateral divorce laws raise divorce rates? <i>American Economic Review</i>, 96(5), on unit trends absorbing phased-in effects. · Lakens, D. (2017). Equivalence tests: a practical primer. <i>Social Psychological and Personality Science</i>, 8(4). · Simonsohn, U., Simmons, J. P., &amp; Nelson, L. D. (2020). Specification curve analysis. <i>Nature Human Behaviour</i>, 4. · Nunn, N., &amp; Puga, D. (2012). Ruggedness: the blessing of bad geography in Africa. <i>Review of Economics and Statistics</i>, 94(1). · WHO (2025), anaemia estimates in women of reproductive age, Global Health Observatory.</p>
+  <div class="links"><a href="../at-a-glance/">← At a glance</a><a href="../reproduce/">Reproduce it →</a></div>
+</main>
+
+<footer class="site"><div class="wrap"><p>Scaffold v2.0, data version afe63e46c26b. Sources on each figure. Association within countries, not causation. Last updated 14 September 2026.</p></div></footer>
+</body>
+</html>
