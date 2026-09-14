@@ -1,36 +1,59 @@
-:root{--paper:#F2EEDF;--card:#FAF7EE;--ink:#2A241B;--ink-soft:#5C5345;--ink-faint:#877E6E;--line:rgba(42,36,27,.16);--line-2:rgba(42,36,27,.32);--oxide:#C0392B;--indigo:#2E6DB4;--green:#2E8B45;--plum:#A03A6E;--ochre:#B07A10;--sage:#B7C7A8;--blush:#E8C9B6;--lilac:#C9BEDC;--head:"Manrope",system-ui,sans-serif;--text:"Inter",system-ui,sans-serif}
+/* Palette: a very pale pea green in light mode, plum and gold as the accents (a nod to Women in Data); dark mode follows the device
+   setting and can be overridden by data-theme on <html>. Every colour is a token; components never carry a literal colour. */
+:root{color-scheme:light;
+  --bg:#F4F8F0;--surface:#FBFDF8;--surface-2:#EDF3E6;
+  --ink:#1E2A21;--ink-soft:#4B5A4F;--ink-faint:#74857A;
+  --line:rgba(30,42,33,.14);--line-2:rgba(30,42,33,.30);
+  --plum:#7A2E5A;--plum-soft:#9C4B7A;--gold:#8F6A12;--gold-soft:#D9B24C;--green:#2FB24A;--green-deep:#237A38;
+  --tint-plum:#F2E4EC;--tint-gold:#F7EFD8;--tint-green:#E3F0DC;
+  --code-bg:#1B2A1F;--code-ink:#EAF2E7;
+  --head:"Manrope",system-ui,sans-serif;--text:"Inter",system-ui,sans-serif}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){color-scheme:dark;
+  --bg:#111A14;--surface:#182219;--surface-2:#202C22;
+  --ink:#ECF2EA;--ink-soft:#C3CEC5;--ink-faint:#8A978D;
+  --line:rgba(236,242,234,.14);--line-2:rgba(236,242,234,.30);
+  --plum:#D48BB4;--plum-soft:#B86F9A;--gold:#E2C066;--gold-soft:#C9A64A;--green:#4CCB66;--green-deep:#2FB24A;
+  --tint-plum:#2D1E29;--tint-gold:#2C2718;--tint-green:#1B2C1F;
+  --code-bg:#0C120E;--code-ink:#E4EEE2}}
+:root[data-theme="dark"]{color-scheme:dark;
+  --bg:#111A14;--surface:#182219;--surface-2:#202C22;
+  --ink:#ECF2EA;--ink-soft:#C3CEC5;--ink-faint:#8A978D;
+  --line:rgba(236,242,234,.14);--line-2:rgba(236,242,234,.30);
+  --plum:#D48BB4;--plum-soft:#B86F9A;--gold:#E2C066;--gold-soft:#C9A64A;--green:#4CCB66;--green-deep:#2FB24A;
+  --tint-plum:#2D1E29;--tint-gold:#2C2718;--tint-green:#1B2C1F;
+  --code-bg:#0C120E;--code-ink:#E4EEE2}
 *{box-sizing:border-box}
 html{color-scheme:light}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--text);font-size:16px;line-height:1.6}
-a{color:var(--indigo);text-decoration:none}a:hover{text-decoration:underline}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--text);font-size:16px;line-height:1.6}
+a{color:var(--plum);text-decoration:none}a:hover{text-decoration:underline}
 .wrap{max-width:1100px;margin:0 auto;padding:0 20px}
-header.site{border-bottom:1px solid var(--line);background:var(--paper);position:sticky;top:0;z-index:5}
+header.site{border-bottom:1px solid var(--line);background:var(--bg);position:sticky;top:0;z-index:5}
 header.site .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:12px;padding-bottom:12px}
 .brand{font-family:var(--head);font-weight:800;letter-spacing:-.01em;color:var(--ink);font-size:18px}
-.brand span{color:var(--oxide)}
+.brand span{color:var(--green-deep)}
 nav.site a{font-size:14px;font-weight:600;color:var(--ink-soft);margin-left:18px}
-nav.site a[aria-current]{color:var(--oxide)}
+nav.site a[aria-current]{color:var(--plum)}
 nav.site a.ext::after{content:" ↗";color:var(--ink-faint)}
 main{padding:28px 0 56px}
 h1{font-family:var(--head);font-weight:800;font-size:clamp(32px,4.6vw,54px);line-height:1.08;letter-spacing:-.02em;margin:.2em 0 .3em;text-wrap:balance;max-width:20ch}
 h2{font-family:var(--head);font-weight:800;font-size:clamp(24px,3vw,34px);line-height:1.15;letter-spacing:-.015em;margin:1.6em 0 .4em;text-wrap:balance}
 h3{font-family:var(--head);font-weight:700;font-size:19px;margin:1.2em 0 .3em}
-.eyebrow{font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--oxide)}
+.eyebrow{font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)}
 .lead{font-size:19px;color:var(--ink-soft);max-width:62ch}
 p{max-width:70ch}
-.accent{color:var(--oxide)}
+.accent{color:var(--plum)}
 .grid{display:grid;gap:16px}
 .g2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
 .g3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
 .g5{grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
-.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px 22px}
-.card.blush{background:var(--blush)}.card.sage{background:var(--sage)}.card.lilac{background:var(--lilac)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:20px 22px}
+.card.blush{background:var(--tint-plum)}.card.sage{background:var(--tint-green)}.card.lilac{background:var(--tint-gold)}
 .card h3{margin-top:0}
 .card p{font-size:15px;color:var(--ink-soft)}
-.stat{font-family:var(--head);font-weight:800;font-size:34px;line-height:1;letter-spacing:-.02em;color:var(--oxide)}
+.stat{font-family:var(--head);font-weight:800;font-size:34px;line-height:1;letter-spacing:-.02em;color:var(--plum)}
 .stat small{display:block;font-family:var(--text);font-weight:600;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px}
 figure{margin:24px 0}
-figure img{display:block;width:100%;height:auto;border-radius:14px;border:1px solid var(--line);background:#fff}
+figure img{display:block;width:100%;height:auto;border-radius:14px;border:1px solid var(--line);background:#fcfcfb}
 figcaption{font-size:13.5px;color:var(--ink-faint);margin-top:8px;max-width:80ch}
 table{border-collapse:collapse;width:100%;font-size:14.5px;margin:12px 0 20px}
 th,td{text-align:left;vertical-align:top;padding:9px 12px;border-bottom:1px solid var(--line)}
@@ -38,17 +61,17 @@ th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-
 td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 .tablewrap{overflow-x:auto}
 code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13.5px}
-code{background:rgba(42,36,27,.06);padding:1px 5px;border-radius:5px}
-pre{background:#1f1b16;color:#f3eee0;padding:16px 18px;border-radius:14px;overflow-x:auto;line-height:1.5}
+code{background:var(--surface-2);padding:1px 5px;border-radius:5px}
+pre{background:var(--code-bg);color:var(--code-ink);padding:16px 18px;border-radius:14px;overflow-x:auto;line-height:1.5}
 pre code{background:none;padding:0;color:inherit}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
 .chips span{font-size:13.5px;font-weight:500;color:var(--ink-soft);border:1px dashed var(--line-2);border-radius:999px;padding:6px 12px}
-.note{border-left:3px solid var(--oxide);padding:6px 0 6px 16px;color:var(--ink-soft);max-width:72ch}
-.callout{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px 22px;max-width:76ch}
+.note{border-left:3px solid var(--gold);padding:6px 0 6px 16px;color:var(--ink-soft);max-width:72ch}
+.callout{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:18px 22px;max-width:76ch}
 .callout b{font-family:var(--head)}
 .qs{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin:12px 0}
-.q{border-left:3px solid var(--oxide);padding:2px 0 2px 16px}
-.q .qn{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--oxide)}
+.q{border-left:3px solid var(--gold);padding:2px 0 2px 16px}
+.q .qn{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)}
 .q p{margin:6px 0 0;font-size:15.5px}
 ol.steps{padding-left:22px}ol.steps li{margin:6px 0}
 footer.site{border-top:1px solid var(--line);padding:22px 0 40px;font-size:13px;color:var(--ink-faint)}
@@ -63,3 +86,7 @@ pre{max-width:100%}
 .g3{grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr))}
 .g5{grid-template-columns:repeat(auto-fit,minmax(min(160px,100%),1fr))}
 .qs{grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr))}
+
+/* theme toggle (system by default; the button stores an explicit choice) */
+.theme-toggle{border:1px solid var(--line-2);background:var(--surface);color:var(--ink-soft);border-radius:999px;padding:5px 12px;font:600 12.5px var(--text);cursor:pointer;margin-left:18px}
+.theme-toggle:hover{color:var(--ink)}
