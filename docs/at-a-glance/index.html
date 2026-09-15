@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>At a glance · Primary Pea</title>
-<meta name="description" content="The Primary Pea scaffold on one page: what happened to each data source, how one script turned twelve datasets into a 49-country panel, what went into each model, and what came out.">
+<meta name="description" content="The Primary Pea scaffold on one page: a clickable data-flow diagram from twelve sources to the results, with a detailed section for every source, script, table and model, including what goes in and what comes out.">
 <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png"><link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png"><meta name="theme-color" content="#F4F8F0">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Inter:wght@400;500;600&display=swap">
@@ -22,7 +22,7 @@ b.addEventListener('click',function(){var cur=document.documentElement.getAttrib
 <main class="wrap">
   <div class="eyebrow">At a glance</div>
   <h1>The scaffold, source to result</h1>
-  <p class="lead">Twelve public datasets from eight organisations go in; one guarded script turns them into a single country-year table; seven models read that table; every number that comes out is tagged with the script and the statistic that produced it. This page follows the data through, source by source and model by model. The <a href="../method/">Method</a> page explains why each choice was made.</p>
+  <p class="lead">Twelve public datasets go in; one guarded script turns them into a single country-year table; seven models read that table; every number that comes out is tagged with the script and the statistic that produced it. The diagram is the map. Click any box to open its section: what it is, what went in and in what shape, what the code does, what came out. The <a href="../method/">Method</a> page explains why each choice was made.</p>
 
   <div class="grid g5" style="margin-top:22px">
     <div class="card"><div class="stat">49 × 26<small>countries × years, 2000–2025</small></div></div>
@@ -34,294 +34,788 @@ b.addEventListener('click',function(){var cur=document.documentElement.getAttrib
   </div>
 
   <h2 id="flow">The flow</h2>
-  <p>Read it top to bottom. Each source arrives as a pinned file with a provenance record or through a committed pull script, is joined on a country code, and lands in one grid. The panel becomes a modelling frame, the frame feeds the seven models, and the models write tagged results. Plum marks the headline path: the outcome series and the main model.</p>
+  <p>Read it top to bottom. Solid arrows carry the panel; the dashed arrow carries the per-country events table that only the event studies and the context ranking read. Green boxes are scripts, gold boxes are tables, grey boxes are outputs; plum marks the headline path, the outcome series and the main model. Every box is a link.</p>
   <figure>
-    <div class="flowwrap"><svg class="flow" viewBox="0 0 1100 1030" role="img" aria-label="Data flow of the scaffold: twelve pinned sources are joined by one guarded script into a 49 by 26 by 174 panel and an events table, prepared into a modelling frame, read by seven models, and written out as tagged results, a report, figures, a notebook and tests, which feed the deck, the dashboard and this site.">
-<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="ah"/></marker><marker id="ah-hi" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="ah-hi"/></marker></defs>
-<rect x="20" y="20" width="196" height="96" rx="8" class="box hi"/>
-<text x="30" y="37" class="t">WHO anaemia estimates</text>
-<text x="30" y="53" class="l">women 15–49, modelled series</text>
-<text x="30" y="67" class="l">GHO 4552 via FAOSTAT FS 21043</text>
-<text x="30" y="81" class="l">pinned parquet · July 2026</text>
-<text x="30" y="95" class="l">→ the outcome of every model</text>
-<rect x="236" y="20" width="196" height="96" rx="8" class="box "/>
-<text x="246" y="37" class="t">UNICEF women&#x27;s nutrition</text>
-<text x="246" y="53" class="l">anaemia: pregnant, all women</text>
-<text x="246" y="67" class="l">underweight · overweight</text>
-<text x="246" y="81" class="l">pinned workbook · Aug 2025</text>
-<text x="246" y="95" class="l">→ outcome swaps, index, score</text>
-<rect x="452" y="20" width="196" height="96" rx="8" class="box "/>
-<text x="462" y="37" class="t">FAOSTAT</text>
-<text x="462" y="53" class="l">child outcomes: LBW, stunting,</text>
-<text x="462" y="67" class="l">wasting, overweight, EBF (5)</text>
-<text x="462" y="81" class="l">cost of a healthy diet (3)</text>
-<text x="462" y="95" class="l">FIES 3-year averages (6)</text>
-<text x="462" y="109" class="l">pinned parquets · July 2026</text>
-<rect x="668" y="20" width="196" height="96" rx="8" class="box "/>
-<text x="678" y="37" class="t">UN IGME</text>
-<text x="678" y="53" class="l">neonatal, infant, under-five</text>
-<text x="678" y="67" class="l">mortality (3 rates)</text>
-<text x="678" y="81" class="l">pinned CSV · 2025 round</text>
-<text x="678" y="95" class="l">→ descriptive outcomes only</text>
-<rect x="884" y="20" width="196" height="96" rx="8" class="box "/>
-<text x="894" y="37" class="t">World Bank WDI</text>
-<text x="894" y="53" class="l">GDP per capita (constant US$)</text>
-<text x="894" y="67" class="l">malaria, fertility, urban, HIV,</text>
-<text x="894" y="81" class="l">sanitation, jobs, health spend</text>
-<text x="894" y="95" class="l">committed pull scripts · 2026</text>
-<text x="894" y="109" class="l">team file: GDP current, beds</text>
-<rect x="20" y="154" width="90" height="96" rx="8" class="box "/>
-<text x="30" y="171" class="t">DHS</text>
-<text x="30" y="187" class="l">haemoglobin</text>
-<text x="30" y="201" class="l">surveys</text>
-<text x="30" y="215" class="l">API pull</text>
-<text x="30" y="229" class="l">→ anchor flag</text>
-<rect x="126" y="154" width="200" height="96" rx="8" class="box "/>
-<text x="136" y="171" class="t">Country-code lookup</text>
-<text x="136" y="187" class="l">ISO3 · ISO2 · M49 · FAOSTAT area</text>
-<text x="136" y="201" class="l">one row per country, 49 rows</text>
-<text x="136" y="215" class="l">every join uses a code, never</text>
-<text x="136" y="229" class="l">a name; team list cross-checked</text>
-<rect x="342" y="154" width="200" height="96" rx="8" class="box "/>
-<text x="352" y="171" class="t">GFDx fortification laws</text>
-<text x="352" y="187" class="l">mandatory fortification year</text>
-<text x="352" y="201" class="l">per food vehicle, 45 countries</text>
-<text x="352" y="215" class="l">pinned CSV + provenance</text>
-<text x="352" y="229" class="l">→ wheat / maize mandate events</text>
-<rect x="558" y="154" width="200" height="96" rx="8" class="box "/>
-<text x="568" y="171" class="t">WHO PCT databank</text>
-<text x="568" y="187" class="l">deworming (STH) coverage of</text>
-<text x="568" y="201" class="l">school-age children, % per year</text>
-<text x="568" y="215" class="l">best round per year (WHO rule)</text>
-<text x="568" y="229" class="l">pinned workbook · Nov 2025</text>
-<text x="568" y="243" class="l">→ the one delivery series</text>
-<rect x="774" y="154" width="200" height="96" rx="8" class="box "/>
-<text x="784" y="171" class="t">WHO GIFNA registry</text>
-<text x="784" y="187" class="l">3 files: 944 policies, 1,803</text>
-<text x="784" y="201" class="l">programmes, 131 mechanisms</text>
-<text x="784" y="215" class="l">per-country exports · Sep 2026</text>
-<text x="784" y="229" class="l">+ the team&#x27;s feature table</text>
-<text x="784" y="243" class="l">(76 composite columns)</text>
-<rect x="990" y="154" width="90" height="96" rx="8" class="box "/>
-<text x="1000" y="171" class="t">Terrain</text>
-<text x="1000" y="187" class="l">Nunn &amp; Puga</text>
-<text x="1000" y="201" class="l">(2012):</text>
-<text x="1000" y="215" class="l">ruggedness,</text>
-<text x="1000" y="229" class="l">tropical,</text>
-<text x="1000" y="243" class="l">coast dist.</text>
-<rect x="20" y="288" width="1060" height="96" rx="8" class="box step"/>
-<text x="30" y="305" class="t">00_assemble_panel.py — one guarded script builds the grid</text>
-<text x="30" y="321" class="l">joins every source on a code (ISO3, ISO2, M49 or FAOSTAT area), never on a name; one value per country-year per column</text>
-<text x="30" y="335" class="l">refuses duplicate keys, undeclared gaps and an incomplete grid; declared gaps stay missing — nothing is imputed</text>
-<text x="30" y="349" class="l">hashes every input and the panel → MANIFEST.json; the first 12 hex digits become the data version, afe63e46c26b</text>
-<text x="30" y="363" class="l">writes the readiness table (coverage per column) and the data dictionary next to the panel</text>
-<rect x="700" y="294" width="360" height="84" rx="8" class="box sub"/>
-<text x="710" y="311" class="t">gifna_direct.py — the policy features</text>
-<text x="710" y="327" class="l">controlled tokens only × 47 regex rules → 11 topic clusters</text>
-<text x="710" y="341" class="l">a record counts while active (start → end year; open end =</text>
-<text x="710" y="355" class="l">still active); undated rows excluded, GNPR answers in windows</text>
-<text x="710" y="369" class="l">→ stock · log-stock · any per cluster: 60 columns + first years</text>
-<line x1="118" y1="116" x2="118" y2="288" class="ar hi" marker-end="url(#ah-hi)"/>
-<text x="124" y="139" class="lab" text-anchor="start">1 series · area code</text>
-<line x1="334" y1="116" x2="334" y2="288" class="ar" marker-end="url(#ah)"/>
-<text x="340" y="139" class="lab" text-anchor="start">4 sheets · ISO3</text>
-<line x1="550" y1="116" x2="550" y2="288" class="ar" marker-end="url(#ah)"/>
-<text x="556" y="139" class="lab" text-anchor="start">14 series · area code</text>
-<line x1="766" y1="116" x2="766" y2="288" class="ar" marker-end="url(#ah)"/>
-<text x="772" y="139" class="lab" text-anchor="start">3 rates · ISO3</text>
-<line x1="982" y1="116" x2="982" y2="288" class="ar" marker-end="url(#ah)"/>
-<text x="976" y="139" class="lab" text-anchor="end">11 series · ISO3 / ISO2</text>
-<line x1="65" y1="250" x2="65" y2="288" class="ar" marker-end="url(#ah)"/>
-<text x="59" y="273" class="lab" text-anchor="end">surveys</text>
-<line x1="226" y1="250" x2="226" y2="288" class="ar" marker-end="url(#ah)"/>
-<text x="232" y="273" class="lab" text-anchor="start">codes</text>
-<line x1="442" y1="250" x2="442" y2="288" class="ar" marker-end="url(#ah)"/>
-<text x="448" y="273" class="lab" text-anchor="start">mandate years</text>
-<line x1="658" y1="250" x2="658" y2="288" class="ar" marker-end="url(#ah)"/>
-<text x="664" y="273" class="lab" text-anchor="start">coverage %</text>
-<line x1="874" y1="250" x2="874" y2="288" class="ar" marker-end="url(#ah)"/>
-<text x="880" y="273" class="lab" text-anchor="start">2,878 records</text>
-<line x1="1035" y1="250" x2="1035" y2="288" class="ar" marker-end="url(#ah)"/>
-<text x="1029" y="273" class="lab" text-anchor="end">terrain</text>
-<rect x="20" y="420" width="680" height="88" rx="8" class="box data"/>
-<text x="30" y="437" class="t">ssa_panel.csv — the panel</text>
-<text x="30" y="453" class="l">49 countries × 26 years (2000–2025) = 1,274 rows on a complete grid; 174 columns: 3 keys, 13 outcomes, 158 features</text>
-<text x="30" y="467" class="l">features: 76 team GIFNA composites, 60 direct registry features, 22 others (income, context, diet cost,</text>
-<text x="30" y="481" class="l">food insecurity, deworming, survey flag); the UNICEF anaemia sheet duplicates the WHO series (checked)</text>
-<text x="30" y="495" class="l">about three dozen columns are named by a model; the rest let every alternative and check run from one table</text>
-<rect x="760" y="420" width="320" height="88" rx="8" class="box data"/>
-<text x="770" y="437" class="t">events.csv — one row per country</text>
-<text x="770" y="453" class="l">first dated anaemia-policy year: 46 of 49 countries</text>
-<text x="770" y="467" class="l">GFDx wheat-flour mandate year (27) · maize (11)</text>
-<text x="770" y="481" class="l">UNICEF sub-region (ESA / WCA)</text>
-<text x="770" y="495" class="l">terrain: ruggedness, tropical share, distance to coast</text>
-<line x1="360" y1="384" x2="360" y2="420" class="ar" marker-end="url(#ah)"/>
-<text x="366" y="406" class="lab" text-anchor="start">the grid</text>
-<line x1="920" y1="384" x2="920" y2="420" class="ar" marker-end="url(#ah)"/>
-<text x="914" y="406" class="lab" text-anchor="end">first-adoption years · mandate years · terrain</text>
-<rect x="20" y="544" width="680" height="80" rx="8" class="box data"/>
-<text x="30" y="561" class="t">frame.csv — the modelling frame, 72 columns (01_prep_frame.py)</text>
-<text x="30" y="577" class="l">log income (constant, current US$) · lags 2, 3, 5 and a 3-year lead of every exposure · FIES women − men gap</text>
-<text x="30" y="591" class="l">survey-anchor flag · women&#x27;s index (mean z-score of four women&#x27;s series) · sub-region · window 2000–2023</text>
-<text x="30" y="605" class="l">main estimation sample: 994 country-years, 49 countries, 2003–2023 (44 countries vary in the dose)</text>
-<line x1="360" y1="508" x2="360" y2="544" class="ar" marker-end="url(#ah)"/>
-<text x="366" y="530" class="lab" text-anchor="start">01_prep_frame.py: logs, lags, leads, gaps, flags, the index</text>
-<line x1="360" y1="624" x2="360" y2="650" class="ar"/>
-<line x1="920" y1="508" x2="920" y2="650" class="ar ev"/>
-<text x="926" y="586" class="lab" text-anchor="start">adoption years, terrain,</text>
-<text x="926" y="600" class="lab" text-anchor="start">sub-region → 02b, 04</text>
-<line x1="89" y1="650" x2="1007" y2="650" class="bus"/>
-<rect x="20" y="684" width="139" height="132" rx="8" class="box hi"/>
-<text x="30" y="701" class="t">02 · Dose ladder</text>
-<text x="30" y="717" class="l">y: anaemia 15–49</text>
-<text x="30" y="731" class="l">x: policies in force</text>
-<text x="30" y="745" class="l">at t−3 · + log income</text>
-<text x="30" y="759" class="l">country + year effects</text>
-<text x="30" y="773" class="l">SE clustered + wild</text>
-<text x="30" y="787" class="l">bootstrap · bounds</text>
-<text x="30" y="801" class="l">38 check rows</text>
-<line x1="89" y1="650" x2="89" y2="684" class="ar hi" marker-end="url(#ah-hi)"/>
-<rect x="173" y="684" width="139" height="132" rx="8" class="box "/>
-<text x="183" y="701" class="t">02b · Events</text>
-<text x="183" y="717" class="l">first anaemia policy</text>
-<text x="183" y="731" class="l">(31 adopt, 3 never)</text>
-<text x="183" y="745" class="l">wheat-flour mandate</text>
-<text x="183" y="759" class="l">(26 adopt, 23 never)</text>
-<text x="183" y="773" class="l">TWFE · 2-stage DiD</text>
-<text x="183" y="787" class="l">· LP-DiD; −4 … +5</text>
-<text x="183" y="801" class="l">+ events.csv years</text>
-<line x1="242" y1="650" x2="242" y2="684" class="ar" marker-end="url(#ah)"/>
-<rect x="326" y="684" width="139" height="132" rx="8" class="box "/>
-<text x="336" y="701" class="t">02c · Spec curve</text>
-<text x="336" y="717" class="l">7 exposures ×</text>
-<text x="336" y="731" class="l">4 estimators ×</text>
-<text x="336" y="745" class="l">2 incomes ×</text>
-<text x="336" y="759" class="l">3 lags × 2 control</text>
-<text x="336" y="773" class="l">sets = 336 fits</text>
-<text x="336" y="787" class="l">same y, same frame</text>
-<line x1="395" y1="650" x2="395" y2="684" class="ar" marker-end="url(#ah)"/>
-<rect x="479" y="684" width="139" height="132" rx="8" class="box "/>
-<text x="489" y="701" class="t">03 · Held-out fit</text>
-<text x="489" y="717" class="l">fit on 48 countries,</text>
-<text x="489" y="731" class="l">predict the 49th</text>
-<text x="489" y="745" class="l">year effects → +</text>
-<text x="489" y="759" class="l">income → + dose →</text>
-<text x="489" y="773" class="l">+ all 8 exposures</text>
-<text x="489" y="787" class="l">RMSE + bootstrap</text>
-<text x="489" y="801" class="l">994 rows</text>
-<line x1="548" y1="650" x2="548" y2="684" class="ar" marker-end="url(#ah)"/>
-<rect x="632" y="684" width="139" height="132" rx="8" class="box "/>
-<text x="642" y="701" class="t">04 · Ranking</text>
-<text x="642" y="717" class="l">context model, OLS:</text>
-<text x="642" y="731" class="l">year, sub-region,</text>
-<text x="642" y="745" class="l">income, malaria,</text>
-<text x="642" y="759" class="l">fertility, urban,</text>
-<text x="642" y="773" class="l">sanitation, terrain</text>
-<text x="642" y="787" class="l">1,046 rows → 43</text>
-<text x="642" y="801" class="l">ranked; tails 8 + 8</text>
-<line x1="701" y1="650" x2="701" y2="684" class="ar" marker-end="url(#ah)"/>
-<rect x="785" y="684" width="139" height="132" rx="8" class="box "/>
-<text x="795" y="701" class="t">08 · Concern</text>
-<text x="795" y="717" class="l">score from 4 women&#x27;s</text>
-<text x="795" y="731" class="l">series: anaemia (all,</text>
-<text x="795" y="745" class="l">pregnant), under-,</text>
-<text x="795" y="759" class="l">overweight; flags</text>
-<text x="795" y="773" class="l">0/1/2 + percentile;</text>
-<text x="795" y="787" class="l">500 weight draws;</text>
-<text x="795" y="801" class="l">49 countries</text>
-<line x1="854" y1="650" x2="854" y2="684" class="ar" marker-end="url(#ah)"/>
-<rect x="938" y="684" width="139" height="132" rx="8" class="box "/>
-<text x="948" y="701" class="t">09 · Double ML</text>
-<text x="948" y="717" class="l">same y and dose;</text>
-<text x="948" y="731" class="l">controls: income,</text>
-<text x="948" y="745" class="l">malaria, fertility,</text>
-<text x="948" y="759" class="l">urban; random</text>
-<text x="948" y="773" class="l">forests, 5 country</text>
-<text x="948" y="787" class="l">folds; 931 rows,</text>
-<text x="948" y="801" class="l">46 countries</text>
-<line x1="1007" y1="650" x2="1007" y2="684" class="ar" marker-end="url(#ah)"/>
-<line x1="89" y1="816" x2="89" y2="842" class="ar"/>
-<line x1="242" y1="816" x2="242" y2="842" class="ar"/>
-<line x1="395" y1="816" x2="395" y2="842" class="ar"/>
-<line x1="548" y1="816" x2="548" y2="842" class="ar"/>
-<line x1="701" y1="816" x2="701" y2="842" class="ar"/>
-<line x1="854" y1="816" x2="854" y2="842" class="ar"/>
-<line x1="1007" y1="816" x2="1007" y2="842" class="ar"/>
-<line x1="89" y1="842" x2="1007" y2="842" class="bus"/>
-<rect x="20" y="868" width="196" height="72" rx="8" class="box out"/>
-<text x="30" y="885" class="t">results/*.csv + stats/*.json</text>
-<text x="30" y="901" class="l">13 result tables, 10 stats files;</text>
-<text x="30" y="915" class="l">every number keyed</text>
-<text x="30" y="929" class="l">[E:script→key]</text>
-<line x1="118" y1="842" x2="118" y2="868" class="ar" marker-end="url(#ah)"/>
-<rect x="236" y="868" width="196" height="72" rx="8" class="box out"/>
-<text x="246" y="885" class="t">06 · RESULTS.md</text>
-<text x="246" y="901" class="l">11 sections, each number</text>
-<text x="246" y="915" class="l">claim-tagged to a stats key;</text>
-<text x="246" y="929" class="l">estimator-agreement check</text>
-<line x1="334" y1="842" x2="334" y2="868" class="ar" marker-end="url(#ah)"/>
-<rect x="452" y="868" width="196" height="72" rx="8" class="box out"/>
-<text x="462" y="885" class="t">05 · figures</text>
-<text x="462" y="901" class="l">trends, map, dose timeline,</text>
-<text x="462" y="915" class="l">ladder, event studies, spec</text>
-<text x="462" y="929" class="l">curve, LOCO, ranking</text>
-<line x1="550" y1="842" x2="550" y2="868" class="ar" marker-end="url(#ah)"/>
-<rect x="668" y="868" width="196" height="72" rx="8" class="box out"/>
-<text x="678" y="885" class="t">07 · notebook</text>
-<text x="678" y="901" class="l">fresh kernel re-fits the</text>
-<text x="678" y="915" class="l">headline row; checked</text>
-<text x="678" y="929" class="l">against the pipeline</text>
-<line x1="766" y1="842" x2="766" y2="868" class="ar" marker-end="url(#ah)"/>
-<rect x="884" y="868" width="196" height="72" rx="8" class="box out"/>
-<text x="894" y="885" class="t">tests · 24 pass</text>
-<text x="894" y="901" class="l">grid, provenance, registry</text>
-<text x="894" y="915" class="l">recount, model reproduction,</text>
-<text x="894" y="929" class="l">v2.0 guarantees (1 retired)</text>
-<line x1="982" y1="842" x2="982" y2="868" class="ar" marker-end="url(#ah)"/>
-<line x1="550" y1="940" x2="550" y2="966" class="ar" marker-end="url(#ah)"/>
-<rect x="20" y="966" width="1060" height="44" rx="8" class="box out"/>
-<text x="30" y="983" class="t">→ the deck · the dashboard · this site</text>
-<text x="30" y="999" class="l">one command (./run_all.sh, about 2½ minutes) rebuilds all of it from the pinned inputs; every number carries data version afe63e46c26b</text>
+    <div class="flowwrap"><svg class="flow" viewBox="0 0 1100 776" role="img" aria-label="Data flow of the scaffold: eleven pinned sources and the country-code lookup feed one guarded assembly script and the registry reader; they write the panel and the events table; the frame script prepares the modelling frame; seven models read it; the outputs are tagged tables and stats, the report, figures, the notebook and the tests, which feed the deck, the dashboard and this site. Every box opens a detail section.">
+<defs><marker id="ah-m12" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="ah"/></marker><marker id="ahhi-m12" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="ah-hi"/></marker></defs>
+<a href="#d-src-who" class="node" aria-label="WHO anaemia estimates: open the section">
+<rect x="20" y="20" width="196" height="52" rx="9" class="box hi"/>
+<text x="30" y="37" class="eb">source · pinned file</text>
+<text x="30" y="56" class="t">WHO anaemia estimates</text>
+</a>
+<a href="#d-src-unicef" class="node" aria-label="UNICEF women&#x27;s nutrition: open the section">
+<rect x="236" y="20" width="196" height="52" rx="9" class="box "/>
+<text x="246" y="37" class="eb">source · workbook</text>
+<text x="246" y="56" class="t">UNICEF women&#x27;s nutrition</text>
+</a>
+<a href="#d-src-faostat" class="node" aria-label="FAOSTAT: open the section">
+<rect x="452" y="20" width="196" height="52" rx="9" class="box "/>
+<text x="462" y="37" class="eb">source · parquets</text>
+<text x="462" y="56" class="t">FAOSTAT</text>
+</a>
+<a href="#d-src-igme" class="node" aria-label="UN IGME: open the section">
+<rect x="668" y="20" width="196" height="52" rx="9" class="box "/>
+<text x="678" y="37" class="eb">source · pinned csv</text>
+<text x="678" y="56" class="t">UN IGME</text>
+</a>
+<a href="#d-src-wb" class="node" aria-label="World Bank WDI: open the section">
+<rect x="884" y="20" width="196" height="52" rx="9" class="box "/>
+<text x="894" y="37" class="eb">pulls + team file</text>
+<text x="894" y="56" class="t">World Bank WDI</text>
+</a>
+<a href="#d-src-dhs" class="node" aria-label="DHS: open the section">
+<rect x="20" y="112" width="90" height="52" rx="9" class="box "/>
+<text x="30" y="129" class="eb">surveys</text>
+<text x="30" y="148" class="t">DHS</text>
+</a>
+<a href="#d-src-codes" class="node" aria-label="Country-code lookup: open the section">
+<rect x="126" y="112" width="200" height="52" rx="9" class="box "/>
+<text x="136" y="129" class="eb">committed lookup</text>
+<text x="136" y="148" class="t">Country-code lookup</text>
+</a>
+<a href="#d-src-gfdx" class="node" aria-label="GFDx fortification laws: open the section">
+<rect x="342" y="112" width="200" height="52" rx="9" class="box "/>
+<text x="352" y="129" class="eb">source · pinned csv</text>
+<text x="352" y="148" class="t">GFDx fortification laws</text>
+</a>
+<a href="#d-src-pct" class="node" aria-label="WHO PCT databank: open the section">
+<rect x="558" y="112" width="200" height="52" rx="9" class="box "/>
+<text x="568" y="129" class="eb">source · workbook</text>
+<text x="568" y="148" class="t">WHO PCT databank</text>
+</a>
+<a href="#d-src-gifna" class="node" aria-label="WHO GIFNA registry: open the section">
+<rect x="774" y="112" width="200" height="52" rx="9" class="box "/>
+<text x="784" y="129" class="eb">team repo · 3 files</text>
+<text x="784" y="148" class="t">WHO GIFNA registry</text>
+</a>
+<a href="#d-src-terrain" class="node" aria-label="Terrain: open the section">
+<rect x="990" y="112" width="90" height="52" rx="9" class="box "/>
+<text x="1000" y="129" class="eb">geography</text>
+<text x="1000" y="148" class="t">Terrain</text>
+</a>
+<a href="#d-assemble" class="node" aria-label="One guarded script builds the grid: open the section">
+<rect x="20" y="206" width="680" height="52" rx="9" class="box step"/>
+<text x="30" y="223" class="eb">script 00 · 00_assemble_panel.py</text>
+<text x="30" y="242" class="t">One guarded script builds the grid</text>
+</a>
+<a href="#d-gifna-direct" class="node" aria-label="Registry reader: tokens → clusters → features: open the section">
+<rect x="720" y="206" width="360" height="52" rx="9" class="box step"/>
+<text x="730" y="223" class="eb">module · gifna_direct.py</text>
+<text x="730" y="242" class="t">Registry reader: tokens → clusters → features</text>
+</a>
+<line x1="720" y1="232" x2="700" y2="232" class="ar" marker-end="url(#ah-m12)"/>
+<line x1="118" y1="72" x2="118" y2="206" class="ar hi" marker-end="url(#ahhi-m12)"/>
+<text x="124" y="92" class="lab" text-anchor="start">1 series · area code</text>
+<line x1="334" y1="72" x2="334" y2="206" class="ar" marker-end="url(#ah-m12)"/>
+<text x="340" y="92" class="lab" text-anchor="start">4 sheets · ISO3</text>
+<line x1="550" y1="72" x2="550" y2="206" class="ar" marker-end="url(#ah-m12)"/>
+<text x="556" y="92" class="lab" text-anchor="start">14 series · area code</text>
+<line x1="766" y1="72" x2="766" y2="206" class="ar" marker-end="url(#ah-m12)"/>
+<text x="772" y="92" class="lab" text-anchor="start">3 rates · ISO3</text>
+<line x1="982" y1="72" x2="982" y2="206" class="ar" marker-end="url(#ah-m12)"/>
+<text x="976" y="92" class="lab" text-anchor="end">11 series · ISO3 / ISO2</text>
+<line x1="65" y1="164" x2="65" y2="206" class="ar" marker-end="url(#ah-m12)"/>
+<text x="59" y="184" class="lab" text-anchor="end">surveys</text>
+<line x1="226" y1="164" x2="226" y2="206" class="ar" marker-end="url(#ah-m12)"/>
+<text x="232" y="184" class="lab" text-anchor="start">codes</text>
+<line x1="442" y1="164" x2="442" y2="206" class="ar" marker-end="url(#ah-m12)"/>
+<text x="448" y="184" class="lab" text-anchor="start">mandate years</text>
+<line x1="658" y1="164" x2="658" y2="206" class="ar" marker-end="url(#ah-m12)"/>
+<text x="664" y="184" class="lab" text-anchor="start">coverage %</text>
+<line x1="874" y1="164" x2="874" y2="206" class="ar" marker-end="url(#ah-m12)"/>
+<text x="880" y="184" class="lab" text-anchor="start">2,878 records</text>
+<line x1="1035" y1="164" x2="1035" y2="206" class="ar" marker-end="url(#ah-m12)"/>
+<text x="1029" y="184" class="lab" text-anchor="end">terrain</text>
+<a href="#d-panel" class="node" aria-label="The panel: 49 × 26 × 174: open the section">
+<rect x="20" y="298" width="680" height="52" rx="9" class="box data"/>
+<text x="30" y="315" class="eb">table · panel/ssa_panel.csv</text>
+<text x="30" y="334" class="t">The panel: 49 × 26 × 174</text>
+</a>
+<a href="#d-events" class="node" aria-label="Events: one row per country: open the section">
+<rect x="760" y="298" width="320" height="52" rx="9" class="box data"/>
+<text x="770" y="315" class="eb">table · panel/events.csv</text>
+<text x="770" y="334" class="t">Events: one row per country</text>
+</a>
+<line x1="360" y1="258" x2="360" y2="298" class="ar" marker-end="url(#ah-m12)"/>
+<text x="366" y="282" class="lab" text-anchor="start">the grid</text>
+<line x1="920" y1="258" x2="920" y2="298" class="ar" marker-end="url(#ah-m12)"/>
+<text x="914" y="282" class="lab" text-anchor="end">first-adoption years · mandate years · terrain</text>
+<a href="#d-frame" class="node" aria-label="The modelling frame: 1,274 × 72: open the section">
+<rect x="20" y="390" width="680" height="52" rx="9" class="box data"/>
+<text x="30" y="407" class="eb">script 01 · 01_prep_frame.py → results/frame.csv</text>
+<text x="30" y="426" class="t">The modelling frame: 1,274 × 72</text>
+</a>
+<line x1="360" y1="350" x2="360" y2="390" class="ar" marker-end="url(#ah-m12)"/>
+<text x="366" y="374" class="lab" text-anchor="start">logs, lags, leads, gaps, flags, the index</text>
+<line x1="360" y1="442" x2="360" y2="468" class="ar"/>
+<line x1="920" y1="350" x2="920" y2="468" class="ar ev"/>
+<text x="926" y="404" class="lab" text-anchor="start">adoption years, terrain,</text>
+<text x="926" y="418" class="lab" text-anchor="start">sub-region → 02b, 04</text>
+<line x1="89" y1="468" x2="1007" y2="468" class="bus"/>
+<a href="#d-m02" class="node" aria-label="Dose ladder: open the section">
+<rect x="20" y="502" width="139" height="52" rx="9" class="box hi"/>
+<text x="30" y="519" class="eb">02_fe_model</text>
+<text x="30" y="538" class="t">Dose ladder</text>
+</a>
+<line x1="89" y1="468" x2="89" y2="502" class="ar hi" marker-end="url(#ahhi-m12)"/>
+<a href="#d-m02b" class="node" aria-label="Event studies: open the section">
+<rect x="173" y="502" width="139" height="52" rx="9" class="box "/>
+<text x="183" y="519" class="eb">02b_event_study</text>
+<text x="183" y="538" class="t">Event studies</text>
+</a>
+<line x1="242" y1="468" x2="242" y2="502" class="ar" marker-end="url(#ah-m12)"/>
+<a href="#d-m02c" class="node" aria-label="Spec curve: open the section">
+<rect x="326" y="502" width="139" height="52" rx="9" class="box "/>
+<text x="336" y="519" class="eb">02c_spec_curve</text>
+<text x="336" y="538" class="t">Spec curve</text>
+</a>
+<line x1="395" y1="468" x2="395" y2="502" class="ar" marker-end="url(#ah-m12)"/>
+<a href="#d-m03" class="node" aria-label="Held-out fit: open the section">
+<rect x="479" y="502" width="139" height="52" rx="9" class="box "/>
+<text x="489" y="519" class="eb">03_loco</text>
+<text x="489" y="538" class="t">Held-out fit</text>
+</a>
+<line x1="548" y1="468" x2="548" y2="502" class="ar" marker-end="url(#ah-m12)"/>
+<a href="#d-m04" class="node" aria-label="Context ranking: open the section">
+<rect x="632" y="502" width="139" height="52" rx="9" class="box "/>
+<text x="642" y="519" class="eb">04_residuals</text>
+<text x="642" y="538" class="t">Context ranking</text>
+</a>
+<line x1="701" y1="468" x2="701" y2="502" class="ar" marker-end="url(#ah-m12)"/>
+<a href="#d-m08" class="node" aria-label="Concern score: open the section">
+<rect x="785" y="502" width="139" height="52" rx="9" class="box "/>
+<text x="795" y="519" class="eb">08_concern_score</text>
+<text x="795" y="538" class="t">Concern score</text>
+</a>
+<line x1="854" y1="468" x2="854" y2="502" class="ar" marker-end="url(#ah-m12)"/>
+<a href="#d-m09" class="node" aria-label="Double ML: open the section">
+<rect x="938" y="502" width="139" height="52" rx="9" class="box "/>
+<text x="948" y="519" class="eb">09_dml_sidebar</text>
+<text x="948" y="538" class="t">Double ML</text>
+</a>
+<line x1="1007" y1="468" x2="1007" y2="502" class="ar" marker-end="url(#ah-m12)"/>
+<line x1="89" y1="554" x2="89" y2="590" class="ar"/>
+<line x1="242" y1="554" x2="242" y2="590" class="ar"/>
+<line x1="395" y1="554" x2="395" y2="590" class="ar"/>
+<line x1="548" y1="554" x2="548" y2="590" class="ar"/>
+<line x1="701" y1="554" x2="701" y2="590" class="ar"/>
+<line x1="854" y1="554" x2="854" y2="590" class="ar"/>
+<line x1="1007" y1="554" x2="1007" y2="590" class="ar"/>
+<line x1="89" y1="590" x2="1007" y2="590" class="bus"/>
+<a href="#d-out-tables" class="node" aria-label="Tables and stats: open the section">
+<rect x="20" y="620" width="196" height="52" rx="9" class="box out"/>
+<text x="30" y="637" class="eb">results/ · stats/</text>
+<text x="30" y="656" class="t">Tables and stats</text>
+</a>
+<line x1="118" y1="590" x2="118" y2="620" class="ar" marker-end="url(#ah-m12)"/>
+<a href="#d-out-results" class="node" aria-label="RESULTS.md: open the section">
+<rect x="236" y="620" width="196" height="52" rx="9" class="box out"/>
+<text x="246" y="637" class="eb">06_report.py</text>
+<text x="246" y="656" class="t">RESULTS.md</text>
+</a>
+<line x1="334" y1="590" x2="334" y2="620" class="ar" marker-end="url(#ah-m12)"/>
+<a href="#d-out-figures" class="node" aria-label="Figures: open the section">
+<rect x="452" y="620" width="196" height="52" rx="9" class="box out"/>
+<text x="462" y="637" class="eb">05_figures.py</text>
+<text x="462" y="656" class="t">Figures</text>
+</a>
+<line x1="550" y1="590" x2="550" y2="620" class="ar" marker-end="url(#ah-m12)"/>
+<a href="#d-out-notebook" class="node" aria-label="Notebook re-fit: open the section">
+<rect x="668" y="620" width="196" height="52" rx="9" class="box out"/>
+<text x="678" y="637" class="eb">07_make_notebook.py</text>
+<text x="678" y="656" class="t">Notebook re-fit</text>
+</a>
+<line x1="766" y1="590" x2="766" y2="620" class="ar" marker-end="url(#ah-m12)"/>
+<a href="#d-out-tests" class="node" aria-label="Tests: 24 pass: open the section">
+<rect x="884" y="620" width="196" height="52" rx="9" class="box out"/>
+<text x="894" y="637" class="eb">tests/ · pytest</text>
+<text x="894" y="656" class="t">Tests: 24 pass</text>
+</a>
+<line x1="982" y1="590" x2="982" y2="620" class="ar" marker-end="url(#ah-m12)"/>
+<line x1="550" y1="672" x2="550" y2="704" class="ar" marker-end="url(#ah-m12)"/>
+<a href="#d-consumers" class="node" aria-label="The deck · the dashboard · this site: open the section">
+<rect x="20" y="704" width="1060" height="52" rx="9" class="box out"/>
+<text x="30" y="721" class="eb">consumers · run_all.sh rebuilds everything in about 2½ minutes</text>
+<text x="30" y="740" class="t">The deck · the dashboard · this site</text>
+</a>
 </svg></div>
-    <figcaption>Scaffold v2.0, data version afe63e46c26b. Solid arrows carry the panel; the dashed arrow carries the per-country events table (adoption and mandate years, terrain, sub-region) that only the event studies and the context ranking read. On a phone the diagram scrolls sideways.</figcaption>
+    <figcaption>Scaffold v2.0, data version afe63e46c26b. On a phone the diagram scrolls sideways.</figcaption>
   </figure>
 
-  <h2 id="sources">What happened to each source</h2>
-  <p>Every join uses a code, never a name. Columns named <code>out_</code> are candidate outcomes and <code>feat_</code> candidate regressors; the data dictionary next to the panel lists all 174 with their coverage.</p>
-  <div class="tablewrap"><table class="fixed"><colgroup><col style="width:19%"><col style="width:19%"><col style="width:26%"><col style="width:18%"><col style="width:18%"></colgroup>
-    <thead><tr><th>Source</th><th>How it arrived</th><th>What the scaffold does with it</th><th>Columns</th><th>Where it is used</th></tr></thead>
-    <tbody>
-      <tr><td><b>WHO anaemia estimates</b>, women 15–49 (GHO indicator 4552), republished in FAOSTAT's food security suite as item 21043</td><td>Pinned parquet of the July 2026 release, byte-identical copy with its hash</td><td>Joined on FAOSTAT area code; 49 countries, 2000–2023, one modelled value per country-year</td><td><code>out_anaemia_wra_fs_pct</code></td><td>The outcome of every model; the map and the trend figures</td></tr>
-      <tr><td><b>UNICEF women's nutrition database</b> (August 2025 workbook: WHO anaemia, NCD-RisC weight)</td><td>Pinned workbook with its hash</td><td>Four sheets read and joined on ISO3; the anaemia sheet is checked to be identical to the WHO series and kept only for that check</td><td><code>out_anaemia_pregnant_pct</code>, <code>out_women_underweight_pct</code>, <code>out_women_overweight_pct</code>, <code>out_anaemia_wra_unicef_pct</code></td><td>Outcome swaps in the ladder, the women's index, the concern score</td></tr>
-      <tr><td><b>FAOSTAT food security suite</b>: low birthweight, stunting, wasting, overweight under five, exclusive breastfeeding</td><td>Pinned parquets, July 2026 release</td><td>Joined on area code; five child series</td><td><code>out_lbw_pct</code>, <code>out_stunting_u5_pct</code>, <code>out_wasting_u5_pct</code>, <code>out_overweight_u5_pct</code>, <code>out_ebf_0_5mo_pct</code></td><td>Low birthweight is an outcome swap; the rest stay descriptive, the chain's later links</td></tr>
-      <tr><td><b>FAOSTAT cost and affordability of a healthy diet</b> (CAHD, release 7S2026)</td><td>Pinned parquet</td><td>Three items, 2017–2025, 45 countries (none for Eritrea, Sudan, Somalia, Zimbabwe)</td><td><code>feat_cohd_ppp_per_day</code>, <code>feat_pua_pct</code>, <code>feat_nua_million</code></td><td>Unaffordability as a sub-period control from 2017</td></tr>
-      <tr><td><b>FAOSTAT food insecurity</b> (FIES)</td><td>The annual pull returned no rows for the region, so three-year averages were rebuilt from the cached release and assigned to the middle year</td><td>Six series, 2015–2024, 40 countries; the women-minus-men gap is derived in the frame</td><td><code>feat_fies_severe_*_3yr</code>, <code>feat_fies_mod_sev_*_3yr</code> (female, male, total)</td><td>Severe food insecurity and the gender gap as sub-period controls from 2015</td></tr>
-      <tr><td><b>UN IGME child mortality</b>, 2025 round</td><td>Pinned CSV</td><td>Joined on ISO3, 2000–2024, both sexes</td><td><code>out_nmr_per1000</code>, <code>out_imr_per1000</code>, <code>out_u5mr_per1000</code></td><td>Kept for the last link of the chain; descriptive only, not modelled</td></tr>
-      <tr><td><b>World Bank WDI</b></td><td>GDP per capita in constant 2015 US$: pinned API pull with provenance. Seven context series pulled by a committed script (<code>inputs/pull_wb_context.py</code>). The team's file supplies GDP in current US$ (its header said constant), unemployment and hospital beds</td><td>Pulls joined on ISO3, the team file on ISO2; both incomes are logged in the frame</td><td><code>feat_gdp_pc_constant_2015_usd</code>, <code>feat_gdp_pc_current_usd</code>, <code>feat_malaria_incidence_per1000</code>, <code>feat_fertility_rate</code>, <code>feat_urban_pct</code>, <code>feat_hiv_prev_pct</code>, <code>feat_sanitation_basic_pct</code>, <code>feat_employment_pop_pct</code>, <code>feat_health_exp_pc_usd</code>, <code>feat_unemployment_pct</code>, <code>feat_hospital_beds_per1000</code></td><td>Log income in every model; the context rows of the ladder, the context ranking, the held-out context ladder and the double-ML sidebar; the team's rows; sub-period rows</td></tr>
-      <tr><td><b>WHO GIFNA registry</b>: policies (944 rows), programmes and actions (1,803), mechanisms (131)</td><td>Per-country exports of 3–5 September combined by the feature-table owner's script and read directly; the team's feature table (76 composite columns) merged unchanged</td><td>Controlled fields only (topics, theme, target group, micronutrient, type), matched token by token against 47 patterns in 11 topic clusters. A record counts while active, start to end year, open end meaning still active; questionnaire rows are placed in their survey window; 109 programme and 35 mechanism rows without a date are excluded. Per cluster: a stock, its log, and an ever-adopted flag</td><td>60 <code>feat_gd_*</code> and 76 <code>feat_gifna_*</code>; first-adoption years in <code>events.csv</code></td><td>The main dose (<code>feat_gd_stock_anaemia_policies</code>, lagged three years), seven alternative exposures, the specification curve, held-out prediction, the tails contrast, the anaemia-policy event study</td></tr>
-      <tr><td><b>Global Fortification Data Exchange</b> legislation</td><td>Pinned CSV from a dataset snapshot, 45 countries</td><td>The year each food vehicle was first mandated</td><td><code>events.csv</code>: wheat-flour (27 countries) and maize-flour (11) mandate years and status</td><td>The wheat-flour mandate event study</td></tr>
-      <tr><td><b>DHS Program</b>, surveys with women's haemoglobin testing</td><td>Pinned API pull, 139 survey rows, country names mapped to ISO3</td><td>A 1 in each country-year with a survey, 0 elsewhere</td><td><code>feat_dhs_anaemia_survey</code></td><td>The survey-anchored ladder row (80 country-years, 33 countries)</td></tr>
-      <tr><td><b>WHO PCT databank</b>, soil-transmitted helminths</td><td>Workbook downloaded 12 September, pinned with provenance</td><td>National deworming coverage among school-age children; where a year has several treatment rounds the best round counts; 0 where a country required treatment and reported none</td><td><code>feat_sth_pc_coverage_sac_pct</code> (2003–2024, 47 countries)</td><td>The implementation rows of the ladder, as exposure and as control, and a sub-period row: the one delivered-coverage series next to the paper record</td></tr>
-      <tr><td><b>Nunn &amp; Puga terrain</b> (2012)</td><td>Pinned CSV from the public dataset</td><td>Three time-invariant variables per country</td><td><code>events.csv</code>: <code>geo_rugged</code>, <code>geo_tropical</code>, <code>geo_dist_coast</code></td><td>The context ranking model only</td></tr>
-      <tr><td><b>Country-code lookup</b> (<code>inputs/country_codes_ssa.csv</code>)</td><td>Committed with the code</td><td>ISO3, ISO2, M49, FAOSTAT area code and display name for the 49 countries (UNICEF's Eastern and Southern plus West and Central Africa); the team's country list is cross-checked, 48 of 49 names match, one has an encoding fault</td><td>the keys <code>iso3</code>, <code>year</code>, <code>country</code></td><td>Every join</td></tr>
-    </tbody>
-  </table></div>
-
-  <h2 id="models">What went into each model</h2>
-  <p>All seven read the same frame, so a difference between results is a difference in design, not in data. The outcome is the WHO anaemia series in every case; "the dose" is the number of anaemia-cluster policies in force three years earlier.</p>
-  <div class="tablewrap"><table class="fixed"><colgroup><col style="width:14%"><col style="width:16%"><col style="width:32%"><col style="width:14%"><col style="width:24%"></colgroup>
-    <thead><tr><th>Model (script)</th><th>Policy input</th><th>Other inputs and structure</th><th>Sample</th><th>Result, and where it lives</th></tr></thead>
-    <tbody>
-      <tr><td><b>Dose ladder</b> (<code>02_fe_model.py</code>)</td><td>The dose</td><td>Log income (constant US$); country and year effects; standard errors clustered by country with a wild cluster bootstrap. 38 check rows swap the lag (2, 5) and the income series, add a three-year lead, country trends, first and five-year differences, a lagged outcome, malaria, fertility, urbanisation, HIV, sanitation, unemployment, employment, deworming coverage, seven alternative exposures, five outcome swaps with adjusted p-values, and survey-anchored years only. 12 sub-period rows add food insecurity, the gender gap, diet unaffordability, hospital beds, health spending and deworming on their own years. Equivalence and minimum-detectable-effect bounds against a pre-specified smallest effect of interest</td><td>994 country-years, 49 countries, 2003–2023</td><td>−0.21 pp per policy, interval −0.62 to +0.20; the lead −0.34, −0.66 to −0.03; the trend row −0.02 → <code>fe_coefficients.csv</code>, <code>fe_sensitivity.csv</code>, <code>fe_subsample.csv</code>, <code>stats/02_fe.json</code>; the ladder figure</td></tr>
-      <tr><td><b>Event studies</b> (<code>02b_event_study.py</code>)</td><td>The adoption year of the first dated anaemia policy; the year of the wheat-flour mandate, both from <code>events.csv</code></td><td>Log income; window four years before to five after, reference the year before adoption; three estimators: two-way fixed effects, two-stage difference-in-differences with a country bootstrap, local-projections difference-in-differences; the negative-weight share of the naive estimator; a pre-trend slope adjustment</td><td>Anaemia policy: 31 adopters, 3 never-adopters, 15 early adopters excluded (775 rows). Wheat mandate: 26 and 23 (1,135 rows)</td><td>Naive −0.94 (p 0.08, 27% negative weights); two-stage +0.10; local projections −0.08; no break after wheat mandates → <code>event_study.csv</code>, <code>event_att.csv</code>; the event-study figure</td></tr>
-      <tr><td><b>Specification curve</b> (<code>02c_spec_curve.py</code>)</td><td>Seven exposures: the dose, its log, the team composite, the all-file stock and its log, ever any anaemia policy, ever any fortification record</td><td>Four estimators (fixed effects, with country trends, first differences, lagged outcome) × two income series × lags 2, 3 and 5 × with and without the context block</td><td>336 fits on the frame</td><td>Median −0.02 pp per within-country SD; 7% of intervals exclude zero → <code>spec_curve.csv</code>; the curve figure</td></tr>
-      <tr><td><b>Held-out prediction</b> (<code>03_loco.py</code>)</td><td>The dose; the team composite; all eight exposures</td><td>Each country predicted by a model fitted to the other 48, on within-country deviations with year effects carried over; nested models: year effects, then + income, + the dose, + all exposures; a context ladder income → + context → + dose; a bootstrap on the error difference</td><td>Common sample 994 rows; context ladder 931 rows, 46 countries</td><td>Error 2.50 → 1.91 (year effects) → 1.92 (income) → 1.93 (dose); the dose helps in 22 of 49 countries → <code>loco_rmse.csv</code>, <code>loco_per_country.csv</code>, <code>loco_predictions.csv</code></td></tr>
-      <tr><td><b>Context ranking and tails</b> (<code>04_residuals.py</code>)</td><td>None in the ranking; all eight exposures in the tails contrast</td><td>Cross-country regression of levels on year effects, sub-region, log income, malaria, fertility, urbanisation, basic sanitation, ruggedness, tropical share and distance to coast; the residual averaged over 2015–2023 for countries with at least five years; an income-only ranking beside it</td><td>1,046 rows, 45 countries; 43 ranked; eight in each tail</td><td>Context explains 81% of level differences, income alone 6%; the tails carry 4.5 vs 2.8 policies in force (p 0.12) → <code>residuals_by_country.csv</code>, <code>deviants_policy_stock.csv</code>, <code>deviant_contrast.csv</code>, <code>deviants_timeline.csv</code>; the ranking and map figures</td></tr>
-      <tr><td><b>Concern score</b> (<code>08_concern_score.py</code>, sidebar)</td><td>None</td><td>Four women's series (anaemia in all and in pregnant women, underweight, overweight): per series 0 if improved, 1 if it started in the worst quarter, 2 if it worsened, plus the percentile; equal weights; 500 random-weight draws to test stability</td><td>49 countries, 2000–2023</td><td>Burundi, Somalia, Senegal, Gambia, Niger on top; rank correlation 0.997 under random weights → <code>concern_score.csv</code></td></tr>
-      <tr><td><b>Double machine learning</b> (<code>09_dml_sidebar.py</code>, sidebar)</td><td>The dose</td><td>Log income, malaria, fertility and urbanisation as nuisance functions fitted by random forests; five country-grouped folds, cross-fitted</td><td>931 rows, 46 countries</td><td>+0.08 pp (p 0.59): a same-sign check, nothing more → <code>stats/09_dml.json</code></td></tr>
-      <tr><td><b>Descriptives</b> (<code>01_prep_frame.py</code>, <code>05_figures.py</code>)</td><td>The dose, undated</td><td>The panel as it is: levels, changes, policies in force by year</td><td>49 countries, 2000–2023</td><td>Regional mean 44% → 37% → 39%; 37 of 49 higher in 2023 than in 2015; anaemia policies in force 17 → 158 → the trend, map and dose-timeline figures</td></tr>
-    </tbody>
-  </table></div>
+  <h2 id="details">Box by box</h2>
+  <p>Twenty-nine sections in the order of the flow. Each model section carries an <b>In → Out</b> block with the rows and columns that went in and the files that came out.</p>
+  <div class="d-controls"><button type="button" data-open-all>Open all</button><button type="button" data-close-all>Close all</button></div>
+<h3 class="layer" id="layer-sources">Sources</h3><p class="hint">Twelve datasets from eight organisations, plus the lookup that keys them. Each arrived as a pinned file with a provenance record, through a committed pull script, or from the team repository.</p><details class="d" id="d-src-who"><summary><span class="d-eb">source · WHO via FAOSTAT · pinned parquet</span><span class="d-title">WHO anaemia estimates, women 15–49</span><span class="d-gist">The outcome series: modelled annual prevalence, 49 countries, 2000–2023, one column, read by every model.</span></summary><div class="d-body">
+<p>WHO's 2025 edition of anaemia estimates (Global Health Observatory indicator 4552) comes from a Bayesian hierarchical model fitted to 412 surveys from 122 countries; FAOSTAT republishes it in the Suite of Food Security Indicators as item 21043. The scaffold reads the FAOSTAT copy because FAOSTAT area codes are pinned in the country lookup. The UNICEF workbook carries the same series; the assembly checks the two columns cell by cell (largest difference 0.0) and keeps the duplicate only for that check, so the panel has one anaemia series, not two.</p>
+<div class="inout"><div><div class="io-h">In</div><p><code>inputs/faostat/data_FS_item21043_anaemia_women_15_49_pct.parquet</code>: 5,616 rows × 14 columns, every country and year in the July 2026 release (20 KB), byte-identical copy with its SHA-256 in <code>raw_copies.provenance.json</code>.</p></div><div><div class="io-h">Sample used</div><p>Rows with <code>Element == "Value"</code>; area code mapped to ISO3 through the lookup; the 49 countries, 2000–2025.</p></div><div><div class="io-h">Out</div><p>One panel column, <code>out_anaemia_wra_fs_pct</code>: 1,176 filled cells (49 countries × 2000–2023), none missing.</p></div></div>
+<p><b>Where it goes.</b> The left-hand side of every regression: the dose ladder, both event studies, all 336 specifications, the held-out fit, the context ranking and the double-ML sidebar; the first of the four concern-score indicators; one of the four components of the women's index; the map and the small-multiple trends.</p>
+<p><b>What to keep in mind.</b> It is a modelled series. In a country-year without a survey the value is a covariate prediction (the WHO model uses the Socio-Demographic Index, meat supply and mean BMI), and within-country movement is partly the model's own smoothing (autocorrelation about 0.98). That is why the ladder carries a survey-anchored row and why the site says association, never effect.</p>
+<pre><code># 00_assemble_panel.py
+d = pd.read_parquet(parquet); d = d[d["Element"] == "Value"]
+iso3 = d["Area Code"].astype(str).map(area2iso)        # code, never name
+builder.add(frame, "out_anaemia_wra_fs_pct", "outcome", "FAOSTAT FS item 21043 …")</code></pre>
+<p class="back"><a href="#flow">↑ back to the flow</a></p></div></details><details class="d" id="d-src-unicef"><summary><span class="d-eb">source · UNICEF · pinned workbook</span><span class="d-title">UNICEF women's nutrition database</span><span class="d-gist">Four sheets of the August 2025 workbook: anaemia in pregnant and all women, underweight, overweight.</span></summary><div class="d-body">
+<p>UNICEF's global database on women's nutrition bundles WHO's anaemia estimates with NCD-RisC's estimates of underweight (BMI under 18.5) and overweight (BMI 25 and over) for women 15–49. The reader does not trust fixed cell offsets: it finds the header row by its <code>ISO3Code</code> label, takes the year labels from two rows above, and keeps only the columns marked <em>Point Estimate</em> (the lower and upper bounds are skipped).</p>
+<div class="inout"><div><div class="io-h">In</div><p><code>inputs/unicef/UNICEF_Global-database_Womens-Nutrition_August-2025_2.xlsx</code>, 1.5 MB, sheets <code>underweight</code>, <code>overweight</code>, <code>anaemia_WRA</code>, <code>anaemia_pregnant_women</code> (the non-pregnant sheet is not read).</p></div><div><div class="io-h">Sample used</div><p>Point estimates only, joined on ISO3, 49 countries.</p></div><div><div class="io-h">Out</div><p>Four columns: <code>out_women_underweight_pct</code> and <code>out_women_overweight_pct</code> (2000–2022, 1,127 cells each), <code>out_anaemia_pregnant_pct</code> (2000–2023, 1,176), <code>out_anaemia_wra_unicef_pct</code> (1,176; the duplicate kept for the identity check).</p></div></div>
+<p><b>Where it goes.</b> Three of the five outcome swaps in the ladder (pregnant-women anaemia, underweight, overweight), all four components of the women's index and of the concern score. Nothing from this workbook is a regressor.</p>
+<p class="back"><a href="#flow">↑ back to the flow</a></p></div></details><details class="d" id="d-src-faostat"><summary><span class="d-eb">source · FAO · pinned parquets</span><span class="d-title">FAOSTAT: child outcomes, cost of a healthy diet, food insecurity</span><span class="d-gist">Fourteen series in three groups; five child outcomes, three diet-cost items, six food-insecurity averages.</span></summary><div class="d-body">
+<p><b>Food security suite, child series.</b> Low birthweight (item 21049), stunting (21025), wasting (21026), overweight under five (21041) and exclusive breastfeeding (21044), each a pinned parquet of the July 2026 release filtered to <code>Element == "Value"</code> and joined on area code. Two of them are survey-based and therefore sparse: wasting has 302 filled cells and exclusive breastfeeding 247; the modelled series (stunting, overweight) fill 1,225 cells each; low birthweight runs to 2020 for 35 countries.</p>
+<p><b>Cost and affordability of a healthy diet</b> (CAHD, release 7S2026, 10,320 rows × 15 in the file). Three items are picked by name and by unit keyword: the cost of a healthy diet in PPP dollars per person per day, the prevalence of unaffordability (%), and the number of people unable to afford it (millions). 2017–2025, 45 countries (no rows for Eritrea, Sudan, Somalia, Zimbabwe).</p>
+<p><b>Food insecurity (FIES).</b> The annual FIES items returned no rows for the region, so on 8 September the three-year averages were rebuilt from the cached release and assigned to the middle year of each window: <code>inputs/ssa_fies_3yr_average.csv</code>, 321 rows × 10, 40 countries, 2015–2024, six series (severe, moderate-or-severe × female, male, total). The women-minus-men gap is derived later, in the frame.</p>
+<div class="inout"><div><div class="io-h">In</div><p>Seven parquets (14–37 KB each, 654–10,320 rows) plus the rebuilt FIES CSV; all hashed in the manifest.</p></div><div><div class="io-h">Sample used</div><p>The 49 countries, 2000–2025; item and unit filters for CAHD; the FIES window's middle year as the panel year.</p></div><div><div class="io-h">Out</div><p>Fourteen columns: five <code>out_</code> child series, <code>feat_cohd_ppp_per_day</code>, <code>feat_pua_pct</code>, <code>feat_nua_million</code> (405 cells each), six <code>feat_fies_*_3yr</code> (321 cells each).</p></div></div>
+<p><b>Where it goes.</b> Low birthweight is the fourth outcome swap. Unaffordability enters the ladder as a sub-period control from 2017; severe food insecurity and the gender gap as sub-period controls from 2015 (three-year averages are autocorrelated by construction, which the report says next to those rows). The rest stay descriptive: they are the later links of the chain, in the table so that anyone can swap them in.</p>
+<p class="back"><a href="#flow">↑ back to the flow</a></p></div></details><details class="d" id="d-src-igme"><summary><span class="d-eb">source · UN IGME · pinned csv</span><span class="d-title">UN IGME child mortality, 2025 round</span><span class="d-gist">Neonatal, infant and under-five mortality, both sexes; kept for the chain's last link, not modelled.</span></summary><div class="d-body">
+<p>The UN Inter-agency Group for Child Mortality Estimation's 2025 round, national estimates for both sexes, arrives as a slim extract (<code>inputs/igme_2025_ssa_national.csv</code>, 3,675 rows × 6: iso3, indicator, year, value, lower, upper) cut from the full IGME release by a committed tidy script; the assembly can also fall back to the full parquet filtered the same way (total sex, total wealth quintile).</p>
+<div class="inout"><div><div class="io-h">In</div><p>3,675 rows, three indicators, 49 countries, 2000–2025 (307 KB).</p></div><div><div class="io-h">Sample used</div><p>Rows per indicator, joined on ISO3.</p></div><div><div class="io-h">Out</div><p><code>out_nmr_per1000</code>, <code>out_imr_per1000</code>, <code>out_u5mr_per1000</code>: 1,225 cells each (2000–2024).</p></div></div>
+<p><b>Where it goes.</b> Nowhere in a regression. The three rates sit in the panel so the mother-to-child link of the chain can be tested on the same grid; the datathon build stopped at the mother.</p>
+<p class="back"><a href="#flow">↑ back to the flow</a></p></div></details><details class="d" id="d-src-wb"><summary><span class="d-eb">source · World Bank WDI · pull scripts and a team file</span><span class="d-title">World Bank WDI: income and context</span><span class="d-gist">Constant-dollar income from a pinned pull, seven context series from a committed script, three more from the team's file.</span></summary><div class="d-body">
+<p>Three arrivals, three join paths.</p>
+<ul>
+<li><b>GDP per capita, constant 2015 US$</b> (NY.GDP.PCAP.KD): a pinned API pull of 9 September with its provenance record (<code>wb_gdp_pc_constant_2015usd_ssa.csv</code>, 1,229 rows × 3). The main income measure; logged in the frame.</li>
+<li><b>Seven context series</b> pulled on 12 September by the committed script <code>inputs/pull_wb_context.py</code> (<code>wb_context_ssa.csv</code>, 1,274 rows × 10): malaria incidence per 1,000 at risk (SH.MLR.INCD.P3; no series for Lesotho, Mauritius, Seychelles), total fertility (SP.DYN.TFRT.IN), urban share (SP.URB.TOTL.IN.ZS), HIV prevalence 15–49 (SH.DYN.AIDS.ZS; 45 countries), employment-to-population 15+ (SL.EMP.TOTL.SP.ZS), current health expenditure per capita (SH.XPD.CHEX.PC.CD), people using at least basic sanitation (SH.STA.BASS.ZS, from the WHO/UNICEF JMP). An open-defecation column was pulled and is not used.</li>
+<li><b>The team's file</b> <code>subsaharan_data/GDP_per_capita.csv</code> (1,274 rows × 6), joined on ISO2 with Namibia's code <code>NA</code> protected from being read as missing. Its GDP column is headed "Constant USD" but the series is NY.GDP.PCAP.CD, current dollars (checked against the API: relative difference 0.0), so it became <code>feat_gdp_pc_current_usd</code>, an alternative income row. The same file supplies unemployment (SL.UEM.TOTL.ZS) and hospital beds per 1,000 (SH.MED.BEDS.ZS, only 324 cells).</li>
+</ul>
+<div class="inout"><div><div class="io-h">In</div><p>Three files, 1,229 + 1,274 + 1,274 rows; every value dropped where the API returned null.</p></div><div><div class="io-h">Sample used</div><p>ISO3 for the pulls, ISO2 for the team file; non-positive income would stop the frame (the log is undefined).</p></div><div><div class="io-h">Out</div><p>Eleven columns: <code>feat_gdp_pc_constant_2015_usd</code>, <code>feat_gdp_pc_current_usd</code>, <code>feat_malaria_incidence_per1000</code>, <code>feat_fertility_rate</code>, <code>feat_urban_pct</code>, <code>feat_hiv_prev_pct</code>, <code>feat_sanitation_basic_pct</code>, <code>feat_employment_pop_pct</code>, <code>feat_health_exp_pc_usd</code>, <code>feat_unemployment_pct</code>, <code>feat_hospital_beds_per1000</code>.</p></div></div>
+<p><b>Where it goes.</b> Log constant income is in every model. Malaria, fertility and urbanisation are the <em>context block</em>: the ladder's context rows, the spec curve's control set, the held-out context ladder, the double-ML nuisance functions, and (with sanitation, sub-region and terrain) the context ranking model. HIV and sanitation enter the ladder one at a time; unemployment and employment are the team's two rows; hospital beds and health spending are sub-period rows because their coverage is thinner.</p>
+<p class="back"><a href="#flow">↑ back to the flow</a></p></div></details><details class="d" id="d-src-gifna"><summary><span class="d-eb">source · WHO GIFNA · team repo, three registry files and a feature table</span><span class="d-title">WHO GIFNA registry</span><span class="d-gist">2,878 policy, programme and mechanism records, read directly; plus the team's 76-column feature table, merged unchanged.</span></summary><div class="d-body">
+<p>WHO's Global database on the Implementation of Food and Nutrition Action (GIFNA) is the policy record. Per-country exports of 3–5 September were combined by the feature-table owner's script into three files in the team repo: <code>tiana/gifna_policies.csv</code> (944 rows × 45 columns, 3.9 MB), <code>tiana/gifna_programmes_and_actions.csv</code> (1,803 × 73, 5.0 MB) and <code>tiana/gifna_mechanisms.csv</code> (131 × 28). The scaffold reads all three directly through <a href="#d-gifna-direct">the registry reader</a>, so nothing about the dose depends on a pre-built table. The team's own <code>tiana/gifna_feature_table.csv</code> (1,350 rows × 80: 49 countries × 1999–2025) is merged as well, values unchanged, as the <code>feat_gifna_*</code> family; its six-flag composite is one of the alternative exposures.</p>
+<div class="inout"><div><div class="io-h">In</div><p>Three registry files, 2,878 rows (928 + 1,756 + 131 of them in the 49 countries) and the feature table, 1,350 × 80.</p></div><div><div class="io-h">Sample used</div><p>Controlled columns only: policy <code>Topics</code>; programme <code>Theme</code>, <code>Topic</code>, <code>Target_Group</code>, <code>Micronutrient</code>; mechanism <code>Topics</code> and <code>Type</code>. Free text is never read.</p></div><div><div class="io-h">Out</div><p>60 <code>feat_gd_*</code> columns (complete on the grid, 0 means no record), 76 <code>feat_gifna_*</code> columns, and the first-adoption years that seed <code>events.csv</code>.</p></div></div>
+<p><b>Where it goes.</b> The main dose, <code>feat_gd_stock_anaemia_policies</code> (anaemia-cluster policies in force, lagged three years); the seven alternative exposures of the ladder and the spec curve; the eight exposures of the held-out fit and the tails contrast; the adoption year of the first dated anaemia policy for the event study.</p>
+<p><b>What the registry is.</b> A record of what governments reported to WHO: titles, topics, target groups, start years. There is no funding, coverage or delivery field with data in it, which is the finding the whole build turns on.</p>
+<p class="back"><a href="#flow">↑ back to the flow</a></p></div></details><details class="d" id="d-src-gfdx"><summary><span class="d-eb">source · Global Fortification Data Exchange · pinned csv</span><span class="d-title">GFDx fortification legislation</span><span class="d-gist">The year each food vehicle was first mandated; wheat-flour years date the second event study.</span></summary><div class="d-body">
+<p>A tidied extract of the GFDx dataset snapshot: <code>inputs/gfdx_legislation_years_ssa.csv</code>, 225 rows × 7 (iso3, country name, vehicle, mandatory fortification YES/NO/UNKNOWN, fortification year, standard, standard year), 45 countries. For wheat flour and maize flour the assembly keeps the year of first mandatory fortification where the status is YES, and the status itself for every country.</p>
+<div class="inout"><div><div class="io-h">In</div><p>225 vehicle rows, 45 countries.</p></div><div><div class="io-h">Sample used</div><p>Vehicle in {wheat flour, maize flour}; year kept only where mandatory fortification is YES.</p></div><div><div class="io-h">Out</div><p>In <code>events.csv</code>: <code>gfdx_wheat_mandate_year</code> (27 countries), <code>gfdx_maize_mandate_year</code> (11), and the two status columns.</p></div></div>
+<p><b>Where it goes.</b> The wheat-flour mandate event study (26 adopters inside the window, 23 never-adopters; one mandate falls after 2023 and counts as never treated within the window), and the wheat status shown in the tails timeline.</p>
+<p class="back"><a href="#flow">↑ back to the flow</a></p></div></details><details class="d" id="d-src-dhs"><summary><span class="d-eb">source · The DHS Program API · pinned pull</span><span class="d-title">DHS surveys with women's haemoglobin testing</span><span class="d-gist">A 1 in every country-year with a survey, 0 elsewhere: the flag behind the survey-anchored row.</span></summary><div class="d-body">
+<p>The DHS API was asked for indicator AN_ANEM_W_ANY (any anaemia among women, national) across all surveys; the answer is <code>inputs/dhs_anaemia_women_surveys.csv</code>, 139 survey rows × 6 with its provenance record. DHS country codes are not ISO3, so names are normalised (accents stripped, lower-cased) and mapped through the lookup's three name columns plus ten explicit overrides such as "congo democratic republic" → COD and "eswatini" → SWZ.</p>
+<div class="inout"><div><div class="io-h">In</div><p>139 surveys, all DHS countries.</p></div><div><div class="io-h">Sample used</div><p>The 49 countries, survey year within 2000–2025, one flag per country-year.</p></div><div><div class="io-h">Out</div><p><code>feat_dhs_anaemia_survey</code>: 1 in 83 country-years of 33 countries inside the 2000–2023 window, 0 everywhere else (the one column filled with zeros by rule, so it is complete on the grid).</p></div></div>
+<p><b>Where it goes.</b> The ladder's survey-anchored row: the main regression re-fitted on the 80 country-years (33 countries) where the dose and income are also present, the sample in which the WHO estimate is pinned by data rather than by its covariates.</p>
+<p class="back"><a href="#flow">↑ back to the flow</a></p></div></details><details class="d" id="d-src-pct"><summary><span class="d-eb">source · WHO PCT databank · pinned workbook</span><span class="d-title">WHO PCT databank: deworming coverage</span><span class="d-gist">The one delivered-coverage series in the build; an implementation contrast next to the paper record.</span></summary><div class="d-body">
+<p>WHO's preventive-chemotherapy databank for soil-transmitted helminthiases reports, per country and year, the population requiring treatment, the numbers targeted and treated, and coverage, for pre-school and school-age children, one row per treatment round. Saarah downloaded the workbook on 12 September and pinned it with a provenance record.</p>
+<div class="inout"><div><div class="io-h">In</div><p><code>inputs/STH_data.xlsx</code>, sheet <code>STH_DATA</code>, 3,256 rows × 16, all countries, 2003–2024 (369 KB).</p></div><div><div class="io-h">Sample used</div><p>The 49 countries; national coverage of school-age children, clipped at 100; several rounds in a year → the best round (WHO's convention); a missing coverage in a year with a positive population requiring treatment → 0 (nothing reported); years with no requirement stay missing.</p></div><div><div class="io-h">Out</div><p><code>feat_sth_pc_coverage_sac_pct</code>: 913 cells, 47 countries (none for Eritrea, Seychelles), 2003–2024.</p></div></div>
+<p><b>Where it goes.</b> Two implementation rows of the ladder, coverage lagged three years as the exposure on its own (+0.001 pp of anaemia per point of coverage, 744 rows) and with the policy dose alongside, and a sub-period control from 2005. Deworming reaches school-age children, not women, so this is a contrast in kind, delivery against paper, not a treatment of the outcome.</p>
+<p class="back"><a href="#flow">↑ back to the flow</a></p></div></details><details class="d" id="d-src-terrain"><summary><span class="d-eb">source · Nunn &amp; Puga (2012) · pinned csv</span><span class="d-title">Terrain: ruggedness, tropical share, distance to coast</span><span class="d-gist">Three time-invariant variables for the context ranking model, nothing else.</span></summary><div class="d-body">
+<p>Nunn and Puga's terrain-ruggedness dataset (<code>rugged_data.csv</code> from the public archive, pinned as <code>inputs/nunn_puga_ruggedness_ssa.csv</code>, 48 rows × 13) gives one row per country. South Sudan has no row, so it cannot enter the context ranking.</p>
+<div class="inout"><div><div class="io-h">In</div><p>48 country rows.</p></div><div><div class="io-h">Sample used</div><p>Three columns renamed: <code>rugged</code>, <code>tropical</code>, <code>dist_coast</code>.</p></div><div><div class="io-h">Out</div><p>In <code>events.csv</code>: <code>geo_rugged</code>, <code>geo_tropical</code>, <code>geo_dist_coast</code>.</p></div></div>
+<p><b>Where it goes.</b> The context ranking model only, where ruggedness (−2.8 pp per unit) and distance to coast (−7.4) are two of its four clearly non-zero terms.</p>
+<p class="back"><a href="#flow">↑ back to the flow</a></p></div></details><details class="d" id="d-src-codes"><summary><span class="d-eb">committed lookup · inputs/country_codes_ssa.csv</span><span class="d-title">Country-code lookup</span><span class="d-gist">ISO3, ISO2, M49 and FAOSTAT area code for the 49 countries; every join uses one of them.</span></summary><div class="d-body">
+<p>One committed file, 49 rows × 7 (<code>iso3</code>, <code>iso2</code>, <code>m49</code>, <code>faostat_area_code</code>, <code>faostat_area_name</code>, <code>wb_name</code>, <code>display_name</code>). The 49 are UNICEF's Eastern and Southern Africa (25) plus West and Central Africa (24), pinned in <code>config.SSA_ISO3</code>; the assembly refuses to run if the file and the config disagree. The team's own country list is cross-checked at every build and used only as provenance: 48 of its 49 names match, one carries an encoding fault.</p>
+<p><b>Where it goes.</b> Every join: FAOSTAT on area code, the team's income file on ISO2, DHS on normalised names, everything else on ISO3. No source is ever joined on a country name.</p>
+<p class="back"><a href="#flow">↑ back to the flow</a></p></div></details><h3 class="layer" id="layer-assembly">Assembly</h3><p class="hint">One script and one module turn the sources into a grid, or stop.</p><details class="d" id="d-assemble"><summary><span class="d-eb">script 00 · 00_assemble_panel.py</span><span class="d-title">One guarded script builds the grid</span><span class="d-gist">Twenty-nine inputs go in; a complete 49 × 26 grid with 174 columns comes out, or the script stops.</span></summary><div class="d-body"><figure class="minifig"><svg class="mini" viewBox="0 0 760 250" role="img" aria-label="Assembly flow: the empty grid, then load, tidy, guard and left-join each source; the registry reader and the events table; the grid check; hashing; the written outputs.">
+<defs><marker id="ah-m1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="ah"/></marker><marker id="ahhi-m1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="ah-hi"/></marker></defs>
+<rect x="10" y="20" width="120" height="52" rx="8" class="box data"/>
+<text x="70.0" y="43" text-anchor="middle" class="mt">The grid</text>
+<text x="70.0" y="57" text-anchor="middle" class="ml">49 × 26 keys</text>
+<rect x="160" y="20" width="130" height="52" rx="8" class="box step"/>
+<text x="225.0" y="43" text-anchor="middle" class="mt">Load</text>
+<text x="225.0" y="57" text-anchor="middle" class="ml">one source</text>
+<rect x="320" y="20" width="130" height="52" rx="8" class="box step"/>
+<text x="385.0" y="43" text-anchor="middle" class="mt">Tidy</text>
+<text x="385.0" y="57" text-anchor="middle" class="ml">codes, years, values</text>
+<rect x="480" y="20" width="130" height="52" rx="8" class="box step"/>
+<text x="545.0" y="43" text-anchor="middle" class="mt">Guard</text>
+<text x="545.0" y="57" text-anchor="middle" class="ml">duplicates · gaps</text>
+<rect x="640" y="20" width="110" height="52" rx="8" class="box step"/>
+<text x="695.0" y="43" text-anchor="middle" class="mt">Left join</text>
+<text x="695.0" y="57" text-anchor="middle" class="ml">onto the grid</text>
+<rect x="160" y="110" width="130" height="52" rx="8" class="box step"/>
+<text x="225.0" y="133" text-anchor="middle" class="mt">Registry reader</text>
+<text x="225.0" y="147" text-anchor="middle" class="ml">gifna_direct.py</text>
+<rect x="320" y="110" width="130" height="52" rx="8" class="box data"/>
+<text x="385.0" y="133" text-anchor="middle" class="mt">Events</text>
+<text x="385.0" y="147" text-anchor="middle" class="ml">first years · GFDx</text>
+<rect x="480" y="110" width="130" height="52" rx="8" class="box step"/>
+<text x="545.0" y="133" text-anchor="middle" class="mt">Grid check</text>
+<text x="545.0" y="147" text-anchor="middle" class="ml">unique · 1,274 rows</text>
+<rect x="640" y="110" width="110" height="52" rx="8" class="box step"/>
+<text x="695.0" y="133" text-anchor="middle" class="mt">Hash</text>
+<text x="695.0" y="147" text-anchor="middle" class="ml">MANIFEST.json</text>
+<rect x="10" y="190" width="740" height="44" rx="8" class="box out"/>
+<text x="380.0" y="216" text-anchor="middle" class="mt">Written: ssa_panel.csv · events.csv · readiness table · data dictionary · token map · MANIFEST.json · data_version.txt</text>
+<line x1="130" y1="46" x2="160" y2="46" class="ar" marker-end="url(#ah-m1)"/>
+<line x1="290" y1="46" x2="320" y2="46" class="ar" marker-end="url(#ah-m1)"/>
+<line x1="450" y1="46" x2="480" y2="46" class="ar" marker-end="url(#ah-m1)"/>
+<line x1="610" y1="46" x2="640" y2="46" class="ar" marker-end="url(#ah-m1)"/>
+<line x1="695" y1="72" x2="695" y2="110" class="ar" marker-end="url(#ah-m1)"/>
+<text x="689.0" y="95.0" text-anchor="end" class="lab">× 36 columns</text>
+<line x1="290" y1="136" x2="320" y2="136" class="ar" marker-end="url(#ah-m1)"/>
+<line x1="450" y1="136" x2="480" y2="136" class="ar" marker-end="url(#ah-m1)"/>
+<line x1="610" y1="136" x2="640" y2="136" class="ar" marker-end="url(#ah-m1)"/>
+<line x1="225" y1="72" x2="225" y2="110" class="ar" marker-end="url(#ah-m1)"/>
+<text x="231.0" y="95.0" text-anchor="start" class="lab">after the sources</text>
+<line x1="695" y1="162" x2="695" y2="190" class="ar" marker-end="url(#ah-m1)"/>
+</svg><figcaption>The assembly loop. Every source passes the same four steps before it touches the grid; the registry reader runs after them; the events table and the hashes are written last.</figcaption></figure>
+<p><b>The logic, in order.</b></p>
+<ol class="steps">
+<li><b>Start from the full grid.</b> The panel is created as every combination of the 49 ISO3 codes and the 26 years, so every source is a left join onto a fixed skeleton. A source can never add or remove a country-year.</li>
+<li><b>Load and tidy each source</b> into three columns, <code>iso3</code>, <code>year</code>, <code>value</code>: years and values coerced to numbers, nulls dropped, only the 49 countries and 2000–2025 kept.</li>
+<li><b>Guard.</b> Duplicate (country, year) keys stop the build with the source named ("resolve upstream, not with <code>.first()</code>"). A country with no values at all must be declared in <code>config.EXPECTED_MISSING</code>; an undeclared gap stops the build for the core sources and is logged for the context series. Every input path is registered the moment it is opened, so a missing file fails early with the environment variable to set.</li>
+<li><b>Join</b> with <code>validate="one_to_one"</code>, then record a readiness row: countries covered, first and last year, cells filled, countries without values.</li>
+<li><b>The registry reader</b> runs after the ordinary sources and returns its 60 columns plus each country's first-adoption years; the build refuses any missing value in those columns (zero means no record, never unknown).</li>
+<li><b>The events table</b> is assembled from the first-adoption years, the GFDx mandate years, the UNICEF sub-region and the terrain variables, one row per country.</li>
+<li><b>Grid check.</b> <code>check_panel_grid</code> requires unique keys and exactly 49 × 26 rows, then the identical-series check compares the two anaemia columns.</li>
+<li><b>Hash and stamp.</b> Every input and the panel itself are hashed with SHA-256 into <code>MANIFEST.json</code>; the first twelve hex digits of the panel's hash are the data version, <code>afe63e46c26b</code>. Change any input and the version changes.</li>
+</ol>
+<p><b>Nothing is imputed.</b> A missing value stays missing and is counted in the readiness table. The two exceptions are rules, not guesses: the survey flag is 0 where there was no survey, and a registry feature is 0 where the registry holds no record.</p>
+<div class="inout"><div><div class="io-h">In</div><p>29 files, about 12 MB: 24 pinned under <code>scaffold/inputs/</code> (workbooks, parquets, CSVs, the cluster rules, the lookup, provenance records) and 5 from the team repo (three registry files, the feature table, the income file).</p></div><div><div class="io-h">Sample used</div><p>49 countries × 26 years; 36 ordinary columns added one at a time, then 60 registry columns and 76 team columns merged as blocks.</p></div><div><div class="io-h">Out</div><p><code>ssa_panel.csv</code> 1,274 rows × 174 columns (1.15 MB); <code>events.csv</code> 49 × 18; <code>ssa_panel_readiness.csv/.md</code> (37 rows); <code>DATA_DICTIONARY.md</code>; <code>gifna_direct_token_map.csv</code>; <code>MANIFEST.json</code>; <code>data_version.txt</code>. Runtime: seconds.</p></div></div>
+<pre><code>builder = PanelBuilder()                      # the 49 × 26 grid
+builder.add(faostat(parquet, area2iso), "out_anaemia_wra_fs_pct", "outcome", "FAOSTAT FS item 21043 …")
+…                                             # 36 adds, each tidied, guarded, left-joined, recorded
+panel = panel.merge(feature_table, on=["iso3", "year"], how="left", validate="one_to_one")
+panel = panel.merge(gifna_direct.build(...), on=["iso3", "year"], how="left", validate="one_to_one")
+check_panel_grid(panel)                       # unique keys, 1,274 rows, every year present
+MANIFEST["inputs"] = {rel(p): sha256_of(p) for p in USED_INPUTS}</code></pre>
+<p class="back"><a href="#flow">↑ back to the flow</a></p></div></details><details class="d" id="d-gifna-direct"><summary><span class="d-eb">module · gifna_direct.py</span><span class="d-title">Registry reader: tokens → clusters → features</span><span class="d-gist">Deterministic features from the registry's controlled fields, with a dating rule and no language model.</span></summary><div class="d-body"><figure class="minifig"><svg class="mini" viewBox="0 0 760 260" role="img" aria-label="Registry reader flow: controlled fields to tokens to rules to clusters; dating rule; years active; counts; the three feature families; the first-years table.">
+<defs><marker id="ah-m2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="ah"/></marker><marker id="ahhi-m2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="ah-hi"/></marker></defs>
+<rect x="10" y="20" width="130" height="56" rx="8" class="box data"/>
+<text x="75.0" y="38" text-anchor="middle" class="mt">A record</text>
+<text x="75.0" y="52" text-anchor="middle" class="ml">policy · programme</text>
+<text x="75.0" y="66" text-anchor="middle" class="ml">· mechanism</text>
+<rect x="170" y="20" width="140" height="56" rx="8" class="box step"/>
+<text x="240.0" y="38" text-anchor="middle" class="mt">Controlled fields</text>
+<text x="240.0" y="52" text-anchor="middle" class="ml">Topics · Theme ·</text>
+<text x="240.0" y="66" text-anchor="middle" class="ml">Target_Group …</text>
+<rect x="340" y="20" width="120" height="56" rx="8" class="box step"/>
+<text x="400.0" y="45" text-anchor="middle" class="mt">Tokens</text>
+<text x="400.0" y="59" text-anchor="middle" class="ml">split on |</text>
+<rect x="490" y="20" width="120" height="56" rx="8" class="box step"/>
+<text x="550.0" y="45" text-anchor="middle" class="mt">47 rules</text>
+<text x="550.0" y="59" text-anchor="middle" class="ml">regex on the token</text>
+<rect x="640" y="20" width="110" height="56" rx="8" class="box data"/>
+<text x="695.0" y="45" text-anchor="middle" class="mt">11 clusters</text>
+<text x="695.0" y="59" text-anchor="middle" class="ml">a record in several</text>
+<rect x="10" y="120" width="170" height="56" rx="8" class="box step"/>
+<text x="95.0" y="138" text-anchor="middle" class="mt">Dating rule</text>
+<text x="95.0" y="152" text-anchor="middle" class="ml">start → end · open end</text>
+<text x="95.0" y="166" text-anchor="middle" class="ml">= still active</text>
+<rect x="210" y="120" width="170" height="56" rx="8" class="box step"/>
+<text x="295.0" y="138" text-anchor="middle" class="mt">Years active</text>
+<text x="295.0" y="152" text-anchor="middle" class="ml">one row per record ×</text>
+<text x="295.0" y="166" text-anchor="middle" class="ml">year × group</text>
+<rect x="410" y="120" width="160" height="56" rx="8" class="box step"/>
+<text x="490.0" y="145" text-anchor="middle" class="mt">Count distinct keys</text>
+<text x="490.0" y="159" text-anchor="middle" class="ml">per country, year, group</text>
+<rect x="600" y="120" width="150" height="56" rx="8" class="box data"/>
+<text x="675.0" y="145" text-anchor="middle" class="mt">stock · log-stock · any</text>
+<text x="675.0" y="159" text-anchor="middle" class="ml">60 columns, 0 = none</text>
+<rect x="10" y="196" width="740" height="52" rx="8" class="box out"/>
+<text x="380.0" y="219" text-anchor="middle" class="mt">first_years(): the earliest dated record per country, per cluster and per file → events.csv</text>
+<text x="380.0" y="233" text-anchor="middle" class="ml">survey-window rows never date an event</text>
+<line x1="140" y1="48" x2="170" y2="48" class="ar" marker-end="url(#ah-m2)"/>
+<line x1="310" y1="48" x2="340" y2="48" class="ar" marker-end="url(#ah-m2)"/>
+<line x1="460" y1="48" x2="490" y2="48" class="ar" marker-end="url(#ah-m2)"/>
+<line x1="610" y1="48" x2="640" y2="48" class="ar" marker-end="url(#ah-m2)"/>
+<line x1="695" y1="76" x2="695" y2="120" class="ar" marker-end="url(#ah-m2)"/>
+<line x1="180" y1="148" x2="210" y2="148" class="ar" marker-end="url(#ah-m2)"/>
+<line x1="380" y1="148" x2="410" y2="148" class="ar" marker-end="url(#ah-m2)"/>
+<line x1="570" y1="148" x2="600" y2="148" class="ar" marker-end="url(#ah-m2)"/>
+<line x1="95" y1="76" x2="95" y2="120" class="ar" marker-end="url(#ah-m2)"/>
+<line x1="95" y1="176" x2="95" y2="196" class="ar" marker-end="url(#ah-m2)"/>
+</svg><figcaption>How a registry record becomes a number. The top row is classification, the bottom row is time; the two meet in the count of distinct records active in a country-year.</figcaption></figure>
+<p><b>Classification.</b> Only the controlled columns are read (policy <code>Topics</code>; programme <code>Theme</code>, <code>Topic</code>, <code>Target_Group</code>, <code>Micronutrient</code>; mechanism <code>Topics</code> and <code>Type</code>). Each cell is split on <code>|</code> into tokens, and each token is matched, case-insensitively, against the 47 regular expressions in <code>inputs/gifna_cluster_rules.csv</code>. A rule names one of eleven clusters: anaemia, fortification, micronutrient, maternal, infant-and-young-child feeding, wasting and stunting, infection, food security, diet and non-communicable disease, schools and education, governance. A record belongs to every cluster any of its tokens hits, and is counted once per cluster. Tokens no rule matches are listed, not guessed: 51 of 457 policy tokens (2.9% of mentions), 9 of 124 programme tokens (8.1%), none of the 20 mechanism tokens. Every mechanism also counts as governance. The full token-to-cluster map is written next to the panel.</p>
+<p><b>Dating.</b> A policy is active from its start year to its end year inclusive; no end year means still active. A programme with a start year is treated the same way; the undated questionnaire rows titled "GNPR 2009-2010" or "GNPR 2016-2017" are placed in their survey window (the team's decision of 10 September); other undated rows are excluded and counted. Mechanisms are active from their start year onward. Of the rows in the 49 countries: 928 policies (408 with an end year, 520 open), 1,647 programmes used (206 dated with an end, 203 open, 1,238 placed by survey window; 109 excluded) and 96 mechanisms (35 excluded).</p>
+<p><b>Three families per group.</b> For each cluster, for all records, for each source file, and for anaemia and fortification crossed with each file: <code>stock</code> is the number of distinct records active in the year; <code>logstock</code> is log(1 + stock), so a country with twenty programmes no longer dominates; <code>any</code> is 1 from the first record onward and never returns to 0. Sixty columns in all, complete on the grid: zero is the literal reading of the registry, not an imputation.</p>
+<p><b>Events.</b> <code>first_years()</code> takes, per country, the earliest start year among <em>dated</em> records only, per cluster and per file; survey-window rows never date an event. That is where the first-anaemia-policy year of the event study comes from (46 of 49 countries have one; the Central African Republic, Equatorial Guinea and South Sudan do not).</p>
+<div class="inout"><div><div class="io-h">In</div><p>2,878 registry rows across three files; 47 rules.</p></div><div><div class="io-h">Sample used</div><p>928 + 1,647 + 96 records used; groups = 11 clusters + all + 3 files + 6 cluster-by-file combinations.</p></div><div><div class="io-h">Out</div><p>60 <code>feat_gd_*</code> columns on 1,274 rows; a token map (601 tokens with their clusters and mention counts); a first-years table (49 × 9) that seeds <code>events.csv</code>; a counts report that is printed into the readiness note.</p></div></div>
+<p><b>Tests that pin it down.</b> A hand recount of active anaemia policies for a chosen country-year must equal the column; <code>any</code> must be binary and absorbing; a positive stock must imply <code>any</code>; log-stock must equal log1p of stock; every token must appear in the map; the registry files and the rules must be manifest inputs.</p>
+<p class="back"><a href="#flow">↑ back to the flow</a></p></div></details><h3 class="layer" id="layer-panel-and-events">Panel and events</h3><p class="hint">The two tables everything downstream reads.</p><details class="d" id="d-panel"><summary><span class="d-eb">table · panel/ssa_panel.csv</span><span class="d-title">The panel: 49 × 26 × 174</span><span class="d-gist">One complete grid, 1,274 country-years, 174 columns, nothing imputed, hashed into a data version.</span></summary><div class="d-body"><figure class="minifig"><svg class="mini" viewBox="0 0 760 96" role="img" aria-label="Column families of the panel drawn to scale: 3 keys, 13 outcomes, 22 other features, 76 team registry composites, 60 direct registry features.">
+<defs><marker id="ah-m3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="ah"/></marker><marker id="ahhi-m3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="ah-hi"/></marker></defs>
+<rect x="10" y="20" width="22" height="44" rx="8" class="box out"/>
+<text x="21.0" y="46" text-anchor="middle" class="mt">3</text>
+<rect x="36" y="20" width="57" height="44" rx="8" class="box data"/>
+<text x="64.5" y="39" text-anchor="middle" class="mt">13</text>
+<text x="64.5" y="53" text-anchor="middle" class="ml">outcomes</text>
+<rect x="97" y="20" width="96" height="44" rx="8" class="box step"/>
+<text x="145.0" y="39" text-anchor="middle" class="mt">22</text>
+<text x="145.0" y="53" text-anchor="middle" class="ml">other feat.</text>
+<rect x="197" y="20" width="332" height="44" rx="8" class="box step"/>
+<text x="363.0" y="39" text-anchor="middle" class="mt">76</text>
+<text x="363.0" y="53" text-anchor="middle" class="ml">team GIFNA composites (feat_gifna_*)</text>
+<rect x="533" y="20" width="217" height="44" rx="8" class="box step"/>
+<text x="641.5" y="39" text-anchor="middle" class="mt">60</text>
+<text x="641.5" y="53" text-anchor="middle" class="ml">direct registry (feat_gd_*)</text>
+<text x="10" y="84" text-anchor="start" class="lab">keys</text>
+<text x="750" y="84" text-anchor="end" class="lab">174 columns, widths to scale</text>
+</svg><figcaption>What the 174 columns are. Only about three dozen are ever named by a model; the rest are there so every alternative and every check runs from the same table.</figcaption></figure>
+<p><b>Keys.</b> <code>iso3</code> and <code>year</code> (2000–2025) identify a row; <code>country</code> is a display name. The grid is complete by construction, which is what makes the positional lags and leads in the frame valid.</p>
+<p><b>Outcomes (13, <code>out_</code>).</b> Anaemia in women 15–49 (the outcome), its UNICEF duplicate, anaemia in pregnant women, underweight, overweight, low birthweight, stunting, wasting, overweight under five, exclusive breastfeeding, and the three child-mortality rates.</p>
+<p><b>Other features (22).</b> Two incomes, seven World Bank context series, unemployment, hospital beds, deworming coverage, the survey flag, three diet-cost items, six food-insecurity averages.</p>
+<p><b>Registry features (136).</b> The team's 76 composites and counts, values unchanged from the feature table (three <code>*_count_active</code> columns are empty when nothing is active and are read as zero by the frame), and the 60 direct features built by the registry reader.</p>
+<p><b>Coverage.</b> The readiness table lists, for every column, the countries covered, the years and the cells filled, and names the countries without values; the data dictionary lists all 174 with their sources. Two examples of what it shows: malaria incidence exists for 46 countries, wasting for 302 country-years only.</p>
+<div class="inout"><div><div class="io-h">In</div><p>The assembly's 36 tidied sources plus two merged blocks.</p></div><div><div class="io-h">Sample used</div><p>49 countries × 26 years.</p></div><div><div class="io-h">Out</div><p><code>ssa_panel.csv</code>: 1,274 rows × 174 columns, 1.15 MB; SHA-256 <code>afe63e46c26b…</code>, the data version stamped on every result.</p></div></div>
+<p class="back"><a href="#flow">↑ back to the flow</a></p></div></details><details class="d" id="d-events"><summary><span class="d-eb">table · panel/events.csv</span><span class="d-title">Events: one row per country</span><span class="d-gist">Adoption and mandate years, sub-region and terrain; read only by the event studies and the context ranking.</span></summary><div class="d-body">
+<p>Eighteen columns, 49 rows. From the registry reader: the first dated anaemia-cluster record per file and across files, the same for fortification, and <code>first_anaemia_policy_year</code> (the policies-file year, 46 countries). From GFDx: wheat-flour and maize-flour mandate years and statuses (27 and 11 countries with a year). From the configuration: the UNICEF sub-region, ESA or WCA. From Nunn and Puga: ruggedness, tropical share, distance to coast (48 countries).</p>
+<div class="inout"><div><div class="io-h">In</div><p>First-years table (49 × 9), the GFDx extract, the sub-region map, the terrain file.</p></div><div><div class="io-h">Sample used</div><p>One row per country, joined on ISO3 with one-to-one validation.</p></div><div><div class="io-h">Out</div><p><code>events.csv</code>: 49 rows × 18 columns; its hash sits in the manifest next to the panel's.</p></div></div>
+<p><b>Where it goes.</b> The event studies take the two adoption columns; the context ranking takes sub-region and terrain; the tails timeline shows first-policy year and wheat status. The frame does not carry any of it, which is why the flow draws the events table as a separate, dashed feeder.</p>
+<p class="back"><a href="#flow">↑ back to the flow</a></p></div></details><h3 class="layer" id="layer-frame">Frame</h3><p class="hint">The panel plus the derived columns the models need, so that no model derives anything on its own.</p><details class="d" id="d-frame"><summary><span class="d-eb">script 01 · 01_prep_frame.py → results/frame.csv</span><span class="d-title">The modelling frame: 1,274 × 72</span><span class="d-gist">The panel plus everything the models need derived in one place: logs, lags, leads, the gap, the flag, the index.</span></summary><div class="d-body"><figure class="minifig"><svg class="mini" viewBox="0 0 760 186" role="img" aria-label="Timeline of one country: the dose at t−5, t−3 and t−2 are lags, the outcome and controls sit at t, the lagged outcome at t−1, and the dose at t+3 is the lead used for the lead test.">
+<defs><marker id="ah-m4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="ah"/></marker><marker id="ahhi-m4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="ah-hi"/></marker></defs>
+<rect x="30" y="70" width="70" height="40" rx="8" class="box step"/>
+<text x="65.0" y="87" text-anchor="middle" class="mt">t−5</text>
+<text x="65.0" y="101" text-anchor="middle" class="ml">dose lag 5</text>
+<rect x="150" y="70" width="70" height="40" rx="8" class="box hi"/>
+<text x="185.0" y="87" text-anchor="middle" class="mt">t−3</text>
+<text x="185.0" y="101" text-anchor="middle" class="ml">dose lag 3</text>
+<rect x="230" y="70" width="70" height="40" rx="8" class="box step"/>
+<text x="265.0" y="87" text-anchor="middle" class="mt">t−2</text>
+<text x="265.0" y="101" text-anchor="middle" class="ml">dose lag 2</text>
+<rect x="330" y="20" width="110" height="40" rx="8" class="box step"/>
+<text x="385.0" y="37" text-anchor="middle" class="mt">t−1</text>
+<text x="385.0" y="51" text-anchor="middle" class="ml">lagged outcome</text>
+<rect x="330" y="70" width="110" height="40" rx="8" class="box data"/>
+<text x="385.0" y="87" text-anchor="middle" class="mt">t</text>
+<text x="385.0" y="101" text-anchor="middle" class="ml">anaemia (y)</text>
+<rect x="330" y="120" width="110" height="40" rx="8" class="box step"/>
+<text x="385.0" y="137" text-anchor="middle" class="mt">t</text>
+<text x="385.0" y="151" text-anchor="middle" class="ml">log income, controls</text>
+<rect x="560" y="70" width="110" height="40" rx="8" class="box step"/>
+<text x="615.0" y="87" text-anchor="middle" class="mt">t+3</text>
+<text x="615.0" y="101" text-anchor="middle" class="ml">dose lead 3</text>
+<line x1="100" y1="90" x2="150" y2="90" class="ar" marker-end="url(#ah-m4)"/>
+<line x1="300" y1="90" x2="330" y2="90" class="ar" marker-end="url(#ah-m4)"/>
+<line x1="385" y1="60" x2="385" y2="70" class="ar" marker-end="url(#ah-m4)"/>
+<line x1="385" y1="120" x2="385" y2="110" class="ar" marker-end="url(#ah-m4)"/>
+<line x1="560" y1="90" x2="440" y2="90" class="ar" marker-end="url(#ah-m4)"/>
+<text x="500.0" y="84.0" text-anchor="middle" class="lab">lead test</text>
+<text x="30" y="178" text-anchor="start" class="lab">the same country&#x27;s own row, three years earlier, is the regressor; the row three years later is the lead test</text>
+</svg><figcaption>Why the grid must be complete: lags and leads are positional shifts inside each country's sorted rows, so a missing year would silently shift the wrong value into place. The grid check runs again here.</figcaption></figure>
+<p><b>What is derived.</b></p>
+<ul>
+<li>Log income for both series (the build stops if any income is non-positive).</li>
+<li>Lags 2, 3 and 5 years of each of the eight exposures and of deworming coverage (27 columns), and a 3-year lead of each exposure (8 columns), by shifting within country.</li>
+<li>The outcome one year earlier, for the lagged-outcome row.</li>
+<li>The women-minus-men gap in severe food insecurity.</li>
+<li>The survey flag as a 0/1 integer; the sub-region label.</li>
+<li>The women's index: the mean z-score of anaemia in all women, anaemia in pregnant women, underweight and overweight, standardised on the 2000–2023 rows, higher meaning worse; it exists only where all four exist (1,127 rows), so it ends where the NCD-RisC series end.</li>
+</ul>
+<p><b>What it records about the sample.</b> The main estimation sample is every 2000–2023 row with an outcome, log constant income and the lag-3 dose: 994 country-years, 49 countries, 2003–2023. The dose averages 1.89 policies in force (median 1, maximum 11); its overall standard deviation is 2.12 and its within-country standard deviation 1.66, the unit the bounds are stated in. Five countries (Central African Republic, Eritrea, Equatorial Guinea, South Sudan, Seychelles) never change their dose inside the sample, so the within-country coefficient is identified from 44. The eight lag-3 exposures correlate up to 0.95 with each other, which is why they only ever enter one at a time.</p>
+<div class="inout"><div><div class="io-h">In</div><p><code>ssa_panel.csv</code>, 1,274 × 174.</p></div><div><div class="io-h">Sample used</div><p>All rows kept; the window 2000–2023 is applied by each model, not here.</p></div><div><div class="io-h">Out</div><p><code>results/frame.csv</code>: 1,274 rows × 72 columns (keys, 7 outcomes, 4 incomes, 14 controls, the flag, 9 exposures, 27 lags, 8 leads); <code>stats/01_frame.json</code> with 26 keys describing the sample.</p></div></div>
+<pre><code>g = p.groupby("iso3", sort=False)
+new[f"{f}_lag{k}"]  = g[f].shift(k)        # k in {2, 3, 5}; within country, positional
+new[f"{f}_lead3"]   = g[f].shift(-3)
+p["out_women_index"] = Z.mean(axis=1).where(Z.notna().all(axis=1))</code></pre>
+<p class="back"><a href="#flow">↑ back to the flow</a></p></div></details><h3 class="layer" id="layer-models">Models</h3><p class="hint">Seven scripts, one frame. Each section says what goes in, with its shape, and what comes out.</p><details class="d" id="d-m02"><summary><span class="d-eb">script 02 · 02_fe_model.py · the headline model</span><span class="d-title">Dose ladder</span><span class="d-gist">One regression, then 38 check rows and 12 sub-period rows that change one thing each; −0.21 pp per policy, interval spanning zero.</span></summary><div class="d-body">
+<p class="note">Everything the team reports is ordinary least squares on the country-year panel. There is no logit and, apart from one sidebar, no machine learning: the outcome is a prevalence in percentage points, so linear fits are the right tool. The main model is a two-way fixed-effects regression, which with a staggered, continuous treatment is a generalised difference-in-differences: each country is compared with itself before and after its policies, net of what happened to the whole region that year. The ladder re-runs that regression under different assumptions; the event studies are explicit difference-in-differences around adoption; the specification curve refits it 336 ways; the bounds say how small an effect could have hidden; the held-out fit asks whether the dose predicts; the context model is a cross-sectional regression used only to rank countries. Every model reads the same frame.</p>
+<figure class="minifig"><svg class="mini" viewBox="0 0 760 344" role="img" aria-label="The main regression: country effect plus year effect plus beta times the dose three years earlier plus delta times log income equals anaemia; below it, the six rung groups of the ladder and the inference used on every row.">
+<defs><marker id="ah-m5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="ah"/></marker><marker id="ahhi-m5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="ah-hi"/></marker></defs>
+<rect x="10" y="20" width="120" height="50" rx="8" class="box step"/>
+<text x="70.0" y="42" text-anchor="middle" class="mt">α_i</text>
+<text x="70.0" y="56" text-anchor="middle" class="ml">country effect</text>
+<rect x="140" y="20" width="120" height="50" rx="8" class="box step"/>
+<text x="200.0" y="42" text-anchor="middle" class="mt">γ_t</text>
+<text x="200.0" y="56" text-anchor="middle" class="ml">year effect</text>
+<rect x="270" y="20" width="150" height="50" rx="8" class="box hi"/>
+<text x="345.0" y="42" text-anchor="middle" class="mt">β · dose_i,t−3</text>
+<text x="345.0" y="56" text-anchor="middle" class="ml">policies in force</text>
+<rect x="430" y="20" width="130" height="50" rx="8" class="box step"/>
+<text x="495.0" y="42" text-anchor="middle" class="mt">δ · log income</text>
+<text x="495.0" y="56" text-anchor="middle" class="ml">constant US$</text>
+<rect x="600" y="20" width="150" height="50" rx="8" class="box data"/>
+<text x="675.0" y="42" text-anchor="middle" class="mt">anaemia_i,t</text>
+<text x="675.0" y="56" text-anchor="middle" class="ml">women 15–49, pp</text>
+<rect x="10" y="110" width="200" height="62" rx="8" class="box out"/>
+<text x="110.0" y="131" text-anchor="middle" class="mt">Timing</text>
+<text x="110.0" y="145" text-anchor="middle" class="ml">lag 2 · lag 5 · lead 3</text>
+<text x="110.0" y="159" text-anchor="middle" class="ml">lead with the lag alongside</text>
+<rect x="220" y="110" width="250" height="62" rx="8" class="box out"/>
+<text x="345.0" y="131" text-anchor="middle" class="mt">Dynamics</text>
+<text x="345.0" y="145" text-anchor="middle" class="ml">country trends · first differences</text>
+<text x="345.0" y="159" text-anchor="middle" class="ml">5-year differences · lagged outcome</text>
+<rect x="480" y="110" width="270" height="62" rx="8" class="box out"/>
+<text x="615.0" y="131" text-anchor="middle" class="mt">Controls</text>
+<text x="615.0" y="145" text-anchor="middle" class="ml">malaria, fertility, urban, HIV, sanitation</text>
+<text x="615.0" y="159" text-anchor="middle" class="ml">unemployment, employment, deworming</text>
+<rect x="10" y="182" width="200" height="62" rx="8" class="box out"/>
+<text x="110.0" y="203" text-anchor="middle" class="mt">Exposure</text>
+<text x="110.0" y="217" text-anchor="middle" class="ml">7 alternative constructions</text>
+<text x="110.0" y="231" text-anchor="middle" class="ml">3 of them also with trends</text>
+<rect x="220" y="182" width="250" height="62" rx="8" class="box out"/>
+<text x="345.0" y="203" text-anchor="middle" class="mt">Outcome</text>
+<text x="345.0" y="217" text-anchor="middle" class="ml">5 swaps in place of anaemia</text>
+<text x="345.0" y="231" text-anchor="middle" class="ml">p-values adjusted (Benjamini–Hochberg)</text>
+<rect x="480" y="182" width="270" height="62" rx="8" class="box out"/>
+<text x="615.0" y="203" text-anchor="middle" class="mt">Sample</text>
+<text x="615.0" y="217" text-anchor="middle" class="ml">current $ · drop thin · survey-anchored</text>
+<text x="615.0" y="231" text-anchor="middle" class="ml">6 sub-period pairs on their own rows</text>
+<rect x="10" y="264" width="740" height="66" rx="8" class="box step"/>
+<text x="380.0" y="287" text-anchor="middle" class="mt">Inference on every row</text>
+<text x="380.0" y="301" text-anchor="middle" class="ml">SE clustered by country (49 clusters) · wild cluster bootstrap-t, Rademacher weights, 999 draws, null imposed</text>
+<text x="380.0" y="315" text-anchor="middle" class="ml">bounds: minimum detectable effect at 80% power · TOST against 1 pp per within-country SD of the dose</text>
+<line x1="345" y1="70" x2="345" y2="110" class="ar" marker-end="url(#ah-m5)"/>
+<text x="580" y="48" text-anchor="middle" class="mt">=</text>
+<text x="135" y="48" text-anchor="middle" class="mt">+</text>
+<text x="265" y="48" text-anchor="middle" class="mt">+</text>
+<text x="425" y="48" text-anchor="middle" class="mt">+</text>
+<text x="380" y="100" text-anchor="middle" class="lab">the same regression, one thing changed per row</text>
+</svg><figcaption>The main specification and its ladder. β is the number reported everywhere: percentage points of anaemia per additional anaemia-cluster policy in force three years earlier.</figcaption></figure>
+<p><b>The main row.</b> Anaemia in country <i>i</i> and year <i>t</i> is regressed on a country effect, a year effect, the number of dated anaemia-cluster policies in force in <i>t−3</i>, and log GDP per capita. The country effect removes each country's level (geography, health system, everything fixed); the year effect removes anything that moved the whole region in a year; the dose is lagged three years to allow implementation. Standard errors are clustered by country, and a wild cluster bootstrap-t (Rademacher weights, 999 draws, null imposed, on the fixed-effects-residualised regression) is reported beside every plain fixed-effects row because 49 clusters is few. Result: <b>−0.209 pp per policy, 95% interval −0.623 to +0.204, p 0.32 (bootstrap p 0.33)</b>, two-way within-R² 0.023; per within-country standard deviation of the dose, −0.35 pp.</p>
+<p><b>The rungs, and what each guards against.</b></p>
+<ul>
+<li><b>Timing.</b> Lag 2 (−0.25) and lag 5 (−0.16) instead of 3: the lag was not a lucky choice. The <b>lead test</b> puts the dose three years <em>later</em> on the right-hand side: a lead cannot cause today's anaemia, so if it predicts it the policies are following trends or targeting. It does: −0.34, interval −0.66 to −0.03, p 0.032 (bootstrap 0.040), on 1,088 rows; with the lag alongside, −0.27, p 0.043.</li>
+<li><b>Dynamics.</b> A linear trend per country absorbs slow drifts (and, as Wolfers 2006 warns, slowly phasing-in effects): −0.017. First differences (−0.013), five-year differences (−0.058) and a lagged-outcome model instead of country effects (−0.025; persistence 0.987) bracket the fixed-effects estimate under their respective assumptions.</li>
+<li><b>Controls.</b> Malaria, fertility and urbanisation together (−0.05, 931 rows), each alone, HIV, basic sanitation, unemployment and employment (the team's ask): −0.01 to −0.22, all spanning zero. Delivered deworming coverage as the exposure instead of the paper dose: +0.001 per point.</li>
+<li><b>Exposure.</b> Seven alternative constructions of the dose, one at a time: its log, the team's six-flag composite, the all-file stock and its log, ever-any-anaemia-policy, ever-any-fortification, the team's active-policy count; three of them also with country trends. The absorbing ever-adopted indicators are the fragile ones: they flip sign when trends are added, which is why the event study, not this row, is the check that holds.</li>
+<li><b>Outcome.</b> Pregnant-women anaemia, underweight, overweight, low birthweight and the women's index in place of the outcome, p-values adjusted across the five by Benjamini–Hochberg: all near zero, adjusted p 0.80.</li>
+<li><b>Sample.</b> Income in current dollars (−0.15); without the two thinnest income series, Eritrea and South Sudan (−0.21); only survey-anchored country-years, 80 rows in 33 countries (−0.04, p 0.90); and six sub-period pairs where a control exists only for some years (food insecurity and the gender gap from 2015, unaffordability from 2017, deworming from 2005, hospital beds and health spending on their own rows), each shown next to the base specification on the same rows.</li>
+</ul>
+<p><b>Bounds.</b> A null is only informative with a bound. The smallest effect of interest was fixed in advance at 1 pp of anaemia per within-country standard deviation of the dose (0.60 pp per policy). The minimum detectable effect at 80% power is 0.59 pp per policy (0.98 per within-SD). The 90% interval per policy runs from −0.556 to +0.137, and the two one-sided tests reject an effect as large as the smallest one of interest (p 0.031). Reading: benefits larger than about 0.9 pp per within-SD step of the dose are ruled out; anything smaller could not have been detected by this design.</p>
+<div class="inout"><div><div class="io-h">In</div><p><code>frame.csv</code> rows in 2000–2023 with the outcome, the lag-3 dose and log constant income: <b>994 rows × 3 variables</b> plus the 49 country and 21 year effects. Other rows use 80 (survey-anchored) to 1,135 (income-only reference) rows.</p></div><div><div class="io-h">Sample used</div><p>49 countries, 2003–2023; 44 with within-country variation in the dose; 51 fits in all: the main row, 38 variants, 12 sub-period fits.</p></div><div><div class="io-h">Out</div><p><code>fe_coefficients.csv</code> 110 × 12 (every term of every fit); <code>fe_sensitivity.csv</code> 39 × 16 (one row per variant: estimate, SE, interval, p, adjusted p, bootstrap p, n, note); <code>fe_subsample.csv</code> 12 × 14; <code>stats/02_fe.json</code> (18 keys, including <code>bounds</code> and <code>wild_cluster_bootstrap</code>); the ladder figure.</p></div></div>
+<pre><code># util.fe_fit — the main row and every plain fixed-effects variant
+PanelOLS(d[y], d[xs], entity_effects=True, time_effects=True).fit(
+    cov_type="clustered", cluster_entity=True, group_debias=True)      # y = out_anaemia_wra_fs_pct
+                                                                        # xs = [feat_gd_stock_anaemia_policies_lag3, log_gdp_pc_constant]
+# the country-trend rows (statsmodels):  y ~ C(iso3) + C(year) + C(iso3):year + dose_lag3 + log_income
+# the bracket rows:  d1_y ~ C(year) + d1_dose_lag3 + d1_log_income        (first differences)
+#                    y    ~ C(year) + y_l1 + dose_lag3 + log_income        (lagged outcome)</code></pre>
+<p class="back"><a href="#flow">↑ back to the flow</a></p></div></details><details class="d" id="d-m02b"><summary><span class="d-eb">script 02b · 02b_event_study.py · difference-in-differences</span><span class="d-title">Event studies</span><span class="d-gist">What happens around a country's first anaemia policy and around its wheat-flour mandate, under three estimators built for staggered adoption.</span></summary><div class="d-body"><figure class="minifig"><svg class="mini" viewBox="0 0 760 334" role="img" aria-label="Event-study architecture: one event frame with binned event time feeds three estimators, the naive two-way fixed-effects event study, Gardner&#x27;s two-stage difference-in-differences and the local-projections difference-in-differences, each followed by the pre-trend check.">
+<defs><marker id="ah-m6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="ah"/></marker><marker id="ahhi-m6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="ah-hi"/></marker></defs>
+<rect x="10" y="20" width="740" height="54" rx="8" class="box data"/>
+<text x="380.0" y="37" text-anchor="middle" class="mt">Event frame</text>
+<text x="380.0" y="51" text-anchor="middle" class="ml">g = adoption year · rel = year − g · bins −4 (≤), −3, −2, [−1 = reference], 0, 1, 2, 3, 4, 5 (≥) · post = rel ≥ 0</text>
+<text x="380.0" y="65" text-anchor="middle" class="ml">countries adopting before 2002 dropped (no pre-period) · adoption after 2023 = never treated in the window</text>
+<rect x="10" y="110" width="230" height="96" rx="8" class="box step"/>
+<text x="125.0" y="134" text-anchor="middle" class="mt">Two-way FE event study</text>
+<text x="125.0" y="148" text-anchor="middle" class="ml">y ~ 9 bins + log income | country + year</text>
+<text x="125.0" y="162" text-anchor="middle" class="ml">static row: y ~ post + log income</text>
+<text x="125.0" y="176" text-anchor="middle" class="ml">negative-weight share of that row</text>
+<text x="125.0" y="190" text-anchor="middle" class="ml">(de Chaisemartin–D&#x27;Haultfœuille)</text>
+<rect x="265" y="110" width="230" height="96" rx="8" class="box step"/>
+<text x="380.0" y="134" text-anchor="middle" class="mt">Two-stage DiD (Gardner)</text>
+<text x="380.0" y="148" text-anchor="middle" class="ml">stage 1: country + year effects and</text>
+<text x="380.0" y="162" text-anchor="middle" class="ml">income fitted on untreated rows only</text>
+<text x="380.0" y="176" text-anchor="middle" class="ml">stage 2: residual ~ 9 bins (and ~ post)</text>
+<text x="380.0" y="190" text-anchor="middle" class="ml">299 country-cluster bootstraps</text>
+<rect x="520" y="110" width="230" height="96" rx="8" class="box step"/>
+<text x="635.0" y="134" text-anchor="middle" class="mt">Local-projections DiD</text>
+<text x="635.0" y="148" text-anchor="middle" class="ml">for each horizon h = −4 … +5:</text>
+<text x="635.0" y="162" text-anchor="middle" class="ml">Δy (t−1 → t+h) ~ treatment switch</text>
+<text x="635.0" y="176" text-anchor="middle" class="ml">clean controls: not-yet- and never-</text>
+<text x="635.0" y="190" text-anchor="middle" class="ml">treated · pooled ATT</text>
+<rect x="10" y="240" width="740" height="62" rx="8" class="box out"/>
+<text x="380.0" y="261" text-anchor="middle" class="mt">Pre-trend check on each estimator</text>
+<text x="380.0" y="275" text-anchor="middle" class="ml">fit a line through the interior pre-period coefficients and subtract its extrapolation from the post period</text>
+<text x="380.0" y="289" text-anchor="middle" class="ml">the largest pre-period |t| is reported next to it</text>
+<line x1="125" y1="74" x2="125" y2="110" class="ar" marker-end="url(#ah-m6)"/>
+<line x1="380" y1="74" x2="380" y2="110" class="ar" marker-end="url(#ah-m6)"/>
+<line x1="635" y1="74" x2="635" y2="110" class="ar" marker-end="url(#ah-m6)"/>
+<line x1="125" y1="206" x2="125" y2="240" class="ar" marker-end="url(#ah-m6)"/>
+<line x1="380" y1="206" x2="380" y2="240" class="ar" marker-end="url(#ah-m6)"/>
+<line x1="635" y1="206" x2="635" y2="240" class="ar" marker-end="url(#ah-m6)"/>
+<text x="380" y="322" text-anchor="middle" class="lab">outputs: 9 event-time coefficients per estimator per event, one average effect per estimator per event</text>
+</svg><figcaption>One event frame, three estimators. The naive estimator is reported with its negative-weight diagnostic; the two estimators built for staggered adoption are the ones read.</figcaption></figure>
+<p><b>Why an event study at all.</b> The ladder asks about a dose; the event study asks what happens in the years around an adoption, which is the sharper test of timing. With adoption staggered across countries, the ordinary two-way fixed-effects estimator mixes comparisons it should not make (already-treated countries serve as controls for later adopters), so two estimators designed for that situation run beside it.</p>
+<p><b>Building the frame.</b> For each country, <i>g</i> is the event year: the first dated anaemia-cluster policy in the policies file, or the year wheat-flour fortification became mandatory. Event time is <i>year − g</i>, binned into nine dummies from four-or-more years before to five-or-more after, with the year before adoption as the reference. Countries that adopted before 2002 have no usable pre-period and are dropped (15 for the anaemia policy, named in the report); a country whose event falls after 2023 is never treated inside the window; never-adopters and not-yet-adopters are the comparison group.</p>
+<p><b>The three estimators.</b></p>
+<ol class="steps">
+<li><b>Two-way fixed effects</b> (pyfixest): the outcome on the nine bins and log income with country and year effects, errors clustered by country; plus a static version on a single post indicator whose weights are decomposed the de Chaisemartin–D'Haultfœuille way. For the anaemia policy 27% of that coefficient's weight is negative (135 of 451 treated cells), so it is shown only next to the estimators that correct it.</li>
+<li><b>Two-stage difference-in-differences</b> (Gardner 2022, implemented directly): stage one fits country effects, year effects and log income on the <em>untreated</em> observations only and residualises every row; stage two regresses that residual on the nine bins (and, for the average effect, on post). Standard errors come from a country cluster bootstrap of 299 draws in which both stages are re-estimated, so the first-stage uncertainty is carried.</li>
+<li><b>Local-projections difference-in-differences</b> (Dube, Girardi, Jordà and Taylor 2023, pyfixest): for each horizon a separate regression of the change in anaemia from the year before adoption to that horizon on the treatment switch, using only clean controls; the horizons are then pooled into one average effect.</li>
+</ol>
+<p><b>Results.</b> First anaemia policy: naive two-way FE −0.94 pp (p 0.08) with a pre-trend of the same sign (−0.11 pp per year; trend-adjusted post mean −0.33); two-stage DiD +0.10 (interval −2.04 to +2.09); local projections −0.08 (−0.47 to +0.31). Wheat-flour mandate: −0.56, −1.05 and −0.17, every interval spanning zero, no pre-trend and no break. The event study, not the country-trend row, is the decisive dynamic check, because unit trends absorb effects that phase in slowly.</p>
+<div class="inout"><div><div class="io-h">In</div><p><code>frame.csv</code> rows in 2000–2023 with the outcome and log income, joined to <code>events.csv</code> adoption years: <b>anaemia policy 775 rows, 34 countries</b> (31 adopters in 14 cohorts, 3 never-adopters); <b>wheat mandate 1,135 rows, 49 countries</b> (26 adopters in 16 cohorts, 23 never).</p></div><div><div class="io-h">Sample used</div><p>Two events × three estimators; window −4 to +5 with reference −1; 299 bootstrap draws for the two-stage estimator.</p></div><div><div class="io-h">Out</div><p><code>event_study.csv</code> 54 × 10 (2 events × 3 estimators × 9 event-time coefficients with intervals); <code>event_att.csv</code> 6 × 8 (one average effect per estimator per event); <code>stats/02b_event.json</code> (cohorts, dropped countries, negative-weight shares, pre-trend slopes); the event-study figure.</p></div></div>
+<pre><code>fml = f"{y} ~ D_m4 + D_m3 + D_m2 + D_p0 + D_p1 + D_p2 + D_p3 + D_p4 + D_p5 + {inc} | iso3 + year"
+pf.feols(fml, data=d, vcov={"CRV1": "iso3"})                      # 1. naive event study
+did2s_manual(d, y, inc, dums, B=299, seed=cfg.SEED)              # 2. two-stage DiD, country bootstrap
+pf.lpdid(data=d, yname=y, idname="iso_id", tname="year", gname="gname",
+         pre_window=-4, post_window=5, never_treated=0, xfml=inc) # 3. local projections</code></pre>
+<p class="back"><a href="#flow">↑ back to the flow</a></p></div></details><details class="d" id="d-m02c"><summary><span class="d-eb">script 02c · 02c_spec_curve.py · all the reasonable choices at once</span><span class="d-title">Specification curve</span><span class="d-gist">Every pre-specified combination of exposure, estimator, income, lag and controls: 336 fits, median −0.02, 7% exclude zero.</span></summary><div class="d-body"><figure class="minifig"><svg class="mini" viewBox="0 0 760 120" role="img" aria-label="The specification grid: seven exposures times four estimators times two incomes times three lags times two control sets equals 336 fits.">
+<defs><marker id="ah-m7" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="ah"/></marker><marker id="ahhi-m7" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="ah-hi"/></marker></defs>
+<rect x="10" y="30" width="120" height="60" rx="8" class="box step"/>
+<text x="70.0" y="50" text-anchor="middle" class="mt">7 exposures</text>
+<text x="70.0" y="64" text-anchor="middle" class="ml">dose, its log, team</text>
+<text x="70.0" y="78" text-anchor="middle" class="ml">composite, all-file …</text>
+<rect x="150" y="30" width="120" height="60" rx="8" class="box step"/>
+<text x="210.0" y="50" text-anchor="middle" class="mt">× 4 estimators</text>
+<text x="210.0" y="64" text-anchor="middle" class="ml">FE · FE + trends ·</text>
+<text x="210.0" y="78" text-anchor="middle" class="ml">first diff · lagged y</text>
+<rect x="290" y="30" width="110" height="60" rx="8" class="box step"/>
+<text x="345.0" y="57" text-anchor="middle" class="mt">× 2 incomes</text>
+<text x="345.0" y="71" text-anchor="middle" class="ml">constant · current</text>
+<rect x="420" y="30" width="100" height="60" rx="8" class="box step"/>
+<text x="470.0" y="57" text-anchor="middle" class="mt">× 3 lags</text>
+<text x="470.0" y="71" text-anchor="middle" class="ml">2 · 3 · 5</text>
+<rect x="540" y="30" width="110" height="60" rx="8" class="box step"/>
+<text x="595.0" y="57" text-anchor="middle" class="mt">× 2 controls</text>
+<text x="595.0" y="71" text-anchor="middle" class="ml">none · context</text>
+<rect x="670" y="30" width="80" height="60" rx="8" class="box data"/>
+<text x="710.0" y="57" text-anchor="middle" class="mt">= 336</text>
+<text x="710.0" y="71" text-anchor="middle" class="ml">fits</text>
+<line x1="130" y1="60" x2="150" y2="60" class="ar" marker-end="url(#ah-m7)"/>
+<line x1="270" y1="60" x2="290" y2="60" class="ar" marker-end="url(#ah-m7)"/>
+<line x1="400" y1="60" x2="420" y2="60" class="ar" marker-end="url(#ah-m7)"/>
+<line x1="520" y1="60" x2="540" y2="60" class="ar" marker-end="url(#ah-m7)"/>
+<line x1="650" y1="60" x2="670" y2="60" class="ar" marker-end="url(#ah-m7)"/>
+</svg><figcaption>The grid is fixed in advance; no specification is added or removed after seeing the results.</figcaption></figure>
+<p><b>How it runs.</b> For each cell of the grid the script builds the regression on the frame rows that have every variable it needs, fits it with errors clustered by country, and converts the coefficient into percentage points of anaemia per within-country standard deviation of that exposure, so that a count, a log and a 0/1 indicator become comparable. First differences are taken within country before fitting; the lagged-outcome estimator adds last year's anaemia; the trend estimator adds a linear trend per country. A fit is skipped if the exposure does not vary or fewer than 100 rows remain (none were). The 336 estimates are sorted and each is flagged if its interval excludes zero.</p>
+<p><b>What it shows.</b> Median −0.02 pp per within-SD, interquartile range −0.06 to 0.00, full range −0.62 to +0.43. The interval excludes zero in 7% of specifications (4% negative, 2% positive), about the false-positive rate. By estimator: plain fixed effects median −0.10 and never excludes zero; with country trends −0.01 (20% exclude zero, driven by the absorbing ever-adopted indicators); first differences −0.01; lagged outcome −0.03. By exposure, the main dose has a median of −0.04 and never excludes zero.</p>
+<div class="inout"><div><div class="io-h">In</div><p><code>frame.csv</code>, 2000–2023; each fit uses the rows complete for its own variables (roughly 900 to 1,090).</p></div><div><div class="io-h">Sample used</div><p>7 × 4 × 2 × 3 × 2 = 336 regressions; 84 per estimator.</p></div><div><div class="io-h">Out</div><p><code>spec_curve.csv</code> 336 × 13 (the five choices, the standardised estimate and interval, p, n, the within-SD used, a rank, the excludes-zero flag); <code>stats/02c_spec.json</code>; the specification-curve figure.</p></div></div>
+<p class="back"><a href="#flow">↑ back to the flow</a></p></div></details><details class="d" id="d-m03"><summary><span class="d-eb">script 03 · 03_loco.py · out-of-sample</span><span class="d-title">Held-out fit (leave one country out)</span><span class="d-gist">Does knowing a country's policy count help predict its anaemia path when the model never saw that country? No.</span></summary><div class="d-body"><figure class="minifig"><svg class="mini" viewBox="0 0 760 190" role="img" aria-label="Leave-one-country-out loop: hold out a country, fit on the other 48, predict its deviations from its own mean, pool the errors, compare nested models.">
+<defs><marker id="ah-m8" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="ah"/></marker><marker id="ahhi-m8" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="ah-hi"/></marker></defs>
+<rect x="10" y="20" width="130" height="56" rx="8" class="box data"/>
+<text x="75.0" y="45" text-anchor="middle" class="mt">49 countries</text>
+<text x="75.0" y="59" text-anchor="middle" class="ml">994 common rows</text>
+<rect x="170" y="20" width="130" height="56" rx="8" class="box step"/>
+<text x="235.0" y="45" text-anchor="middle" class="mt">Hold out</text>
+<text x="235.0" y="59" text-anchor="middle" class="ml">country k</text>
+<rect x="330" y="20" width="170" height="56" rx="8" class="box step"/>
+<text x="415.0" y="45" text-anchor="middle" class="mt">Fit on the other 48</text>
+<text x="415.0" y="59" text-anchor="middle" class="ml">country + year dummies + xs</text>
+<rect x="530" y="20" width="220" height="56" rx="8" class="box step"/>
+<text x="640.0" y="45" text-anchor="middle" class="mt">Predict k&#x27;s deviations</text>
+<text x="640.0" y="59" text-anchor="middle" class="ml">Σ b·(x − x̄_k) + (γ_t − γ̄)</text>
+<rect x="530" y="110" width="220" height="62" rx="8" class="box step"/>
+<text x="640.0" y="138" text-anchor="middle" class="mt">Pool the 994 errors</text>
+<text x="640.0" y="152" text-anchor="middle" class="ml">RMSE · MAE · R² of deviations</text>
+<rect x="250" y="110" width="250" height="62" rx="8" class="box data"/>
+<text x="375.0" y="131" text-anchor="middle" class="mt">Compare nested models</text>
+<text x="375.0" y="145" text-anchor="middle" class="ml">year effects → + income → + dose</text>
+<text x="375.0" y="159" text-anchor="middle" class="ml">→ + all 8 exposures</text>
+<rect x="10" y="110" width="210" height="62" rx="8" class="box out"/>
+<text x="115.0" y="131" text-anchor="middle" class="mt">Repeat</text>
+<text x="115.0" y="145" text-anchor="middle" class="ml">for every k (49) and model (5);</text>
+<text x="115.0" y="159" text-anchor="middle" class="ml">500 country bootstraps of the gap</text>
+<line x1="140" y1="48" x2="170" y2="48" class="ar" marker-end="url(#ah-m8)"/>
+<line x1="300" y1="48" x2="330" y2="48" class="ar" marker-end="url(#ah-m8)"/>
+<line x1="500" y1="48" x2="530" y2="48" class="ar" marker-end="url(#ah-m8)"/>
+<line x1="640" y1="76" x2="640" y2="110" class="ar" marker-end="url(#ah-m8)"/>
+<line x1="530" y1="141" x2="500" y2="141" class="ar" marker-end="url(#ah-m8)"/>
+<line x1="250" y1="141" x2="220" y2="141" class="ar" marker-end="url(#ah-m8)"/>
+</svg><figcaption>The loop. Because the fixed-effects model cannot know a held-out country's level, it predicts deviations from that country's own mean, with the year effects carried over from the training fit.</figcaption></figure>
+<p><b>How it runs.</b> One common sample is fixed first: the 994 rows that have the outcome, log income and all eight lag-3 exposures, so every model is scored on identical rows. For each of the 49 countries the model is fitted by ordinary least squares on the other 48 (country dummies, year dummies, the regressors), and the held-out country's anaemia is predicted as deviations from its own mean: each regressor's coefficient times the regressor's deviation from its within-country mean, plus the year effects centred. The observed deviation is anaemia minus the country's mean. Errors are pooled over all 994 held-out predictions. Five nested models are compared with a naive baseline that predicts no deviation at all: year effects only, plus income, plus the dose, plus the team composite instead of the dose, plus all eight exposures. A context ladder repeats the exercise on the 931 rows (46 countries) that also have malaria, fertility and urbanisation. A bootstrap over countries (500 resamples) gives an interval for the change in error when the dose is added.</p>
+<p><b>What it shows.</b> Root-mean-square error of the deviations: naive 2.50 points; year effects alone 1.91; plus income 1.92; plus the dose 1.93; plus all exposures 1.93. Adding the dose changes the held-out error by +0.013 points, bootstrap interval −0.030 to +0.061; calibration of the income-plus-dose model against the observed deviations r 0.63; the dose lowers a country's own error in 22 of 49 countries (binomial p 0.57, chance). The context ladder: 1.70, 1.70, 1.72. Year effects, the region's shared movement, are what predicts; the policy count adds nothing.</p>
+<div class="inout"><div><div class="io-h">In</div><p><code>frame.csv</code>: 994 rows × (outcome, log income, 8 lag-3 exposures); the context ladder 931 rows × (outcome, log income, 3 context series, the dose).</p></div><div><div class="io-h">Sample used</div><p>49 held-out fits × 5 models, plus 46 × 3 for the context ladder; 500 bootstrap resamples.</p></div><div><div class="io-h">Out</div><p><code>loco_rmse.csv</code> 6 × 5 (one row per model); <code>loco_per_country.csv</code> 49 × 7 (RMSE per country per model); <code>loco_predictions.csv</code> 5,964 × 6 (6 models × 994 held-out rows: observed deviation, predicted deviation, error); <code>stats/03_loco.json</code>; the held-out and calibration figures.</p></div></div>
+<p class="back"><a href="#flow">↑ back to the flow</a></p></div></details><details class="d" id="d-m04"><summary><span class="d-eb">script 04 · 04_residuals.py · question 3</span><span class="d-title">Context ranking and the tails</span><span class="d-gist">Who sits below the level their context predicts, who above, and whether their policy records differ. They do not.</span></summary><div class="d-body"><figure class="minifig"><svg class="mini" viewBox="0 0 760 246" role="img" aria-label="Context ranking flow: levels feed a cross-country context model and an income-only model; residuals are averaged over 2015 to 2023, ranked, split into tails, and the tails&#x27; policy records are contrasted.">
+<defs><marker id="ah-m9" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="ah"/></marker><marker id="ahhi-m9" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="ah-hi"/></marker></defs>
+<rect x="10" y="20" width="150" height="56" rx="8" class="box data"/>
+<text x="85.0" y="45" text-anchor="middle" class="mt">Levels, 2000–2023</text>
+<text x="85.0" y="59" text-anchor="middle" class="ml">anaemia, income, context</text>
+<rect x="200" y="20" width="250" height="56" rx="8" class="box step"/>
+<text x="325.0" y="38" text-anchor="middle" class="mt">Context model (cross-country OLS)</text>
+<text x="325.0" y="52" text-anchor="middle" class="ml">year + sub-region + log income + malaria +</text>
+<text x="325.0" y="66" text-anchor="middle" class="ml">fertility + urban + sanitation + terrain (3)</text>
+<rect x="200" y="100" width="250" height="44" rx="8" class="box step"/>
+<text x="325.0" y="119" text-anchor="middle" class="mt">Income-only model</text>
+<text x="325.0" y="133" text-anchor="middle" class="ml">year effects + log income</text>
+<rect x="490" y="20" width="120" height="56" rx="8" class="box step"/>
+<text x="550.0" y="45" text-anchor="middle" class="mt">Residual</text>
+<text x="550.0" y="59" text-anchor="middle" class="ml">actual − predicted</text>
+<rect x="640" y="20" width="110" height="56" rx="8" class="box step"/>
+<text x="695.0" y="45" text-anchor="middle" class="mt">Mean 2015–23</text>
+<text x="695.0" y="59" text-anchor="middle" class="ml">≥ 5 years</text>
+<rect x="490" y="100" width="260" height="44" rx="8" class="box data"/>
+<text x="620.0" y="126" text-anchor="middle" class="mt">Rank 43 · tails: 8 lowest, 8 highest</text>
+<rect x="10" y="170" width="740" height="62" rx="8" class="box out"/>
+<text x="380.0" y="191" text-anchor="middle" class="mt">Contrast the tails&#x27; policy record</text>
+<text x="380.0" y="205" text-anchor="middle" class="ml">means of the 8 exposures over 2015–2023 with a Mann-Whitney test; dated anaemia-policy stock in 2005, 2010, 2015, 2020, 2023</text>
+<text x="380.0" y="219" text-anchor="middle" class="ml">overlap with the level ranking and with the income ranking</text>
+<line x1="160" y1="48" x2="200" y2="48" class="ar" marker-end="url(#ah-m9)"/>
+<line x1="160" y1="48" x2="200" y2="122" class="ar"/>
+<line x1="450" y1="48" x2="490" y2="48" class="ar" marker-end="url(#ah-m9)"/>
+<line x1="610" y1="48" x2="640" y2="48" class="ar" marker-end="url(#ah-m9)"/>
+<line x1="695" y1="76" x2="695" y2="100" class="ar" marker-end="url(#ah-m9)"/>
+<line x1="450" y1="122" x2="490" y2="122" class="ar" marker-end="url(#ah-m9)"/>
+<line x1="380" y1="144" x2="380" y2="170" class="ar" marker-end="url(#ah-m9)"/>
+</svg><figcaption>Stating the odds before asking who beats them. The context model is not a causal model; it is the expected level given things a policy cannot change quickly.</figcaption></figure>
+<p><b>How it runs.</b> Two cross-country regressions of anaemia levels with year effects and errors clustered by country. The income-only model (log income alone) is the v1.2 ranking, kept for continuity: it explains 6% of the variation and its ranking is the raw-level ranking in disguise (rank correlation with the level 0.98). The context model adds the UNICEF sub-region, malaria incidence, fertility, urbanisation, basic sanitation and the three terrain variables from the events table: R² 0.81 on 1,046 rows and 45 countries. The residual, actual minus predicted, is averaged over 2015–2023 for every country with at least five years (43 ranked; Eritrea, Lesotho, Mauritius, South Sudan and Seychelles lack a series, Equatorial Guinea has three years). The eight lowest and eight highest residuals are the tails. Their policy records are then compared: the mean of each of the eight exposures over 2015–2023 with a Mann-Whitney test, plus the dated anaemia-policy stock at five points in time, the first-policy year and the wheat status.</p>
+<p><b>What it shows.</b> Which terms carry the model: West and Central Africa +11.5 pp above Eastern and Southern, fertility +3.8 pp per child, urbanisation +0.16 pp per point, ruggedness −2.8, distance to coast −7.4; income, malaria and sanitation add nothing once those are in. Below their context: Nigeria (−9.6), Namibia (−9.0), Cameroon (−9.0), Ghana (−6.7), Liberia (−6.4), DR Congo (−6.1), Ethiopia (−4.6), Zambia (−4.5). Above: Comoros (+4.4), Eswatini (+4.4), Madagascar (+5.7), Tanzania (+6.4), Mali (+7.3), Gabon (+8.0), Burundi (+8.2), Mozambique (+11.2). The context ranking names different countries from the level and income rankings (overlap 3 of 8 and 2 of 8). The tails' policy records do not separate: 4.5 versus 2.8 anaemia policies in force (p 0.12), and no exposure of the eight reaches p 0.05 on the context tails. A screening device for the profiles, never a verdict on a country.</p>
+<div class="inout"><div><div class="io-h">In</div><p><code>frame.csv</code> rows with the outcome and log income (1,135 rows) for the income-only model; rows complete for the seven context terms and joined to <code>events.csv</code> terrain and sub-region (<b>1,046 rows, 45 countries</b>) for the context model; the eight exposures averaged over 2015–2023 for the contrast.</p></div><div><div class="io-h">Sample used</div><p>Two regressions; 43 countries ranked by context, 47 by income; 8 + 8 in the tails; 16 Mann-Whitney tests (8 exposures × 2 rankings).</p></div><div><div class="io-h">Out</div><p><code>residuals_by_country.csv</code> 49 × 26 (both residuals, ranks, the fixed-effects country effect, recent policy means, event columns); <code>deviants_policy_stock.csv</code> 16 × 28; <code>deviant_contrast.csv</code> 16 × 7; <code>deviants_timeline.csv</code> 16 × 11; <code>stats/04_residuals.json</code> (20 keys); the ranking, comparison and map figures.</p></div></div>
+<pre><code>out_anaemia_wra_fs_pct ~ C(year) + C(subregion) + log_gdp_pc_constant + feat_malaria_incidence_per1000
+                        + feat_fertility_rate + feat_urban_pct + feat_sanitation_basic_pct
+                        + geo_rugged + geo_tropical + geo_dist_coast          # R² 0.806, n 1,046</code></pre>
+<p class="back"><a href="#flow">↑ back to the flow</a></p></div></details><details class="d" id="d-m08"><summary><span class="d-eb">script 08 · 08_concern_score.py · sidebar</span><span class="d-title">Concern score</span><span class="d-gist">The analytics member's ranking of where trends are most concerning, reproduced on the 49 countries and stress-tested for its weights.</span></summary><div class="d-body"><figure class="minifig"><svg class="mini" viewBox="0 0 760 236" role="img" aria-label="Concern-score flow: four women&#x27;s series, first versus last value, a flag and a percentile per series, the score, the equal-weight mean, and a random-weight stability check.">
+<defs><marker id="ah-m10" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="ah"/></marker><marker id="ahhi-m10" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="ah-hi"/></marker></defs>
+<rect x="10" y="20" width="170" height="56" rx="8" class="box data"/>
+<text x="95.0" y="38" text-anchor="middle" class="mt">4 women&#x27;s series</text>
+<text x="95.0" y="52" text-anchor="middle" class="ml">anaemia all · pregnant ·</text>
+<text x="95.0" y="66" text-anchor="middle" class="ml">underweight · overweight</text>
+<rect x="210" y="20" width="200" height="56" rx="8" class="box step"/>
+<text x="310.0" y="45" text-anchor="middle" class="mt">Per series, per country</text>
+<text x="310.0" y="59" text-anchor="middle" class="ml">first vs last value in 2000–2023</text>
+<rect x="440" y="20" width="160" height="56" rx="8" class="box step"/>
+<text x="520.0" y="38" text-anchor="middle" class="mt">Flag</text>
+<text x="520.0" y="52" text-anchor="middle" class="ml">0 improved · 1 started in</text>
+<text x="520.0" y="66" text-anchor="middle" class="ml">worst quarter · 2 worsened</text>
+<rect x="440" y="100" width="160" height="44" rx="8" class="box step"/>
+<text x="520.0" y="119" text-anchor="middle" class="mt">+ percentile</text>
+<text x="520.0" y="133" text-anchor="middle" class="ml">of the latest level</text>
+<rect x="620" y="20" width="130" height="56" rx="8" class="box data"/>
+<text x="685.0" y="45" text-anchor="middle" class="mt">Score</text>
+<text x="685.0" y="59" text-anchor="middle" class="ml">flag + percentile</text>
+<rect x="620" y="100" width="130" height="44" rx="8" class="box data"/>
+<text x="685.0" y="119" text-anchor="middle" class="mt">Mean of 4</text>
+<text x="685.0" y="133" text-anchor="middle" class="ml">equal weights → rank</text>
+<rect x="10" y="160" width="740" height="62" rx="8" class="box out"/>
+<text x="380.0" y="181" text-anchor="middle" class="mt">Stability under other weights</text>
+<text x="380.0" y="195" text-anchor="middle" class="ml">500 random weight vectors (Dirichlet): median rank, 90th-percentile rank, share of draws in the top 10</text>
+<text x="380.0" y="209" text-anchor="middle" class="ml">rank correlation with the equal-weight ranking 0.997</text>
+<line x1="180" y1="48" x2="210" y2="48" class="ar" marker-end="url(#ah-m10)"/>
+<line x1="410" y1="48" x2="440" y2="48" class="ar" marker-end="url(#ah-m10)"/>
+<line x1="600" y1="48" x2="620" y2="48" class="ar" marker-end="url(#ah-m10)"/>
+<line x1="520" y1="76" x2="520" y2="100" class="ar" marker-end="url(#ah-m10)"/>
+<line x1="600" y1="122" x2="620" y2="122" class="ar" marker-end="url(#ah-m10)"/>
+<line x1="685" y1="76" x2="685" y2="100" class="ar" marker-end="url(#ah-m10)"/>
+<line x1="685" y1="144" x2="685" y2="160" class="ar" marker-end="url(#ah-m10)"/>
+</svg><figcaption>A rule-based index, not a regression. The scaffold reproduces it so the deck's first finding and the panel share one data version.</figcaption></figure>
+<p><b>How it runs.</b> For each of the four women's series and each country, take the first and last non-missing values inside 2000–2023. Flag the country 2 if it worsened, 1 if it did not worsen but started in the highest quarter of first values, 0 if it improved from a lower start. Add the country's percentile on the latest value. Average the four series' scores with equal weights and rank. Because the weights are a choice, 500 random weight vectors are drawn from a Dirichlet distribution and the ranking is recomputed each time; the median rank, the 90th-percentile rank and the share of draws in which a country is in the top ten are reported.</p>
+<p><b>What it shows.</b> Top of the list with equal weights: Burundi (score 2.48; in the top ten under 96% of random weightings), Somalia (2.29; 92%), Senegal (2.17; 85%), Gambia (2.00; 98%), Niger (1.96; 61%), then Lesotho, Chad, Burkina Faso, Gabon, Mauritania. The equal-weight ranking correlates 0.997 with the median ranking under random weights, so the top is not an artefact of the weights. The 194-country version in the team's deck uses the same rule on all countries; this reproduction is on the 49 and pending the analytics member's exact weights.</p>
+<div class="inout"><div><div class="io-h">In</div><p><code>frame.csv</code>, 2000–2023: four outcome columns for 49 countries.</p></div><div><div class="io-h">Sample used</div><p>49 countries × 4 series; 500 weight draws.</p></div><div><div class="io-h">Out</div><p><code>concern_score.csv</code> 49 × 27 (first, last, flag, percentile and score for each series; the equal-weight score and rank; the random-weight rank statistics); <code>stats/08_concern.json</code>.</p></div></div>
+<p class="back"><a href="#flow">↑ back to the flow</a></p></div></details><details class="d" id="d-m09"><summary><span class="d-eb">script 09 · 09_dml_sidebar.py · sidebar, the one machine-learning piece</span><span class="d-title">Double machine learning</span><span class="d-gist">The partially linear model with random-forest nuisance functions; a same-sign check the team asked for, nothing more.</span></summary><div class="d-body"><figure class="minifig"><svg class="mini" viewBox="0 0 760 236" role="img" aria-label="Double machine learning flow: remove fixed effects, split into five country folds, fit two random forests on the other folds, take residuals on the held-out fold, estimate theta from the residuals.">
+<defs><marker id="ah-m11" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="ah"/></marker><marker id="ahhi-m11" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="ah-hi"/></marker></defs>
+<rect x="10" y="20" width="190" height="56" rx="8" class="box step"/>
+<text x="105.0" y="45" text-anchor="middle" class="mt">Remove country + year effects</text>
+<text x="105.0" y="59" text-anchor="middle" class="ml">residualise y, dose and 4 controls</text>
+<rect x="230" y="20" width="150" height="56" rx="8" class="box step"/>
+<text x="305.0" y="45" text-anchor="middle" class="mt">5 country folds</text>
+<text x="305.0" y="59" text-anchor="middle" class="ml">GroupKFold</text>
+<rect x="410" y="20" width="160" height="56" rx="8" class="box step"/>
+<text x="490.0" y="45" text-anchor="middle" class="mt">Random forest ŷ(W)</text>
+<text x="490.0" y="59" text-anchor="middle" class="ml">fitted on the other folds</text>
+<rect x="410" y="100" width="160" height="44" rx="8" class="box step"/>
+<text x="490.0" y="119" text-anchor="middle" class="mt">Random forest d̂(W)</text>
+<text x="490.0" y="133" text-anchor="middle" class="ml">fitted on the other folds</text>
+<rect x="600" y="20" width="150" height="56" rx="8" class="box data"/>
+<text x="675.0" y="38" text-anchor="middle" class="mt">Residuals on the</text>
+<text x="675.0" y="52" text-anchor="middle" class="ml">held-out fold: u = y − ŷ,</text>
+<text x="675.0" y="66" text-anchor="middle" class="ml">v = d − d̂</text>
+<rect x="600" y="100" width="150" height="44" rx="8" class="box data"/>
+<text x="675.0" y="119" text-anchor="middle" class="mt">θ = Σ v·u / Σ v²</text>
+<text x="675.0" y="133" text-anchor="middle" class="ml">SE clustered by country</text>
+<rect x="10" y="160" width="740" height="62" rx="8" class="box out"/>
+<text x="380.0" y="181" text-anchor="middle" class="mt">Nuisance functions and the score</text>
+<text x="380.0" y="195" text-anchor="middle" class="ml">W = log income, malaria incidence, fertility, urbanisation · random forests with 300 trees, minimum leaf 20</text>
+<text x="380.0" y="209" text-anchor="middle" class="ml">the score is Neyman-orthogonal: first-order errors in ŷ and d̂ do not bias θ</text>
+<line x1="200" y1="48" x2="230" y2="48" class="ar" marker-end="url(#ah-m11)"/>
+<line x1="380" y1="48" x2="410" y2="48" class="ar" marker-end="url(#ah-m11)"/>
+<line x1="380" y1="48" x2="410" y2="122" class="ar"/>
+<line x1="570" y1="48" x2="600" y2="48" class="ar" marker-end="url(#ah-m11)"/>
+<line x1="570" y1="122" x2="600" y2="122" class="ar" marker-end="url(#ah-m11)"/>
+<line x1="675" y1="76" x2="675" y2="100" class="ar" marker-end="url(#ah-m11)"/>
+</svg><figcaption>Chernozhukov et al. (2018) on the fixed-effects-residualised data. With 49 countries and four controls this adds no identification; it answers the question "would a modern estimator say something different?"</figcaption></figure>
+<p><b>How it runs.</b> The outcome, the lag-3 dose and the four controls are first residualised on country and year dummies, so the fixed effects are gone. The rows are split into five folds by country, so no country is in both the training and the held-out part. For each fold two random forests (300 trees, minimum leaf 20) are fitted on the other four: one predicts the outcome from the controls, one predicts the dose from the controls. On the held-out fold the two residuals are taken, and after all five folds θ is the regression of the outcome residual on the dose residual, with a standard error clustered by country.</p>
+<p><b>What it shows.</b> θ = +0.08 pp per policy, SE 0.14, interval −0.20 to +0.36, p 0.59; per within-country standard deviation of the dose, +0.13. The interval straddles zero like every row of the ladder; the point estimate has the other sign, which at this precision is noise. The sidebar is not part of the report's hash chain and supports one claim only: a flexible estimator does not find what the linear one did not.</p>
+<div class="inout"><div><div class="io-h">In</div><p><code>frame.csv</code> rows complete for the outcome, the dose and the four controls: <b>931 rows, 46 countries</b> (no malaria series for three countries).</p></div><div><div class="io-h">Sample used</div><p>Five country-grouped folds; 10 random forests; one orthogonal score.</p></div><div><div class="io-h">Out</div><p><code>stats/09_dml.json</code> only (θ, SE, interval, p, θ per within-SD, n, the control list); no CSV, no figure.</p></div></div>
+<p class="back"><a href="#flow">↑ back to the flow</a></p></div></details><h3 class="layer" id="layer-outputs">Outputs</h3><p class="hint">Where the numbers land, how each one is tagged, and what checks them.</p><details class="d" id="d-out-tables"><summary><span class="d-eb">results/*.csv · results/stats/*.json</span><span class="d-title">Tables and stats</span><span class="d-gist">Thirteen result tables and ten stats files; every number on a slide points to a key in one of them.</span></summary><div class="d-body">
+<p><b>The tables</b> (rows × columns): <code>frame.csv</code> 1,274 × 72; <code>fe_coefficients.csv</code> 110 × 12; <code>fe_sensitivity.csv</code> 39 × 16; <code>fe_subsample.csv</code> 12 × 14; <code>event_study.csv</code> 54 × 10; <code>event_att.csv</code> 6 × 8; <code>spec_curve.csv</code> 336 × 13; <code>loco_rmse.csv</code> 6 × 5; <code>loco_per_country.csv</code> 49 × 7; <code>loco_predictions.csv</code> 5,964 × 6; <code>residuals_by_country.csv</code> 49 × 26; <code>deviants_policy_stock.csv</code> 16 × 28; <code>deviant_contrast.csv</code> 16 × 7; <code>deviants_timeline.csv</code> 16 × 11; <code>concern_score.csv</code> 49 × 27.</p>
+<p><b>The stats files</b> are written by <code>util.save_stats</code>, one per script: <code>01_frame</code> (26 keys), <code>02_fe</code> (18), <code>02b_event</code> (6), <code>02c_spec</code> (14), <code>03_loco</code> (15), <code>04_residuals</code> (20), <code>05_figures</code>, <code>06_report</code>, <code>08_concern</code> (10), <code>09_dml</code> (14). Each is stamped first with the run time, the configuration version, the panel's full SHA-256 and the data version; NaN is refused (it is not valid JSON), so a missing statistic is an explicit null.</p>
+<p><b>The claim tag.</b> A number in the report or on a page carries <code>[E:script→key]</code>, for example <code>[E:02_fe→spec_A]</code> for the headline coefficient: open <code>results/stats/02_fe.json</code>, read the key. The test <code>test_stats_share_the_panel_hash</code> fails if any stats file was produced from a different panel than the others.</p>
+<p class="back"><a href="#flow">↑ back to the flow</a></p></div></details><details class="d" id="d-out-results"><summary><span class="d-eb">script 06 · 06_report.py</span><span class="d-title">RESULTS.md and the data dictionary</span><span class="d-gist">Eleven sections, every number claim-tagged, an estimator-agreement table in place of the retired R replica.</span></summary><div class="d-body">
+<p><code>06_report.py</code> reads the stats files and the result tables and writes <code>results/RESULTS.md</code> (285 lines): the three questions and what the design can answer; the modelling frame; the event studies; the dose ladder with all 39 rows; the sub-sample block; the bounds; the specification curve; the held-out fit; the context ranking with both tails, the contrast and the timeline; the survey-anchored row; the figure list; and the caveats that ride with every number. Section 8 is the estimator-agreement table: eleven estimates of the same question (two-way FE, first differences, five-year differences, lagged outcome, FE with trends, and the three event-study estimators for each event) read on the sign of their intervals; agreement is recorded in <code>stats/06_report.json</code>. The same script writes <code>panel/DATA_DICTIONARY.md</code>, listing all 174 columns with their sources and coverage, and checks that every stats file carries the current panel hash before it writes anything.</p>
+<div class="inout"><div><div class="io-h">In</div><p>10 stats files, 13 result tables, the readiness table, the events table.</p></div><div><div class="io-h">Sample used</div><p>One run per build, after every model.</p></div><div><div class="io-h">Out</div><p><code>results/RESULTS.md</code> (11 sections), <code>panel/DATA_DICTIONARY.md</code>, <code>stats/06_report.json</code>.</p></div></div><p class="back"><a href="#flow">↑ back to the flow</a></p></div></details><details class="d" id="d-out-figures"><summary><span class="d-eb">script 05 · 05_figures.py (+ figstyle.py)</span><span class="d-title">Figures</span><span class="d-gist">Nine result figures from the same tables, and the deck-ready variants used on this site and in the deck.</span></summary><div class="d-body">
+<p><code>05_figures.py</code> draws from the result tables, never from the models directly, so a figure can always be traced to a row: the dose ladder (<code>fig_sensitivity</code>), the event studies (<code>fig_event_study</code>), the specification curve, the held-out errors by model and the calibration scatter, the context ranking, the income-versus-context comparison, the choropleth of the context ranking, and the 49 small-multiple anaemia trends. <code>figstyle.py</code> holds the shared style (200 dpi, short headline, one reading line, the source line inside the canvas); with <code>FIG_DECK=1</code> the same script writes the wide deck variants that this site's figures come from.</p>
+<div class="inout"><div><div class="io-h">In</div><p>The result tables and the panel.</p></div><div><div class="io-h">Sample used</div><p>Nine figures, plus seven deck variants in deck mode.</p></div><div><div class="io-h">Out</div><p><code>results/figures/*.png</code> (9 files); <code>stats/05_figures.json</code> listing them with one-line descriptions.</p></div></div><p class="back"><a href="#flow">↑ back to the flow</a></p></div></details><details class="d" id="d-out-notebook"><summary><span class="d-eb">script 07 · 07_make_notebook.py → 90_team_notebook.ipynb</span><span class="d-title">Notebook re-fit</span><span class="d-gist">A standalone notebook re-fits the headline row on a fresh kernel and must match the pipeline before the build passes.</span></summary><div class="d-body">
+<p>The notebook is generated, not hand-written, so it cannot drift from the pipeline. It reads <code>ssa_panel.csv</code> (from the private folder, the shared repo or a mounted Drive in Colab), rebuilds the frame's logs, lags and leads in a few cells, fits the two-way fixed-effects main row, and runs the lead, lag and country-trend checks, a compact held-out validation and the ranking, with a parameters cell at the top for anyone who wants to swap the outcome, the exposure or the lag. <code>07_make_notebook.py</code> then executes it once on a fresh kernel, compares its main coefficient with <code>stats/02_fe.json</code>, writes <code>results/notebook_check.json</code> and saves the notebook with outputs stripped.</p>
+<div class="inout"><div><div class="io-h">In</div><p><code>ssa_panel.csv</code>, 1,274 × 174.</p></div><div><div class="io-h">Sample used</div><p>The same 994-row main sample.</p></div><div><div class="io-h">Out</div><p><code>90_team_notebook.ipynb</code>; <code>results/notebook_check.json</code>: coefficient −0.209354, n 994, match true.</p></div></div><p class="back"><a href="#flow">↑ back to the flow</a></p></div></details><details class="d" id="d-out-tests"><summary><span class="d-eb">tests/ · pytest, run by run_all.sh</span><span class="d-title">Tests: 24 pass, 1 retired</span><span class="d-gist">Twenty-five tests collected on every build: the grid, the provenance, the registry recount, the models, the v2.0 guarantees.</span></summary><div class="d-body">
+<ul>
+<li><b>The panel (7):</b> complete grid and unique keys; the manifest matches the panel; the country-code lookup matches the configuration; coverage gaps are exactly the declared ones; the two anaemia series are identical; incomes are positive; no imputation signature (no column is suspiciously complete where its source is not).</li>
+<li><b>The registry reader (6):</b> columns complete and non-negative; <code>any</code> binary and absorbing; stock implies <code>any</code> and log-stock is log1p; the registry files and rules are manifest inputs; a hand recount of active anaemia policies; every token is in the map and mostly mapped.</li>
+<li><b>The models (6):</b> all stats files share the panel hash; the main row reproduces to the stored coefficient; the trend variant reproduces; the R replica agrees if present (the replica was retired on 10 September, so this one is <em>skipped</em> with that reason); the ranking rules hold; every sensitivity row names its term.</li>
+<li><b>v2.0 guarantees (6):</b> one events row per country; the survey flag is binary and sparse; bounds and bootstrap present; the specification curve has 336 rows; both event studies ran; the deworming column exists with its zero rule.</li>
+</ul>
+<p>Reported as 24 passed, 0 failed, 1 skipped. <code>./run_all.sh</code> runs the whole pipeline and the tests in about two and a half minutes; <code>SKIP_TESTS=1</code> skips them.</p>
+<p class="back"><a href="#flow">↑ back to the flow</a></p></div></details><details class="d" id="d-consumers"><summary><span class="d-eb">consumers · run_all.sh · sync_to_shared.sh</span><span class="d-title">The deck, the dashboard, this site</span><span class="d-gist">Where the numbers go, and the one command that regenerates all of them.</span></summary><div class="d-body">
+<p><b>One command.</b> <code>./run_all.sh</code> deletes anything a later step could read from a stale run, then runs, in order: <code>00_assemble_panel</code>, <code>01_prep_frame</code>, <code>02_fe_model</code>, <code>02b_event_study</code>, <code>02c_spec_curve</code>, <code>03_loco</code>, <code>04_residuals</code>, <code>05_figures</code>, the two sidebars (non-fatal), <code>06_report</code>, <code>07_make_notebook</code>, then the tests, and prints the data version. <code>sync_to_shared.sh</code> copies code, inputs, panel and results into the team repository and prints the hashes.</p>
+<p><b>Who reads what.</b> The deck (Ink and Iron) quotes the ladder, the event studies, the bound, the ranking and the concern score by claim tag; the dashboard is being built on the same result tables; this site's figures are the deck variants of the same nine figures; the reproduce page tells you how to get the same data version on your own machine.</p>
+<p><b>Environment.</b> Python 3.12, pandas 3.0, numpy 2.5, statsmodels, linearmodels (the fixed-effects fits), pyfixest (the event studies), scikit-learn (the sidebar), nbclient (the notebook); pinned in <code>requirements.txt</code>.</p>
+<p class="back"><a href="#flow">↑ back to the flow</a></p></div></details>
 
   <h2>What came out</h2>
   <div class="grid g3">
@@ -342,5 +836,13 @@ b.addEventListener('click',function(){var cur=document.documentElement.getAttrib
 </main>
 
 <footer class="site"><div class="wrap"><p>Scaffold v2.0, data version afe63e46c26b. Sources on each figure. Association within countries, not causation. Last updated 14 September 2026.</p></div></footer>
+<script>(function(){
+function openTarget(id,scroll){var el=document.getElementById(id);if(!el||el.tagName!=='DETAILS')return false;el.open=true;if(scroll){el.scrollIntoView({behavior:'smooth',block:'start'})}return true}
+document.querySelectorAll('a[href^="#d-"]').forEach(function(a){a.addEventListener('click',function(e){var id=a.getAttribute('href').slice(1);if(openTarget(id,true)){e.preventDefault();try{history.replaceState(null,'','#'+id)}catch(x){}}})});
+function fromHash(){var h=location.hash.replace('#','');if(h)openTarget(h,true)}
+window.addEventListener('hashchange',fromHash);window.addEventListener('DOMContentLoaded',fromHash);
+document.querySelectorAll('[data-open-all]').forEach(function(b){b.addEventListener('click',function(){document.querySelectorAll('details.d').forEach(function(d){d.open=true})})});
+document.querySelectorAll('[data-close-all]').forEach(function(b){b.addEventListener('click',function(){document.querySelectorAll('details.d').forEach(function(d){d.open=false})})});
+})();</script>
 </body>
 </html>

@@ -113,3 +113,48 @@ svg.flow .ah-hi{fill:var(--plum)}
 .tablewrap table.fixed{table-layout:fixed;min-width:900px}
 .tablewrap table.fixed td,.tablewrap table.fixed th{overflow-wrap:anywhere}
 .tablewrap table.fixed code{overflow-wrap:anywhere;font-size:12.5px}
+
+/* at-a-glance v2: clickable title-only nodes, focused mini diagrams, and the box-by-box detail sections */
+svg.flow a.node{cursor:pointer;outline:none}
+svg.flow a.node .box{transition:stroke .15s}
+svg.flow a.node:hover .box,svg.flow a.node:focus .box{stroke:var(--plum);stroke-width:2}
+svg.flow a.node:hover .t,svg.flow a.node:focus .t{fill:var(--plum)}
+svg.flow .eb{font-size:9.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;fill:var(--ink-faint)}
+svg.flow .t{font-size:13px}
+figure.minifig{margin:14px 0 18px}
+figure.minifig svg.mini{display:block;width:100%;height:auto;max-width:760px;color:var(--ink-faint);font-family:var(--text)}
+figure.minifig figcaption{font-size:13px}
+svg.mini .box{fill:var(--surface);stroke:var(--line-2);stroke-width:1}
+svg.mini .box.step{fill:var(--tint-green)}
+svg.mini .box.data{fill:var(--tint-gold)}
+svg.mini .box.out{fill:var(--surface-2)}
+svg.mini .box.hi{fill:var(--tint-plum);stroke:var(--plum);stroke-width:1.6}
+svg.mini .mt{font-size:12px;font-weight:700;fill:var(--ink)}
+svg.mini .ml{font-size:10.8px;fill:var(--ink-soft)}
+svg.mini .lab{font-size:10.5px;fill:var(--ink-faint)}
+svg.mini .ar{stroke:currentColor;stroke-width:1.3;fill:none}
+svg.mini .ah{fill:currentColor}
+h3.layer{margin-top:1.8em;font-size:22px}
+.hint{font-size:14.5px;color:var(--ink-soft)}
+.d-controls{display:flex;gap:10px;margin:10px 0 6px}
+.d-controls button{border:1px solid var(--line-2);background:var(--surface);color:var(--ink-soft);border-radius:999px;padding:6px 14px;font:600 13px var(--text);cursor:pointer}
+.d-controls button:hover{color:var(--ink);border-color:var(--plum)}
+details.d{border:1px solid var(--line);border-radius:14px;background:var(--surface);margin:10px 0;scroll-margin-top:76px}
+details.d summary{list-style:none;cursor:pointer;padding:14px 48px 14px 18px;display:grid;grid-template-columns:1fr;gap:2px;position:relative}
+details.d summary::-webkit-details-marker{display:none}
+details.d summary::after{content:"+";position:absolute;right:18px;top:10px;font:700 22px var(--head);color:var(--ink-faint)}
+details.d[open] summary::after{content:"−"}
+details.d[open] summary{border-bottom:1px solid var(--line)}
+details.d summary:hover .d-title{color:var(--plum)}
+.d-eb{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--gold)}
+.d-title{font-family:var(--head);font-weight:800;font-size:19px;color:var(--ink);line-height:1.2}
+.d-gist{font-size:14.5px;color:var(--ink-soft);max-width:80ch}
+.d-body{padding:6px 18px 16px}
+.d-body p,.d-body li{font-size:15px}
+.d-body pre{font-size:12.5px}
+.d-body .note{margin:8px 0 12px}
+.inout{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));gap:12px;margin:12px 0 14px}
+.inout>div{background:var(--surface-2);border-radius:12px;padding:10px 14px}
+.inout p{font-size:13.5px;margin:4px 0;max-width:none}
+.io-h{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--plum);margin-bottom:2px}
+p.back{font-size:13px;margin:10px 0 0}
