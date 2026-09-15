@@ -90,3 +90,26 @@ pre{max-width:100%}
 /* theme toggle (system by default; the button stores an explicit choice) */
 .theme-toggle{border:1px solid var(--line-2);background:var(--surface);color:var(--ink-soft);border-radius:999px;padding:5px 12px;font:600 12.5px var(--text);cursor:pointer;margin-left:18px}
 .theme-toggle:hover{color:var(--ink)}
+
+/* the data-flow diagram (at-a-glance): inline SVG styled through the tokens so it follows the theme */
+.flowwrap{overflow-x:auto;margin:18px 0 6px;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+svg.flow{display:block;min-width:960px;width:100%;height:auto;color:var(--ink-faint);font-family:var(--text)}
+svg.flow .box{fill:var(--surface);stroke:var(--line-2);stroke-width:1}
+svg.flow .box.hi{stroke:var(--plum);stroke-width:1.8}
+svg.flow .box.step{fill:var(--tint-green)}
+svg.flow .box.data{fill:var(--tint-gold)}
+svg.flow .box.sub{fill:var(--surface);stroke-dasharray:3 3}
+svg.flow .box.out{fill:var(--surface-2)}
+svg.flow .t{font-size:12.5px;font-weight:700;fill:var(--ink)}
+svg.flow .l{font-size:11px;fill:var(--ink-soft)}
+svg.flow .lab{font-size:10.5px;fill:var(--ink-faint)}
+svg.flow .ar{stroke:currentColor;stroke-width:1.3;fill:none}
+svg.flow .ar.hi{stroke:var(--plum);stroke-width:1.8}
+svg.flow .bus{stroke:currentColor;stroke-width:1.3;fill:none}
+svg.flow .ev{stroke-dasharray:4 3}
+svg.flow .ah{fill:currentColor}
+svg.flow .ah-hi{fill:var(--plum)}
+/* wide reference tables: fixed column widths so long code names cannot squeeze the prose columns; scroll sideways when narrow */
+.tablewrap table.fixed{table-layout:fixed;min-width:900px}
+.tablewrap table.fixed td,.tablewrap table.fixed th{overflow-wrap:anywhere}
+.tablewrap table.fixed code{overflow-wrap:anywhere;font-size:12.5px}
